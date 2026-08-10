@@ -38,19 +38,19 @@ const projects = [
   },
   {
     number: "05",
-    title: "Roomly",
-    type: "Booking · Web application",
+    title: "EdgeCore",
+    type: "Hardware architecture · Systems concept",
     description:
-      "A reservation experience for browsing shared spaces, understanding availability, and managing bookings without friction.",
-    technologies: ["React", "NestJS", "PostgreSQL", "Docker"],
-    visual: "booking",
+      "A hardware–software co-design concept for a compact edge-computing node, mapping sensor input, memory, processing, and software interfaces into one understandable system.",
+    technologies: ["RISC-V", "SystemVerilog", "C/C++", "FPGA"],
+    visual: "architecture",
   },
 ];
 
 const capabilities = [
-  ["01", "Interfaces", "React · TypeScript · Accessible UI"],
-  ["02", "Systems", "NestJS · APIs · Databases"],
-  ["03", "Practice", "Git · Testing · Clear documentation"],
+  ["01", "Software Engineering", "TypeScript · APIs · Testing"],
+  ["02", "Full-Stack Development", "React / Next.js · NestJS · PostgreSQL"],
+  ["03", "Hardware & Systems", "Computer architecture · Embedded systems · HW/SW interfaces"],
 ];
 
 export default function Home() {
@@ -66,7 +66,7 @@ export default function Home() {
             <span className="brand-mark">ET</span>
             <span className="brand-copy">
               <strong>Ege Tekin</strong>
-              <small>Software Engineer</small>
+              <small>Software &amp; Systems</small>
             </span>
           </a>
 
@@ -86,15 +86,16 @@ export default function Home() {
           <div className="hero-copy">
             <p className="eyebrow">
               <span className="signal-dot" aria-hidden="true" />
-              Computer Science · Freiburg
+              Software · Full-stack · Hardware architecture
             </p>
             <h1 id="hero-title">
-              I build thoughtful software for <em>real-world problems.</em>
+              I build software—and <em>think in systems.</em>
             </h1>
             <p className="hero-intro">
               I&apos;m Ege Tekin, a Computer Science graduate from the University of
               Freiburg with two years of working-student experience at Fraunhofer ISE.
-              I turn complex ideas into clear, useful digital products.
+              I&apos;m interested in full-stack software engineering and the architecture
+              where software meets hardware.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">
@@ -115,8 +116,8 @@ export default function Home() {
                 <dd>University of Freiburg</dd>
               </div>
               <div>
-                <dt>Full-stack</dt>
-                <dd>React + NestJS focus</dd>
+                <dt>System view</dt>
+                <dd>Software + hardware architecture</dd>
               </div>
             </dl>
           </div>
@@ -134,11 +135,11 @@ export default function Home() {
                 <span className="core-label">IDEA</span>
               </div>
               <div className="system-path">
-                <span>Observe</span>
+                <span>Interface</span>
                 <i />
-                <span>Structure</span>
+                <span>Backend</span>
                 <i />
-                <span>Build</span>
+                <span>Hardware</span>
               </div>
               <div className="system-meter">
                 <span />
@@ -152,19 +153,19 @@ export default function Home() {
               </div>
             </div>
             <div className="coordinate coordinate-a">47.999° N</div>
-            <div className="coordinate coordinate-b">RESEARCH → PRODUCT</div>
+            <div className="coordinate coordinate-b">SOFTWARE ↔ HARDWARE</div>
           </div>
         </section>
 
         <div className="profile-strip" aria-label="Profile summary">
           <div className="section-shell strip-inner">
-            <span>Computer science</span>
+            <span>Software engineering</span>
+            <i aria-hidden="true" />
+            <span>Full-stack systems</span>
+            <i aria-hidden="true" />
+            <span>Hardware architecture</span>
             <i aria-hidden="true" />
             <span>Applied research</span>
-            <i aria-hidden="true" />
-            <span>Product engineering</span>
-            <i aria-hidden="true" />
-            <span>Based in Germany</span>
           </div>
         </div>
 
@@ -174,8 +175,8 @@ export default function Home() {
             <div>
               <h2 id="projects-title">Ideas made tangible.</h2>
               <p>
-                Five product concepts exploring how thoughtful interfaces and solid
-                systems can make complex work feel simpler.
+                Five concept projects spanning interfaces, backend systems, data, and
+                hardware-aware engineering.
               </p>
             </div>
           </div>
@@ -239,7 +240,7 @@ export default function Home() {
             <div className="section-heading section-heading-light">
               <p className="section-label">02 / Background</p>
               <div>
-                <h2 id="experience-title">Research mindset.<br />Product focus.</h2>
+                <h2 id="experience-title">Research mindset.<br />System view.</h2>
                 <p>
                   Academic foundations and two years inside an applied-research
                   environment shape how I approach technical work.
@@ -288,24 +289,24 @@ export default function Home() {
           <div className="about-lead">
             <p className="section-label">03 / About me</p>
             <h2 id="about-title">
-              Clear on the outside.<br />Understandable underneath.
+              From interface<br />to architecture.
             </h2>
           </div>
           <div className="about-copy">
             <p className="about-intro">
               My background connects Computer Science with professional experience in
-              applied research. I enjoy learning how systems work, finding the useful
-              structure inside a messy problem, and turning that understanding into
-              software people can rely on.
+              applied research. My current direction spans software engineering,
+              full-stack products, and hardware architecture—especially the interfaces
+              where those layers meet.
             </p>
             <p>
-              I care about maintainable code, purposeful interfaces, and collaboration
-              without unnecessary complexity. The projects above are currently concept
-              pieces; real case studies will replace them as this portfolio grows.
+              I care about maintainable code, purposeful interfaces, and understanding
+              a system beyond a single layer. The projects above are concept pieces;
+              real case studies will replace them as this portfolio grows.
             </p>
           </div>
 
-          <div className="capability-list" aria-label="Capabilities">
+          <div className="capability-list" aria-label="Focus areas">
             {capabilities.map(([number, title, detail]) => (
               <div className="capability" key={number}>
                 <span>{number}</span>
@@ -321,9 +322,9 @@ export default function Home() {
             <p className="section-label">04 / Contact</p>
             <h2 id="contact-title">Have a problem worth engineering?</h2>
             <p>
-              I&apos;m interested in thoughtful software, applied research, and teams that
-              care about the details. Contact links will be connected in the next
-              iteration.
+              I&apos;m interested in thoughtful software, full-stack systems, hardware
+              architecture, and teams that care about the details. Contact links will
+              be connected in the next iteration.
             </p>
             <div className="contact-links" aria-label="Contact links coming soon">
               <span>Email <small>ADD LINK</small></span>
@@ -337,7 +338,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="section-shell footer-inner">
           <p>© 2026 Ege Tekin</p>
-          <p>Designed with clarity. Built with React.</p>
+          <p>Software / Full-stack / Hardware architecture</p>
           <a href="#top">Back to top ↑</a>
         </div>
       </footer>

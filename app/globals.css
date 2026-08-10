@@ -747,23 +747,29 @@ button:focus-visible {
   grid-column: auto;
 }
 
-.visual-booking {
-  background-color: #efcfc8;
+.visual-architecture {
+  background-color: #d7d2f3;
 }
 
-.visual-booking .mock-canvas {
+.visual-architecture .mock-canvas {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  background-image: linear-gradient(rgba(16, 24, 32, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 24, 32, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
 }
 
-.visual-booking .mock-canvas span {
+.visual-architecture .mock-canvas span {
   grid-column: auto;
-  background: transparent;
+  position: relative;
+  background: var(--white);
+  box-shadow: 3px 3px 0 rgba(16, 24, 32, 0.18);
 }
 
-.visual-booking .mock-canvas span:nth-child(2),
-.visual-booking .mock-canvas span:nth-child(6) {
-  background: var(--blue);
+.visual-architecture .mock-canvas span:nth-child(2),
+.visual-architecture .mock-canvas span:nth-child(5) {
+  background: var(--ink);
+  box-shadow: inset 0 0 0 5px var(--yellow), 3px 3px 0 rgba(16, 24, 32, 0.18);
 }
 
 .project-content {
