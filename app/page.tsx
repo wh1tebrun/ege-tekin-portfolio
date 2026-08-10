@@ -166,16 +166,6 @@ const projectIndex = [
     year: "2025",
     projects: [
       {
-        date: "Jul 2025",
-        dateISO: "2025-07",
-        title: "Delusions of Grandeur",
-        description:
-          "A six-person university action game with complementary roles, pathfinding, and a boss encounter.",
-        area: "Team game",
-        stack: "C# · MonoGame",
-        links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/dog" }],
-      },
-      {
         date: "Feb 2025",
         dateISO: "2025-02",
         title: "ROSE",
@@ -190,6 +180,21 @@ const projectIndex = [
   {
     year: "2024",
     projects: [
+      {
+        date: "Nov 2024 – Feb 2025",
+        dateISO: "2024-11",
+        title: "Delusions of Grandeur",
+        description:
+          "A six-person university action game where I worked on persistence, gameplay systems, HUD feedback, and integration QA.",
+        area: "Team game",
+        stack: "C# · MonoGame",
+        links: [
+          {
+            label: "Case study",
+            href: "https://github.com/wh1tebrun/delusions-of-grandeur-case-study",
+          },
+        ],
+      },
       {
         date: "Oct 2024",
         dateISO: "2024-10",
@@ -211,6 +216,30 @@ const projectIndex = [
         area: "Learning",
         stack: "HTML · CSS · JavaScript",
         links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/language" }],
+      },
+      {
+        date: "Jul 2024",
+        dateISO: "2024-07",
+        title: "Terminal Blocks",
+        description:
+          "A deterministic, dependency-free falling-block terminal game with a testable core and automated cross-platform builds.",
+        area: "Game",
+        stack: "C++20 · CMake",
+        links: [
+          { label: "GitHub", href: "https://github.com/wh1tebrun/terminal-blocks" },
+        ],
+      },
+      {
+        date: "Jun 2024",
+        dateISO: "2024-06",
+        title: "Geo Heatmap CLI",
+        description:
+          "A dependency-free CLI that parses geographic point data and renders deterministic ASCII density maps.",
+        area: "Tool",
+        stack: "C++20 · CMake",
+        links: [
+          { label: "GitHub", href: "https://github.com/wh1tebrun/geo-heatmap-cli" },
+        ],
       },
       {
         date: "Mar 2024",

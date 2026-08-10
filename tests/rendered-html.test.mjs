@@ -53,7 +53,9 @@ test("features the strongest work and connects verified public repositories", as
     "https://github.com/wh1tebrun/language",
     "https://github.com/wh1tebrun/calisthenics",
     "https://github.com/wh1tebrun/rose",
-    "https://github.com/wh1tebrun/dog",
+    "https://github.com/wh1tebrun/terminal-blocks",
+    "https://github.com/wh1tebrun/geo-heatmap-cli",
+    "https://github.com/wh1tebrun/delusions-of-grandeur-case-study",
     "https://github.com/wh1tebrun/game",
     "https://github.com/wh1tebrun/football-game",
     "https://dishes-helper.vercel.app/",
@@ -65,6 +67,7 @@ test("features the strongest work and connects verified public repositories", as
   assert.doesNotMatch(page, /Private build/);
   assert.match(page, /\/ege-tekin-yks-score-volatility\.pdf/);
   assert.doesNotMatch(page, /github\.com\/freiburg-missing-semester-course\/project-wh1tebrun/);
+  assert.doesNotMatch(page, /github\.com\/wh1tebrun\/dog/);
   assert.doesNotMatch(page, /VitalLoop|GridScope|FocusFlow/);
 });
 
@@ -83,10 +86,12 @@ test("keeps the project index chronologically ordered", async () => {
     "WG Cup — 2D Football",
     "Regex → AIGER",
     "YKS Score Volatility",
-    "Delusions of Grandeur",
     "ROSE",
+    "Delusions of Grandeur",
     "EGE Fitness Fan Page",
     "Egelingo",
+    "Terminal Blocks",
+    "Geo Heatmap CLI",
     "Country Quiz",
     "Dishes Helper",
     "Balloon Game",
