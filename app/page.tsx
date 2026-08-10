@@ -281,6 +281,18 @@ const projectIndex = [
           { label: "GitHub", href: "https://github.com/wh1tebrun/asteroid-defense" },
         ],
       },
+      {
+        date: "Oct 2023 – Feb 2024",
+        dateISO: "2023-10",
+        title: "Python Coursework",
+        description:
+          "A sheet-by-sheet archive of weekly university exercises covering Python fundamentals, algorithms, data structures, generators, and small games.",
+        area: "Coursework",
+        stack: "Python",
+        links: [
+          { label: "GitHub", href: "https://github.com/wh1tebrun/python" },
+        ],
+      },
     ],
   },
   {

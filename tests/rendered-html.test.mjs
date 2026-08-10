@@ -57,6 +57,7 @@ test("features the strongest work and connects verified public repositories", as
     "https://github.com/wh1tebrun/geo-heatmap-cli",
     "https://github.com/wh1tebrun/delusions-of-grandeur-case-study",
     "https://github.com/wh1tebrun/asteroid-defense",
+    "https://github.com/wh1tebrun/python",
     "https://github.com/wh1tebrun/game",
     "https://github.com/wh1tebrun/football-game",
     "https://dishes-helper.vercel.app/",
@@ -96,6 +97,7 @@ test("keeps the project index chronologically ordered", async () => {
     "Country Quiz",
     "Dishes Helper",
     "Asteroid Defense",
+    "Python Coursework",
     "Balloon Game",
   ]) {
     const next = indexData.indexOf(marker, cursor + 1);
