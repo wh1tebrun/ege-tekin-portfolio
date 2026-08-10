@@ -4,43 +4,160 @@ import test from "node:test";
 
 const pageUrl = new URL("../app/page.tsx", import.meta.url);
 const stylesUrl = new URL("../app/globals.css", import.meta.url);
+const layoutUrl = new URL("../app/layout.tsx", import.meta.url);
 
-test("uses real featured work and removes the mock concepts", async () => {
+test("uses the professional positioning and verified background", async () => {
+  const [page, layout] = await Promise.all([
+    readFile(pageUrl, "utf8"),
+    readFile(layoutUrl, "utf8"),
+  ]);
+
+  assert.match(page, /Software Engineer · Freiburg, Germany/);
+  assert.match(page, /I build clear, reliable software for real-world problems\./);
+  assert.match(page, /University of Freiburg/);
+  assert.match(page, /Fraunhofer ISE/);
+  assert.match(page, /Interconnection &amp; Encapsulation/);
+  assert.match(page, /peel testing/i);
+  assert.match(page, /Apr 2026 – Apr 2027/);
+  assert.match(page, /Oct 2023 – Sep 2026/);
+  assert.match(page, /Akdeniz University/);
+  assert.match(page, /Sep 2026/);
+  assert.match(page, /Starts Sep 2026/);
+  assert.match(page, /5,493/);
+  assert.match(layout, /Ege Tekin — Software Engineer/);
+  assert.match(layout, /<html lang="en">/);
+
+  assert.doesNotMatch(page, /Incoming Medicine|Incoming Medical Student|Academic year 2026\/27/);
+  assert.doesNotMatch(page, /MedTech developer|Medical Software Engineer/i);
+});
+
+test("features the strongest work and connects verified public repositories", async () => {
   const page = await readFile(pageUrl, "utf8");
 
-  assert.match(page, /Regex → AIGER/);
-  assert.match(page, /Dishes Helper/);
-  assert.match(page, /YKS Score Volatility/);
-  assert.match(page, /github\.com\/wh1tebrun\/string-to-aiger/);
-  assert.match(page, /github\.com\/freiburg-missing-semester-course\/project-wh1tebrun/);
-  assert.match(page, /dishes-helper\.vercel\.app/);
-  assert.match(page, /Delusions of Grandeur/);
-  assert.match(page, /country-fawn\.vercel\.app/);
+  for (const title of [
+    "Regex → AIGER",
+    "Ege Image Studio",
+    "Dishes Helper",
+    "YKS Score Volatility",
+  ]) {
+    assert.ok(page.includes(title), `Missing featured project: ${title}`);
+  }
+
+  for (const url of [
+    "https://github.com/wh1tebrun/string-to-aiger",
+    "https://github.com/wh1tebrun/ege-image-studio",
+    "https://github.com/wh1tebrun/dishes",
+    "https://github.com/wh1tebrun/bisiklet",
+    "https://github.com/wh1tebrun/language",
+    "https://github.com/wh1tebrun/calisthenics",
+    "https://github.com/wh1tebrun/rose",
+    "https://github.com/wh1tebrun/dog",
+    "https://github.com/wh1tebrun/game",
+    "https://dishes-helper.vercel.app/",
+    "https://country-fawn.vercel.app/",
+  ]) {
+    assert.ok(page.includes(url), `Missing portfolio link: ${url}`);
+  }
+
+  assert.doesNotMatch(page, /Private build/);
+  assert.doesNotMatch(page, /github\.com\/freiburg-missing-semester-course\/project-wh1tebrun/);
+  assert.match(page, /Research package available on request/);
   assert.doesNotMatch(page, /VitalLoop|GridScope|FocusFlow/);
 });
 
-test("publishes the supplied profile and contact details", async () => {
+test("keeps the project index chronologically ordered", async () => {
   const page = await readFile(pageUrl, "utf8");
+  const start = page.indexOf("const projectIndex = [");
+  const end = page.indexOf("\n];", start);
 
-  assert.match(page, /University of Freiburg/);
-  assert.match(page, /Apr 2026 – Apr 2027/);
-  assert.match(page, /Oct 2023 – Sep 2026/);
-  assert.match(page, /peel\s*testing/);
-  assert.match(page, /Education · Admitted/);
-  assert.match(page, /Medicine program, beginning in Sep 2026/);
-  assert.match(page, /ege\.tekin@web\.de/);
-  assert.match(page, /linkedin\.com\/in\/tekinege/);
-  assert.match(page, /github\.com\/wh1tebrun/);
-  assert.doesNotMatch(page, /Incoming Medicine|Incoming Medical Student|Academic year 2026\/27/);
-  assert.match(page, /ege-tekin-portrait\.jpg/);
+  assert.ok(start >= 0 && end > start, "Project index data is missing");
+  const indexData = page.slice(start, end);
+  let cursor = -1;
+
+  for (const marker of [
+    "Ege Image Studio",
+    "RideQuest",
+    "WG Cup — 2D Football",
+    "Regex → AIGER",
+    "YKS Score Volatility",
+    "Delusions of Grandeur",
+    "ROSE",
+    "EGE Fitness Fan Page",
+    "Egelingo",
+    "Country Quiz",
+    "Dishes Helper",
+    "Balloon Game",
+  ]) {
+    const next = indexData.indexOf(marker, cursor + 1);
+    assert.ok(next > cursor, `${marker} is missing or out of order`);
+    cursor = next;
+  }
 });
 
-test("keeps the portfolio responsive and motion-accessible", async () => {
-  const styles = await readFile(stylesUrl, "utf8");
+test("preserves semantic navigation and accessibility", async () => {
+  const page = await readFile(pageUrl, "utf8");
 
-  assert.match(styles, /@media \(max-width: 760px\)/);
+  assert.match(page, /className="skip-link" href="#main-content"/);
+  assert.match(page, /<main id="main-content">/);
+  assert.match(page, /aria-label="Primary navigation"/);
+
+  for (const target of ["#work", "#project-index", "#background", "#contact"]) {
+    assert.ok(page.includes(`href="${target}"`), `Missing navigation target: ${target}`);
+  }
+
+  assert.equal((page.match(/<h1/g) || []).length, 1);
+  assert.match(page, /alt="Portrait of Ege Tekin"/);
+  assert.match(page, /<time dateTime=/);
+  assert.equal(
+    (page.match(/target="_blank"/g) || []).length,
+    (page.match(/rel="noreferrer"/g) || []).length,
+  );
+});
+
+test("implements the editorial design system and removes the previous concept", async () => {
+  const [page, styles] = await Promise.all([
+    readFile(pageUrl, "utf8"),
+    readFile(stylesUrl, "utf8"),
+  ]);
+  const source = `${page}\n${styles}`;
+
+  for (const token of [
+    /--canvas:\s*#f4f2ed/i,
+    /--surface:\s*#fcfbf8/i,
+    /--ink:\s*#17202a/i,
+    /--muted:\s*#5f6870/i,
+    /--line:\s*#d9d6cf/i,
+    /--navy:\s*#19304d/i,
+    /--accent:\s*#842f3e/i,
+  ]) {
+    assert.match(styles, token);
+  }
+
+  assert.match(styles, /@media \(max-width: 1100px\)/);
+  assert.match(styles, /@media \(max-width: 768px\)/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.match(styles, /\.experiment-list/);
-  assert.match(styles, /\.experiment-copy/);
   assert.match(styles, /:focus-visible/);
+  assert.match(styles, /min-height: 44px/);
+  assert.match(styles, /\.background :focus-visible/);
+  assert.match(page, /className="sr-only">Area: <\/span>/);
+  assert.doesNotMatch(await readFile(layoutUrl, "utf8"), /headers\(\)/);
+
+  for (const legacy of [
+    "system-orbit",
+    "orbit-one",
+    "orbit-two",
+    "system-card",
+    "mock-window",
+    "mock-toolbar",
+    "mock-interface",
+    "mock-sidebar",
+    "mock-canvas",
+    "profile-strip",
+    "coming-soon",
+    "ET / PATH 01",
+    "FREIBURG → ANTALYA",
+    "CODE ↔ CARE",
+  ]) {
+    assert.ok(!source.includes(legacy), `Legacy concept remains: ${legacy}`);
+  }
 });

@@ -1,41 +1,27 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import "./globals.css";
 
-const title = "Ege Tekin — Full-Stack Developer · MedTech Focus";
+const title = "Ege Tekin — Software Engineer";
 const description =
-  "Portfolio of Ege Tekin, completing a B.Sc. in Computer Science at the University of Freiburg, working at Fraunhofer ISE, and admitted to Medicine at Akdeniz University.";
+  "Ege Tekin is a Freiburg-based software engineer building full-stack products and research tools while completing a B.Sc. in Computer Science. Available for freelance web and app projects.";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const forwardedHost = requestHeaders.get("x-forwarded-host")?.split(",")[0]?.trim();
-  const host = forwardedHost || requestHeaders.get("host");
-  const forwardedProtocol = requestHeaders
-    .get("x-forwarded-proto")
-    ?.split(",")[0]
-    ?.trim();
-  const protocol = forwardedProtocol === "http" ? "http" : "https";
-  const socialImage = host ? `${protocol}://${host}/og.png` : undefined;
-
-  return {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://ege-tekin-portfolio.w1b.chatgpt.site"),
+  title,
+  description,
+  openGraph: {
     title,
     description,
-    openGraph: {
-      title,
-      description: "Full-stack product development with a long-term focus on MedTech.",
-      type: "website",
-      images: socialImage
-        ? [{ url: socialImage, alt: "Ege Tekin — Full-Stack Developer, MedTech Focus" }]
-        : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: "Full-stack product development with a long-term focus on MedTech.",
-      images: socialImage ? [socialImage] : undefined,
-    },
-  };
-}
+    type: "website",
+    images: [{ url: "/og.png", alt: "Ege Tekin — Software Engineer" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og.png"],
+  },
+};
 
 export default function RootLayout({
   children,
