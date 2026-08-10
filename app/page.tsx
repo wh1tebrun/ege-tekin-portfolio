@@ -1,32 +1,54 @@
 const projects = [
   {
     number: "01",
-    title: "VitalLoop",
-    type: "MedTech · Connected monitoring concept",
+    title: "Regex → AIGER",
+    stage: "Bachelor’s thesis",
+    type: "Formal methods · Hardware-oriented systems",
     description:
-      "A non-diagnostic prototype that turns simulated wearable data into clear timelines, threshold alerts, and structured handoff notes.",
-    technologies: ["Next.js", "NestJS", "PostgreSQL", "WebSockets"],
-    visual: "health",
+      "A Python compiler pipeline that translates regular expressions into bounded or sequential AIGER circuits, backed by simulation, benchmarks, and model-checking artifacts.",
+    technologies: ["Python", "AIGER", "Model Checking"],
+    visual: "architecture",
+    status: "View source ↗",
+    href: "https://github.com/wh1tebrun/string-to-aiger",
     featured: true,
   },
   {
     number: "02",
-    title: "GridScope",
-    type: "Research data · Full-stack concept",
+    title: "Dishes Helper",
+    stage: "Live web project",
+    type: "Decision game · Product experience",
     description:
-      "A dashboard concept for exploring measurements, comparing time periods, and turning dense research data into a clear visual story.",
-    technologies: ["React", "NestJS", "PostgreSQL", "Recharts"],
-    visual: "energy",
+      "A TypeScript web game that reduces choice overload by letting users compare dishes pair by pair until one clear winner remains.",
+    technologies: ["TypeScript", "Web Game", "Vercel"],
+    visual: "health",
+    status: "Open live project ↗",
+    href: "https://dishes-helper.vercel.app/",
   },
   {
     number: "03",
-    title: "FocusFlow",
-    type: "Web application · Product concept",
+    title: "YKS Score Volatility",
+    stage: "Research paper",
+    type: "Education data · Admissions analysis",
     description:
-      "A calm project workspace for organizing tasks, tracking progress, and keeping team updates in one understandable place.",
-    technologies: ["React", "NestJS", "TypeScript", "WebSockets"],
-    visual: "flow",
+      "A paper titled “Year-Dependent YKS Score Volatility and Implications for German NC Admissions,” examining year-to-year variation and its admissions context.",
+    technologies: ["YKS", "German NC", "Analysis"],
+    visual: "paper",
+    status: "Publication details pending ↗",
+    href: undefined,
   },
+];
+
+const experiments = [
+  ["Egelingo", "Language-learning website"],
+  ["Ege Image Studio", "Image software"],
+  ["2D Football", "Browser game"],
+  ["Bisiklet", "Web game"],
+  ["Balloon Game", "Unity"],
+  ["Cannon Mechanics", "Unity prototype"],
+  ["Delusions of Grandeur", "MonoGame"],
+  ["Country Flags Quiz", "Quiz game"],
+  ["EGE Fitness", "Fan website"],
+  ["ROSE", "Project details pending"],
 ];
 
 const capabilities = [
@@ -162,10 +184,10 @@ export default function Home() {
           <div className="section-heading">
             <p className="section-label">01 / Selected work</p>
             <div>
-              <h2 id="projects-title">Ideas made tangible.</h2>
+              <h2 id="projects-title">Research, systems, and playful builds.</h2>
               <p>
-                Three independent concepts showing the kind of full-stack products I
-                want to build. Each will be replaced by a real case study as it is ready.
+                A first selection from my real work. Full case studies, repositories,
+                and technical details will be added as the archive is organized.
               </p>
             </div>
           </div>
@@ -205,7 +227,7 @@ export default function Home() {
 
                 <div className="project-content">
                   <div className="project-meta">
-                    <span>{project.number} / Independent concept</span>
+                    <span>{project.number} / {project.stage}</span>
                     <span>{project.type}</span>
                   </div>
                   <h3>{project.title}</h3>
@@ -216,11 +238,45 @@ export default function Home() {
                         <li key={technology}>{technology}</li>
                       ))}
                     </ul>
-                    <span className="coming-soon">Details coming soon ↗</span>
+                    {project.href ? (
+                      <a
+                        className="coming-soon"
+                        href={project.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${project.status.replace(" ↗", "")} for ${project.title}`}
+                      >
+                        {project.status}
+                      </a>
+                    ) : (
+                      <span className="coming-soon">{project.status}</span>
+                    )}
                   </div>
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className="experiment-index" aria-labelledby="experiments-title">
+            <div className="experiment-heading">
+              <p className="section-label">Project archive</p>
+              <div>
+                <h3 id="experiments-title">Selected experiments</h3>
+                <p>
+                  Games, websites, and product experiments that will become short case
+                  studies as their demos and source code are prepared.
+                </p>
+              </div>
+            </div>
+            <ul className="experiment-list">
+              {experiments.map(([title, type], index) => (
+                <li key={title}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{title}</strong>
+                  <small>{type}</small>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -244,9 +300,10 @@ export default function Home() {
                   <p className="timeline-type">Experience</p>
                   <h3>Fraunhofer Institute for Solar Energy Systems ISE</h3>
                   <p>
-                    Working in the Interconnection &amp; Encapsulation team, an applied
-                    R&amp;D environment focused on photovoltaic module interconnection,
-                    encapsulation technologies, and prototypes.
+                    Working in the Interconnection &amp; Encapsulation team in an applied
+                    photovoltaic R&amp;D environment. My hands-on work includes peel
+                    testing; further responsibilities will be documented as individual
+                    case-study details are cleared.
                   </p>
                 </div>
                 <div className="timeline-detail">
@@ -341,13 +398,19 @@ export default function Home() {
             <h2 id="contact-title">Need a focused developer for your next web or app project?</h2>
             <p>
               I&apos;m interested in selected freelance and collaborative projects—from
-              focused websites to full-stack product prototypes. Contact links will be
-              connected in the next iteration.
+              focused websites to full-stack product prototypes. If you have a useful
+              idea to build, tell me what you have in mind.
             </p>
-            <div className="contact-links" aria-label="Contact links coming soon">
-              <span>Email <small>ADD LINK</small></span>
-              <span>LinkedIn <small>ADD LINK</small></span>
-              <span>GitHub <small>ADD LINK</small></span>
+            <div className="contact-links" aria-label="Contact links">
+              <a href="mailto:ege.tekin@web.de">
+                Email <small>ege.tekin@web.de ↗</small>
+              </a>
+              <a href="https://www.linkedin.com/in/tekinege/" target="_blank" rel="noreferrer">
+                LinkedIn <small>tekinege ↗</small>
+              </a>
+              <a href="https://github.com/wh1tebrun" target="_blank" rel="noreferrer">
+                GitHub <small>wh1tebrun ↗</small>
+              </a>
             </div>
           </div>
         </section>

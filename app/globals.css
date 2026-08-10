@@ -560,6 +560,79 @@ button:focus-visible {
   gap: 18px;
 }
 
+.experiment-index {
+  margin-top: clamp(72px, 9vw, 112px);
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  border-top: 1px solid var(--ink);
+}
+
+.experiment-heading {
+  display: contents;
+}
+
+.experiment-heading .section-label {
+  padding-top: 8px;
+  color: var(--blue);
+}
+
+.experiment-heading h3 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.experiment-heading > div > p {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.experiment-list {
+  grid-column: 2;
+  margin: 16px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--ink);
+  list-style: none;
+}
+
+.experiment-list li {
+  min-height: 66px;
+  padding: 14px 0;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.experiment-list span,
+.experiment-list small {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experiment-list span {
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.experiment-list strong {
+  font-size: 16px;
+}
+
+.experiment-list small {
+  color: var(--muted);
+  text-align: right;
+}
+
 .project-card {
   min-width: 0;
   grid-column: span 6;
@@ -866,6 +939,15 @@ button:focus-visible {
   white-space: nowrap;
 }
 
+a.coming-soon {
+  color: var(--blue);
+}
+
+a.coming-soon:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .experience {
   padding-block: clamp(96px, 12vw, 150px);
   overflow: hidden;
@@ -1118,7 +1200,7 @@ button:focus-visible {
   border-bottom: 1px solid rgba(255, 255, 255, 0.55);
 }
 
-.contact-links span {
+.contact-links a {
   min-height: 88px;
   padding: 22px 0;
   display: flex;
@@ -1126,14 +1208,19 @@ button:focus-visible {
   justify-content: space-between;
   font-size: 20px;
   font-weight: 700;
+  transition: color 180ms ease;
 }
 
-.contact-links span + span {
+.contact-links a:hover {
+  color: var(--yellow);
+}
+
+.contact-links a + a {
   padding-left: 24px;
   border-left: 1px solid rgba(255, 255, 255, 0.55);
 }
 
-.contact-links span:not(:last-child) {
+.contact-links a:not(:last-child) {
   padding-right: 24px;
 }
 
@@ -1344,6 +1431,34 @@ button:focus-visible {
     flex-direction: column;
   }
 
+  .experiment-index {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .experiment-heading {
+    display: block;
+  }
+
+  .experiment-heading .section-label {
+    margin-bottom: 18px;
+    padding-top: 0;
+  }
+
+  .experiment-list {
+    grid-column: 1;
+    margin-top: 8px;
+  }
+
+  .experiment-list li {
+    grid-template-columns: 34px 1fr;
+  }
+
+  .experiment-list small {
+    grid-column: 2;
+    text-align: left;
+  }
+
   .timeline-card {
     padding-block: 28px;
     grid-template-columns: 34px 1fr;
@@ -1410,13 +1525,13 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .contact-links span + span {
+  .contact-links a + a {
     padding-left: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.55);
     border-left: 0;
   }
 
-  .contact-links span:not(:last-child) {
+  .contact-links a:not(:last-child) {
     padding-right: 0;
   }
 
