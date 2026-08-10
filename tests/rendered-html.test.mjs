@@ -26,7 +26,7 @@ function assertInOrder(source, markers, label) {
   }
 }
 
-test("presents a verified executive résumé without marketing slogans", async () => {
+test("presents the verified v2 identity, direction, and background", async () => {
   const [page, layout] = await Promise.all([
     readFile(pageUrl, "utf8"),
     readFile(layoutUrl, "utf8"),
@@ -34,7 +34,20 @@ test("presents a verified executive résumé without marketing slogans", async (
 
   assert.match(page, /Résumé · August 2026/);
   assert.match(page, /<h1 id="page-title">Ege Tekin<\/h1>/);
-  assert.match(page, /Software Engineer · Freiburg, Germany/);
+  assert.match(page, /<p className="role">Software Engineering · Applied Research · Medical Technology<\/p>/);
+  assert.match(page, /<p className="location">Freiburg, Germany<\/p>/);
+  assert.match(
+    page,
+    /<dt>Currently<\/dt>\s*<dd><strong>Fraunhofer ISE<\/strong><span>Freiburg<\/span><\/dd>/,
+  );
+  assert.match(
+    page,
+    /<dt>Next<\/dt>\s*<dd><strong>Medicine<\/strong><span>Sep 2026<\/span><\/dd>/,
+  );
+  assert.match(
+    page,
+    /<p className="summary-lead">\s*I build software at the intersection of engineering and applied research\.\s*<\/p>/,
+  );
   assert.match(page, /University of Freiburg/);
   assert.match(page, /B\.Sc\. Computer Science \(Informatik\)/);
   assert.match(page, /Oct 2023 – Sep 2026/);
@@ -57,7 +70,7 @@ test("presents a verified executive résumé without marketing slogans", async (
     assert.ok(page.includes(language), `Missing verified language level: ${language}`);
   }
 
-  assert.match(layout, /Ege Tekin — Software Engineer/);
+  assert.match(layout, /Ege Tekin — Software Engineering & Applied Research/);
   assert.match(layout, /<html lang="en">/);
   assert.match(layout, /applicationName:\s*"Ege Tekin Portfolio"/);
   assert.match(layout, /authors:\s*\[\{ name: "Ege Tekin" \}\]/);
@@ -66,9 +79,9 @@ test("presents a verified executive résumé without marketing slogans", async (
   assert.match(layout, /locale:\s*"en_US"/);
   assert.match(layout, /siteName:\s*"Ege Tekin"/);
   assert.equal(
-    (layout.match(/alt: "Ege Tekin — Software Engineer\. Freiburg, 2026\."/g) || []).length,
+    (layout.match(/alt: "Ege Tekin — Software Engineering, Applied Research, and Medical Technology\. Freiburg, 2026\."/g) || []).length,
     2,
-    "Open Graph and X metadata must use the executive résumé preview description",
+    "Open Graph and X metadata must use the v2 editorial preview description",
   );
 
   assert.doesNotMatch(page, /I build clear, reliable software for real-world problems\./);
@@ -77,7 +90,7 @@ test("presents a verified executive résumé without marketing slogans", async (
   assert.doesNotMatch(page, /MedTech developer|Medical Software Engineer/i);
 });
 
-test("uses a document-first résumé information architecture", async () => {
+test("uses a six-section editorial résumé information architecture", async () => {
   const page = await readFile(pageUrl, "utf8");
 
   assert.match(page, /<main className="resume section-shell" id="main-content" tabIndex=\{-1\}>/);
@@ -92,7 +105,7 @@ test("uses a document-first résumé information architecture", async () => {
       'id="experience-title">Experience',
       'id="education-title">Education',
       'id="work-title">Selected work',
-      'id="archive-title">Additional work',
+      'id="archive-title">Archive &amp; capabilities',
       'id="skills-title">Technical profile',
       'id="contact-title">Contact',
     ],
@@ -102,6 +115,23 @@ test("uses a document-first résumé information architecture", async () => {
   for (const anchor of ["top", "background", "work", "project-index", "contact"]) {
     assert.ok(page.includes(`id="${anchor}"`), `Missing preserved section anchor: #${anchor}`);
   }
+
+  for (const [index, id, label] of [
+    ["01", "summary-title", "Profile"],
+    ["02", "experience-title", "Experience"],
+    ["03", "education-title", "Education"],
+    ["04", "work-title", "Selected work"],
+    ["05", "archive-title", "Archive &amp; capabilities"],
+    ["06", "contact-title", "Contact"],
+  ]) {
+    assert.ok(
+      page.includes(`data-index="${index}" id="${id}">${label}`),
+      `Missing section index ${index} for ${label}`,
+    );
+  }
+  assert.equal((page.match(/data-index="0[1-6]"/g) || []).length, 6);
+  assert.doesNotMatch(page, /data-index="07"/);
+  assert.match(page, /<h3 className="subsection-title" id="skills-title">Technical profile<\/h3>/);
 
   assert.doesNotMatch(page, /AnchorNavigation|className="site-header"|<nav\b/);
   assert.doesNotMatch(page, /className="hero|hero-|className="credibility/);
@@ -230,7 +260,7 @@ test("preserves accessibility, anchor offsets, and print behavior", async () => 
 
   assert.match(page, /className="skip-link" href="#main-content"/);
   assert.match(page, /alt="Portrait of Ege Tekin"/);
-  assert.match(page, /<address>/);
+  assert.match(page, /<address\b/);
   assert.match(page, /<time[^>]*dateTime=/);
   assert.match(page, /<details className="archive anchor-target" id="project-index">/);
   assert.match(page, /<summary>/);
@@ -239,6 +269,7 @@ test("preserves accessibility, anchor offsets, and print behavior", async () => 
     (page.match(/target="_blank"/g) || []).length,
     (page.match(/rel="noreferrer"/g) || []).length,
   );
+  assert.equal((page.match(/profile \(opens in a new tab\)/g) || []).length, 4);
 
   assert.match(styles, /:focus-visible/);
   assert.match(styles, /min-height:\s*44px/);
@@ -249,7 +280,7 @@ test("preserves accessibility, anchor offsets, and print behavior", async () => 
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
-test("uses the restrained executive résumé visual system", async () => {
+test("uses the v2 editorial typography and restrained résumé visual system", async () => {
   const [page, styles, layout] = await Promise.all([
     readFile(pageUrl, "utf8"),
     readFile(stylesUrl, "utf8"),
@@ -264,22 +295,25 @@ test("uses the restrained executive résumé visual system", async () => {
     /--muted:\s*#626262/i,
     /--rule:\s*#bdbcb7/i,
     /--accent:\s*#1647d4/i,
-    /--shell:\s*min\(1000px,\s*calc\(100vw - 64px\)\)/i,
+    /--shell:\s*min\(1120px,\s*calc\(100vw - 48px\)\)/i,
+    /--font-instrument:\s*"Instrument Serif"/i,
+    /--serif:\s*var\(--font-instrument\),\s*Georgia/i,
     /--sans:\s*"Manrope Variable"/i,
   ]) {
     assert.match(styles, token);
   }
 
   assert.match(styles, /body\s*\{[\s\S]*?font-size:\s*16px/);
-  assert.match(styles, /\.identity h1\s*\{[\s\S]*?font-size:\s*clamp\(2\.75rem,\s*5vw,\s*3\.25rem\)/);
+  assert.match(styles, /\.identity h1\s*\{[\s\S]*?font-family:\s*var\(--serif\);[\s\S]*?font-size:\s*clamp\(4\.5rem,\s*8\.6vw,\s*6\.5rem\)/);
   assert.match(layout, /@fontsource-variable\/manrope\/wght\.css/);
+  assert.match(layout, /@fontsource\/instrument-serif/);
   assert.doesNotMatch(styles, /#f3f1ea|#14243a|#0f6b63|#842f3e/i);
   assert.doesNotMatch(source, /project-card|project-grid|stack-list|button-primary|availability-note/);
   assert.doesNotMatch(styles, /translateY\(-3px\)|animation:\s*reveal/i);
   assert.doesNotMatch(layout, /headers\(\)/);
 });
 
-test("adds a self-contained editorial specimen layer without obscuring résumé content", async () => {
+test("uses screenshot-led project showcases across responsive and print layouts", async () => {
   const [page, styles] = await Promise.all([
     readFile(pageUrl, "utf8"),
     readFile(stylesUrl, "utf8"),
@@ -289,107 +323,93 @@ test("adds a self-contained editorial specimen layer without obscuring résumé 
     ["const selectedProjects: SelectedProject[] = [", "const selectedProjects = ["],
     "Selected projects",
   );
+  const screenshots = [
+    [
+      "/projects/ege-image-studio.webp",
+      "Reference organization and prompt refinement workspace.",
+    ],
+    [
+      "/projects/regex-aiger.webp",
+      "Compilation pipeline from regular-expression constraints to ASCII AIGER.",
+    ],
+    [
+      "/projects/yks-volatility.webp",
+      "Rank-to-score comparison from the published analysis.",
+    ],
+    [
+      "/projects/dishes-helper.webp",
+      "Game setup before the pairwise selection flow begins.",
+    ],
+  ];
 
-  assert.match(
-    page,
-    /visual:\s*"studio" \| "circuit" \| "research" \| "decision"/,
-  );
-  assert.match(page, /function ProjectSpecimen\(\{ type \}/);
+  assert.match(page, /function ProjectShowcase\(\{ project \}/);
   assert.equal(
-    (selectedData.match(/\n\s+visual:\s*"(?:studio|circuit|research|decision)"/g) || []).length,
-    4,
-    "Every selected project must declare one specimen variant",
-  );
-  for (const variant of ["studio", "circuit", "research", "decision"]) {
-    assert.match(
-      page,
-      new RegExp(`className="project-specimen specimen-${variant}" aria-hidden="true"`),
-      `Missing decorative ${variant} specimen`,
-    );
-  }
-  assert.equal(
-    (page.match(/<ProjectSpecimen type=\{project\.visual\} \/>/g) || []).length,
+    (page.match(/<ProjectShowcase project=\{project\} key=\{project\.title\} \/>/g) || []).length,
     1,
-    "Selected-project rows must render their declared specimen",
+    "Selected work must render through ProjectShowcase",
   );
+  assert.match(page, /<figure className="project-media">/);
+  assert.match(page, /src=\{project\.image\.src\}/);
+  assert.match(page, /alt=\{project\.image\.alt\}/);
+  assert.match(page, /<figcaption>\{project\.image\.caption\}<\/figcaption>/);
+  assert.equal((selectedData.match(/\n\s+image:\s*\{/g) || []).length, 4);
 
-  assert.match(page, /<div className="scroll-progress" aria-hidden="true" \/>/);
-  assert.match(page, /<div className="masthead-folio" aria-hidden="true">/);
-  assert.match(page, /<span>Folio 01<\/span>/);
-  assert.match(page, /<strong>ET<\/strong>/);
-  assert.match(page, /<small>Freiburg · 2026<\/small>/);
+  for (const [src, caption] of screenshots) {
+    assert.ok(selectedData.includes(`src: "${src}"`), `Missing screenshot: ${src}`);
+    assert.ok(selectedData.includes(`caption: "${caption}"`), `Missing caption for ${src}`);
 
-  for (const [index, id, label] of [
-    ["01", "summary-title", "Profile"],
-    ["02", "experience-title", "Experience"],
-    ["03", "education-title", "Education"],
-    ["04", "work-title", "Selected work"],
-    ["05", "archive-title", "Additional work"],
-    ["06", "skills-title", "Technical profile"],
-    ["07", "contact-title", "Contact"],
-  ]) {
-    assert.ok(
-      page.includes(`data-index="${index}" id="${id}">${label}`),
-      `Missing editorial section index ${index} for ${label}`,
-    );
+    const image = await readFile(new URL(`../public${src}`, import.meta.url));
+    assert.ok(image.length > 20_000, `Screenshot is unexpectedly small: ${src}`);
+    assert.equal(image.subarray(0, 4).toString(), "RIFF", `Invalid WebP header: ${src}`);
+    assert.equal(image.subarray(8, 12).toString(), "WEBP", `Invalid WebP format: ${src}`);
   }
 
   for (const selector of [
-    ".project-specimen",
-    ".specimen-studio",
-    ".specimen-circuit",
-    ".specimen-research",
-    ".specimen-decision",
+    ".project-showcase",
+    ".project-showcase-layout",
+    ".project-media",
+    ".project-image-frame",
+    ".project-notes",
   ]) {
-    assert.ok(styles.includes(selector), `Missing specimen style: ${selector}`);
+    assert.ok(styles.includes(selector), `Missing showcase style: ${selector}`);
   }
 
   assert.match(
     styles,
-    /@supports \(animation-timeline: view\(\)\)\s*\{[\s\S]*?\.project-specimen\s*\{[\s\S]*?animation:\s*editorial-entry linear both;[\s\S]*?animation-timeline:\s*view\(\);[\s\S]*?animation-range:\s*entry 12% cover 36%;/,
-  );
-  assert.equal(
-    (styles.match(/animation:\s*editorial-entry/g) || []).length,
-    1,
-    "Only project specimens may use the editorial entry animation",
-  );
-  assert.doesNotMatch(
-    styles,
-    /\.(?:resume|summary|resume-section|cv-entry|project-entry-copy|entry-description)[^{]*\{[^}]*(?:animation:\s*editorial-entry|opacity\s*:)/,
+    /\.masthead\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\) minmax\(330px, 390px\);/,
   );
   assert.match(
     styles,
-    /@supports \(animation-timeline: scroll\(\)\)\s*\{[\s\S]*?\.scroll-progress\s*\{[\s\S]*?display:\s*block;[\s\S]*?\.scroll-progress::after\s*\{[\s\S]*?animation:\s*page-progress linear both;[\s\S]*?animation-timeline:\s*scroll\(root block\);/,
+    /\.project-showcase-layout\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 7fr\) minmax\(230px, 5fr\);/,
   );
   assert.match(
     styles,
-    /@media \(min-width: 769px\)\s*\{[\s\S]*?\.summary > \.section-label,[\s\S]*?\.resume-section > \.section-label\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*28px;/,
+    /@media \(max-width: 920px\)\s*\{[\s\S]*?\.masthead\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-showcase-layout,[\s\S]*?\.project-showcase--media-right \.project-showcase-layout\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-showcase--media-right \.project-media,[\s\S]*?grid-column:\s*1;[\s\S]*?grid-row:\s*auto;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 920px\)\s*\{[\s\S]*?\.masthead\s*\{[\s\S]*?flex-direction:\s*column;[\s\S]*?\.project-entry-body\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-specimen\s*\{[\s\S]*?width:\s*100%;/,
+    /@media \(max-width: 768px\)\s*\{[\s\S]*?\.summary,[\s\S]*?\.resume-section\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-image-frame img\s*\{[\s\S]*?width:\s*100%;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 768px\)\s*\{[\s\S]*?\.project-entry-body\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-specimen\s*\{[\s\S]*?width:\s*100%;/,
+    /@media \(max-width: 480px\)\s*\{[\s\S]*?\.masthead-aside\s*\{[\s\S]*?grid-template-columns:\s*1fr 116px;[\s\S]*?\.cv-entry\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-notes dl > div,[\s\S]*?\.profile-lines dl > div\s*\{[\s\S]*?grid-template-columns:\s*1fr;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 480px\)\s*\{[\s\S]*?\.project-specimen,[\s\S]*?\.scroll-progress\s*\{\s*display:\s*none;/,
+    /@media print\s*\{[\s\S]*?\.project-media,[\s\S]*?\{\s*display:\s*none;[\s\S]*?\.masthead::before,\s*\.masthead::after\s*\{\s*display:\s*none;[\s\S]*?\.project-showcase-layout\s*\{\s*display:\s*block;/,
   );
   assert.match(
     styles,
-    /@media print\s*\{[\s\S]*?\.scroll-progress,[\s\S]*?\.masthead-folio,[\s\S]*?\.project-specimen\s*\{\s*display:\s*none;/,
-  );
-  assert.match(
-    styles,
-    /@media print\s*\{[\s\S]*?\.masthead::before,\s*\.masthead::after\s*\{\s*display:\s*none;[\s\S]*?\.project-entry-body\s*\{\s*grid-template-columns:\s*1fr;/,
-  );
-  assert.match(
-    styles,
-    /@media \(prefers-reduced-motion: reduce\)\s*\{[\s\S]*?animation:\s*none !important;[\s\S]*?\.scroll-progress\s*\{\s*display:\s*none !important;/,
+    /@media \(prefers-reduced-motion: reduce\)\s*\{[\s\S]*?animation:\s*none !important;[\s\S]*?transition-duration:\s*0\.01ms !important;[\s\S]*?\.scroll-progress\s*\{\s*display:\s*none !important;/,
   );
 
+  assert.match(page, /<div className="scroll-progress" aria-hidden="true" \/>/);
+  assert.match(
+    styles,
+    /@supports \(animation-timeline: view\(\)\)\s*\{[\s\S]*?\.project-showcase\s*\{[\s\S]*?animation:\s*editorial-entry linear both;[\s\S]*?animation-timeline:\s*view\(\);/,
+  );
+  assert.doesNotMatch(page, /ProjectSpecimen|project-specimen|specimen-(?:studio|circuit|research|decision)|masthead-folio|Folio 01/);
+  assert.doesNotMatch(styles, /\.project-specimen|\.specimen-(?:studio|circuit|research|decision)|\.masthead-folio/);
   assert.doesNotMatch(page, /<(?:svg|canvas)\b/i);
   assert.doesNotMatch(page, /src="https?:\/\//i);
 });
