@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "@fontsource-variable/manrope/wght.css";
+import "@fontsource/instrument-serif";
 import "./globals.css";
 
-const title = "Ege Tekin — Software Engineer";
+const title = "Ege Tekin — Software Engineering & Applied Research";
 const description =
-  "Ege Tekin is a software engineer in Freiburg working across full-stack products, systems software, and applied research.";
+  "Ege Tekin builds software at the intersection of engineering and applied research, with a long-term focus on medical technology.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ege-tekin-portfolio.w1b.chatgpt.site"),
@@ -23,10 +24,10 @@ export const metadata: Metadata = {
     siteName: "Ege Tekin",
     images: [
       {
-        url: "/og.png",
+        url: "/og-editorial.png",
         width: 1730,
         height: 909,
-        alt: "Ege Tekin — Software Engineer. Freiburg, 2026.",
+        alt: "Ege Tekin — Software Engineering, Applied Research, and Medical Technology. Freiburg, 2026.",
       },
     ],
   },
@@ -36,8 +37,8 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/og.png",
-        alt: "Ege Tekin — Software Engineer. Freiburg, 2026.",
+        url: "/og-editorial.png",
+        alt: "Ege Tekin — Software Engineering, Applied Research, and Medical Technology. Freiburg, 2026.",
       },
     ],
   },

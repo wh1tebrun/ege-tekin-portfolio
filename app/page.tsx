@@ -6,27 +6,45 @@ type ProjectLink = {
 };
 
 type SelectedProject = {
+  index: string;
   title: string;
   date: string;
   dateISO: string;
   type: string;
+  headline: string;
   description: string;
   stack: string;
-  visual: "studio" | "circuit" | "research" | "decision";
+  layout: "wide" | "media-left" | "media-right";
+  image: {
+    src: string;
+    alt: string;
+    caption: string;
+    width: number;
+    height: number;
+  };
   links: ProjectLink[];
   fullTitle?: string;
 };
 
 const selectedProjects: SelectedProject[] = [
   {
+    index: "01",
     title: "Ege Image Studio",
     date: "Aug 2026",
     dateISO: "2026-08",
     type: "Independent project · Product prototype",
+    headline: "A structured workspace for reference-driven image workflows.",
     description:
       "A tested Next.js workspace for organizing image references, assigning roles, refining prompts, and reviewing deterministic mock outputs through a replaceable architecture.",
     stack: "Next.js · React · TypeScript · Vitest · Playwright",
-    visual: "studio",
+    layout: "wide",
+    image: {
+      src: "/projects/ege-image-studio.webp",
+      alt: "Ege Image Studio interface showing image references, a prompt workspace, and output review panels",
+      caption: "Reference organization and prompt refinement workspace.",
+      width: 1600,
+      height: 1000,
+    },
     links: [
       {
         label: "Source",
@@ -35,14 +53,23 @@ const selectedProjects: SelectedProject[] = [
     ],
   },
   {
+    index: "02",
     title: "Regex → AIGER",
     date: "Apr 2026",
     dateISO: "2026-04",
     type: "Bachelor’s thesis · Formal methods",
+    headline: "Compiling regular expressions into verifiable hardware circuits.",
     description:
       "A Python pipeline that compiles fixed-string and regular-expression constraints into bounded or sequential ASCII AIGER circuits, with simulation, fuzzing, and cross-backend validation.",
     stack: "Python · AIGER · Automata · Model checking",
-    visual: "circuit",
+    layout: "media-left",
+    image: {
+      src: "/projects/regex-aiger.webp",
+      alt: "Regex to AIGER tooling showing a regular-expression compilation pipeline and generated circuit output",
+      caption: "Compilation pipeline from regular-expression constraints to ASCII AIGER.",
+      width: 1600,
+      height: 1000,
+    },
     links: [
       {
         label: "Source",
@@ -51,29 +78,47 @@ const selectedProjects: SelectedProject[] = [
     ],
   },
   {
+    index: "03",
     title: "YKS Score Volatility",
     fullTitle:
       "Year-Dependent YKS Score Volatility and Unfair Outcomes Under the Bavarian Grade Conversion Formula",
     date: "Feb 2026",
     dateISO: "2026-02",
     type: "Independent research · Data analysis",
+    headline: "How year-to-year YKS volatility affects German NC admissions.",
     description:
       "An analysis of public 2021–2022 Computer Engineering admissions data examining how comparable national ranks can produce different German grade-conversion outcomes.",
     stack: "Python · pandas · Matplotlib · LaTeX",
-    visual: "research",
+    layout: "media-right",
+    image: {
+      src: "/projects/yks-volatility.webp",
+      alt: "Chart comparing YKS rank-to-score relationships across 2021 and 2022 admission data",
+      caption: "Rank-to-score comparison from the published analysis.",
+      width: 1600,
+      height: 1000,
+    },
     links: [
       { label: "Paper", href: "/ege-tekin-yks-score-volatility.pdf" },
     ],
   },
   {
+    index: "04",
     title: "Dishes Helper",
     date: "Mar 2024",
     dateISO: "2024-03",
     type: "Independent project · Web application",
+    headline: "Turning an overwhelming menu into one clear choice.",
     description:
       "A pairwise decision tool that guides users from a 99-dish catalogue to one choice. Built with strict TypeScript, tested with Vitest, and deployed on Vercel.",
     stack: "TypeScript · Vite · Vitest · Vercel",
-    visual: "decision",
+    layout: "media-left",
+    image: {
+      src: "/projects/dishes-helper.webp",
+      alt: "Dishes Helper landing page with game setup controls for candidate count and dietary preferences",
+      caption: "Game setup before the pairwise selection flow begins.",
+      width: 1600,
+      height: 1000,
+    },
     links: [
       { label: "Live", href: "https://dishes-helper.vercel.app/" },
       { label: "Source", href: "https://github.com/wh1tebrun/dishes" },
@@ -256,62 +301,48 @@ function ExternalLink({ link, project }: { link: ProjectLink; project: string })
   );
 }
 
-function ProjectSpecimen({ type }: { type: SelectedProject["visual"] }) {
-  if (type === "studio") {
-    return (
-      <div className="project-specimen specimen-studio" aria-hidden="true">
-        <span className="specimen-label">Reference workflow</span>
-        <div className="studio-frame">
-          <div className="studio-toolbar"><i /><i /><i /><b>IMAGE / 01</b></div>
-          <div className="studio-workspace">
-            <div className="studio-roles">
-              <span>Identity</span><span>Style</span><span>Layout</span>
-            </div>
-            <div className="studio-prompt-lines"><i /><i /><i /></div>
+function ProjectShowcase({ project }: { project: SelectedProject }) {
+  return (
+    <article className={`project-showcase project-showcase--${project.layout}`}>
+      <header className="project-showcase-header">
+        <p className="project-overline">
+          <span>Project {project.index}</span>
+          <time dateTime={project.dateISO}>{project.date}</time>
+          <span>{project.type}</span>
+        </p>
+        <h3>{project.title}</h3>
+        <p className="project-deck">{project.headline}</p>
+        {project.fullTitle ? <p className="project-full-title">{project.fullTitle}</p> : null}
+      </header>
+
+      <div className="project-showcase-layout">
+        <figure className="project-media">
+          <div className="project-image-frame">
+            <Image
+              src={project.image.src}
+              alt={project.image.alt}
+              width={project.image.width}
+              height={project.image.height}
+              sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1100px) 72vw, 720px"
+            />
+          </div>
+          <figcaption>{project.image.caption}</figcaption>
+        </figure>
+
+        <div className="project-notes">
+          <p>{project.description}</p>
+          <dl>
+            <div><dt>Role / type</dt><dd>{project.type}</dd></div>
+            <div><dt>Technology</dt><dd>{project.stack}</dd></div>
+          </dl>
+          <div className="entry-links">
+            {project.links.map((link) => (
+              <ExternalLink link={link} project={project.title} key={link.href} />
+            ))}
           </div>
         </div>
       </div>
-    );
-  }
-
-  if (type === "circuit") {
-    return (
-      <div className="project-specimen specimen-circuit" aria-hidden="true">
-        <span className="specimen-label">Compiler trace</span>
-        <code>/ab(c|d)*/</code>
-        <div className="circuit-flow">
-          <span>Regex</span><i>→</i><span>NFA</span><i>→</i><span>AIG</span>
-        </div>
-        <div className="circuit-output"><span>0101 1010</span><span>1011 0010</span></div>
-      </div>
-    );
-  }
-
-  if (type === "research") {
-    return (
-      <div className="project-specimen specimen-research" aria-hidden="true">
-        <span className="specimen-label">Rank / score variance</span>
-        <div className="plot-scale"><span>Score</span><i /><i /><i /></div>
-        <div className="plot-bars">
-          <div><i className="bar-2021" /><i className="bar-2022" /><span>5k</span></div>
-          <div><i className="bar-2021" /><i className="bar-2022" /><span>10k</span></div>
-          <div><i className="bar-2021" /><i className="bar-2022" /><span>20k</span></div>
-          <div><i className="bar-2021" /><i className="bar-2022" /><span>30k</span></div>
-        </div>
-        <div className="plot-key"><span>2021</span><span>2022</span></div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="project-specimen specimen-decision" aria-hidden="true">
-      <span className="specimen-label">Pairwise reduction</span>
-      <div className="decision-count"><b>99</b><i>→</i><b>1</b></div>
-      <div className="decision-pairs">
-        <span>Pasta</span><i>or</i><span>Sushi</span>
-      </div>
-      <div className="decision-result">One clear choice</div>
-    </div>
+    </article>
   );
 }
 
@@ -328,27 +359,33 @@ export default function Home() {
           <div className="identity">
             <p className="document-label">Résumé · August 2026</p>
             <h1 id="page-title">Ege Tekin</h1>
-            <p className="role">Software Engineer · Freiburg, Germany</p>
+            <p className="role">Software Engineering · Applied Research · Medical Technology</p>
+            <p className="location">Freiburg, Germany</p>
           </div>
 
           <div className="masthead-aside">
-            <div className="masthead-folio" aria-hidden="true">
-              <span>Folio 01</span>
-              <strong>ET</strong>
-              <small>Freiburg · 2026</small>
-            </div>
+            <dl className="context-block" aria-label="Current position and next step">
+              <div>
+                <dt>Currently</dt>
+                <dd><strong>Fraunhofer ISE</strong><span>Freiburg</span></dd>
+              </div>
+              <div>
+                <dt>Next</dt>
+                <dd><strong>Medicine</strong><span>Sep 2026</span></dd>
+              </div>
+            </dl>
             <Image
               className="headshot"
-              src="/ege-tekin-portrait.jpg"
+              src="/ege-tekin-portrait-large.jpg"
               alt="Portrait of Ege Tekin"
-              width={92}
-              height={92}
+              width={144}
+              height={176}
               priority
             />
-            <address>
-              <a href="mailto:ege.tekin@web.de">ege.tekin@web.de</a>
-              <a href="https://github.com/wh1tebrun" target="_blank" rel="noreferrer">github.com/wh1tebrun</a>
-              <a href="https://www.linkedin.com/in/tekinege/" target="_blank" rel="noreferrer">linkedin.com/in/tekinege</a>
+            <address className="masthead-links">
+              <a href="mailto:ege.tekin@web.de">Email <span aria-hidden="true">↗</span></a>
+              <a aria-label="GitHub profile (opens in a new tab)" href="https://github.com/wh1tebrun" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+              <a aria-label="LinkedIn profile (opens in a new tab)" href="https://www.linkedin.com/in/tekinege/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
             </address>
           </div>
         </section>
@@ -356,10 +393,14 @@ export default function Home() {
         <section className="summary" aria-labelledby="summary-title">
           <h2 className="section-label" data-index="01" id="summary-title">Profile</h2>
           <div>
-            <p>
-              Software engineer working across full-stack products, systems software, and applied
-              research. Computer Science at the University of Freiburg; Medicine at Akdeniz
-              University from Sep 2026, with a long-term direction in medical technology.
+            <p className="summary-lead">
+              I build software at the intersection of engineering and applied research.
+            </p>
+            <p className="summary-supporting">
+              I&apos;m completing a B.Sc. in Computer Science at the University of Freiburg and
+              working in applied photovoltaic R&amp;D at Fraunhofer ISE. I have been admitted to
+              Akdeniz University&apos;s Medicine program, beginning Sep 2026, with a long-term
+              direction in medical technology.
             </p>
           </div>
         </section>
@@ -424,36 +465,15 @@ export default function Home() {
 
         <section className="resume-section anchor-target" id="work" aria-labelledby="work-title">
           <h2 className="section-label" data-index="04" id="work-title">Selected work</h2>
-          <div className="section-content">
+          <div className="section-content selected-work">
             {selectedProjects.map((project) => (
-              <article className="cv-entry project-entry" key={project.title}>
-                <time className="entry-date" dateTime={project.dateISO}>{project.date}</time>
-                <div className="project-entry-body">
-                  <div className="project-entry-copy">
-                    <header className="entry-heading project-heading">
-                      <div>
-                        <h3>{project.title}</h3>
-                        <p>{project.type}</p>
-                      </div>
-                      <div className="entry-links">
-                        {project.links.map((link) => (
-                          <ExternalLink link={link} project={project.title} key={link.href} />
-                        ))}
-                      </div>
-                    </header>
-                    {project.fullTitle ? <p className="project-full-title">{project.fullTitle}</p> : null}
-                    <p className="entry-description">{project.description}</p>
-                    <p className="technology-line"><span>Technology</span>{project.stack}</p>
-                  </div>
-                  <ProjectSpecimen type={project.visual} />
-                </div>
-              </article>
+              <ProjectShowcase project={project} key={project.title} />
             ))}
           </div>
         </section>
 
         <section className="resume-section archive-section" aria-labelledby="archive-title">
-          <h2 className="section-label" data-index="05" id="archive-title">Additional work</h2>
+          <h2 className="section-label" data-index="05" id="archive-title">Archive &amp; capabilities</h2>
           <div className="section-content">
             <details className="archive anchor-target" id="project-index">
               <summary>
@@ -489,38 +509,42 @@ export default function Home() {
                 ))}
               </div>
             </details>
-          </div>
-        </section>
-
-        <section className="resume-section" aria-labelledby="skills-title">
-          <h2 className="section-label" data-index="06" id="skills-title">Technical profile</h2>
-          <div className="section-content profile-lines">
-            <dl>
-              <div>
-                <dt>Web &amp; product</dt>
-                <dd>TypeScript, React, Next.js, Vite, testing, responsive interfaces</dd>
-              </div>
-              <div>
-                <dt>Research &amp; systems</dt>
-                <dd>Python, AIGER, automata, model checking, data analysis, C++20</dd>
-              </div>
-              <div>
-                <dt>Interactive software</dt>
-                <dd>C#, MonoGame, Unity, Canvas, Three.js</dd>
-              </div>
-              <div>
-                <dt>Languages</dt>
-                <dd>{languages.map(([language, level]) => `${language} (${level})`).join(" · ")}</dd>
-              </div>
-            </dl>
+            <div className="profile-lines" aria-labelledby="skills-title">
+              <h3 className="subsection-title" id="skills-title">Technical profile</h3>
+              <dl>
+                <div>
+                  <dt>Web &amp; product</dt>
+                  <dd>TypeScript, React, Next.js, Vite, testing, responsive interfaces</dd>
+                </div>
+                <div>
+                  <dt>Research &amp; systems</dt>
+                  <dd>Python, AIGER, automata, model checking, data analysis, C++20</dd>
+                </div>
+                <div>
+                  <dt>Interactive software</dt>
+                  <dd>C#, MonoGame, Unity, Canvas, Three.js</dd>
+                </div>
+                <div>
+                  <dt>Languages</dt>
+                  <dd>{languages.map(([language, level]) => `${language} (${level})`).join(" · ")}</dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </section>
 
         <section className="resume-section contact anchor-target" id="contact" aria-labelledby="contact-title">
-          <h2 className="section-label" data-index="07" id="contact-title">Contact</h2>
+          <h2 className="section-label" data-index="06" id="contact-title">Contact</h2>
           <div className="section-content contact-content">
-            <p>Available for freelance websites, web applications, and product prototypes.</p>
-            <a className="email-link" href="mailto:ege.tekin@web.de">ege.tekin@web.de</a>
+            <div>
+              <p className="contact-lead">Let&apos;s build something useful.</p>
+              <p>Available for freelance websites, web applications, and product prototypes.</p>
+            </div>
+            <div className="contact-links">
+              <a className="email-link" href="mailto:ege.tekin@web.de">ege.tekin@web.de</a>
+              <a aria-label="GitHub profile (opens in a new tab)" href="https://github.com/wh1tebrun" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+              <a aria-label="LinkedIn profile (opens in a new tab)" href="https://www.linkedin.com/in/tekinege/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </section>
       </main>
