@@ -519,6 +519,7 @@ button:focus-visible {
 }
 
 .projects,
+.services,
 .about {
   padding-block: clamp(96px, 12vw, 160px);
 }
@@ -561,7 +562,7 @@ button:focus-visible {
 
 .project-card {
   min-width: 0;
-  grid-column: span 4;
+  grid-column: span 6;
   overflow: hidden;
   border: 1px solid var(--ink);
   border-radius: var(--radius);
@@ -575,7 +576,7 @@ button:focus-visible {
 }
 
 .project-featured {
-  grid-column: span 8;
+  grid-column: 1 / -1;
 }
 
 .project-visual {
@@ -692,6 +693,25 @@ button:focus-visible {
 
 .visual-energy {
   background-color: #cbd5ff;
+}
+
+.visual-health {
+  background-color: #bfe3d7;
+}
+
+.visual-health .mock-canvas span {
+  background: rgba(255, 254, 249, 0.78);
+}
+
+.visual-health .mock-canvas span:nth-child(4) {
+  background: linear-gradient(
+    166deg,
+    transparent 0 29%,
+    var(--blue) 30% 34%,
+    transparent 35% 43%,
+    var(--blue) 44% 48%,
+    transparent 49% 100%
+  );
 }
 
 .visual-energy .mock-canvas span:nth-child(4) {
@@ -1017,6 +1037,54 @@ button:focus-visible {
   letter-spacing: -0.025em;
 }
 
+.language-panel {
+  grid-column: 1 / -1;
+  padding-top: 34px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  border-top: 1px solid var(--ink);
+}
+
+.language-panel > .section-label {
+  padding-top: 14px;
+  color: var(--blue);
+}
+
+.language-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.language-list div {
+  min-height: 92px;
+  padding: 18px;
+  display: grid;
+  align-content: space-between;
+  gap: 10px;
+}
+
+.language-list div + div {
+  border-left: 1px solid var(--ink);
+}
+
+.language-list dt {
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.language-list dd {
+  margin: 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .contact {
   padding-block: clamp(96px, 12vw, 150px);
   border-top: 1px solid var(--ink);
@@ -1300,6 +1368,29 @@ button:focus-visible {
   .capability-list {
     margin-top: 46px;
     grid-template-columns: 1fr;
+  }
+
+  .language-panel {
+    margin-top: 34px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .language-panel > .section-label {
+    padding-top: 0;
+  }
+
+  .language-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .language-list div:nth-child(3) {
+    border-top: 1px solid var(--ink);
+    border-left: 0;
+  }
+
+  .language-list div:nth-child(4) {
+    border-top: 1px solid var(--ink);
   }
 
   .capability {

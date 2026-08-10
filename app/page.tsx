@@ -1,56 +1,45 @@
 const projects = [
   {
     number: "01",
-    title: "GridScope",
-    type: "Energy analytics · Full-stack",
+    title: "VitalLoop",
+    type: "MedTech · Connected monitoring concept",
     description:
-      "An energy-data dashboard concept for exploring measurements, comparing time periods, and turning dense signals into a clear visual story.",
-    technologies: ["React", "NestJS", "PostgreSQL", "Recharts"],
-    visual: "energy",
+      "A non-diagnostic prototype that turns simulated wearable data into clear timelines, threshold alerts, and structured handoff notes.",
+    technologies: ["Next.js", "NestJS", "PostgreSQL", "WebSockets"],
+    visual: "health",
     featured: true,
   },
   {
     number: "02",
+    title: "GridScope",
+    type: "Research data · Full-stack concept",
+    description:
+      "A dashboard concept for exploring measurements, comparing time periods, and turning dense research data into a clear visual story.",
+    technologies: ["React", "NestJS", "PostgreSQL", "Recharts"],
+    visual: "energy",
+  },
+  {
+    number: "03",
     title: "FocusFlow",
-    type: "Team workspace · Product",
+    type: "Web application · Product concept",
     description:
       "A calm project workspace for organizing tasks, tracking progress, and keeping team updates in one understandable place.",
     technologies: ["React", "NestJS", "TypeScript", "WebSockets"],
     visual: "flow",
   },
-  {
-    number: "03",
-    title: "PaperTrail",
-    type: "Research tools · Search",
-    description:
-      "A research-library concept that makes papers, notes, and tags easier to collect, connect, and find again.",
-    technologies: ["React", "NestJS", "REST API", "PostgreSQL"],
-    visual: "paper",
-  },
-  {
-    number: "04",
-    title: "Freiburg Routes",
-    type: "Mobility · Data visualization",
-    description:
-      "A city route-planning prototype focused on useful information, saved places, and a more legible journey from A to B.",
-    technologies: ["React", "NestJS", "OpenStreetMap", "PostGIS"],
-    visual: "routes",
-  },
-  {
-    number: "05",
-    title: "EdgeCore",
-    type: "Hardware architecture · Systems concept",
-    description:
-      "A hardware–software co-design concept for a compact edge-computing node, mapping sensor input, memory, processing, and software interfaces into one understandable system.",
-    technologies: ["RISC-V", "SystemVerilog", "C/C++", "FPGA"],
-    visual: "architecture",
-  },
 ];
 
 const capabilities = [
-  ["01", "Software Engineering", "TypeScript · APIs · Testing"],
-  ["02", "Full-Stack Development", "React / Next.js · NestJS · PostgreSQL"],
-  ["03", "Hardware & Systems", "Computer architecture · Embedded systems · HW/SW interfaces"],
+  ["01", "Web & App Development", "Responsive websites · Full-stack applications · APIs"],
+  ["02", "MVPs & Prototypes", "Focused builds from idea to a working product"],
+  ["03", "MedTech & Systems", "Healthcare software · Data tools · HW/SW interfaces"],
+];
+
+const languages = [
+  ["Turkish", "Native"],
+  ["English", "C2"],
+  ["German", "C2"],
+  ["French", "B1"],
 ];
 
 export default function Home() {
@@ -66,7 +55,7 @@ export default function Home() {
             <span className="brand-mark">ET</span>
             <span className="brand-copy">
               <strong>Ege Tekin</strong>
-              <small>Software &amp; Systems</small>
+              <small>Full-stack · MedTech</small>
             </span>
           </a>
 
@@ -86,16 +75,16 @@ export default function Home() {
           <div className="hero-copy">
             <p className="eyebrow">
               <span className="signal-dot" aria-hidden="true" />
-              Software · Full-stack · Hardware architecture
+              Full-stack developer · MedTech direction
             </p>
             <h1 id="hero-title">
-              I build software—and <em>think in systems.</em>
+              I build full-stack products—and explore <em>where technology meets medicine.</em>
             </h1>
             <p className="hero-intro">
-              I&apos;m Ege Tekin, a Computer Science graduate from the University of
-              Freiburg with two years of working-student experience at Fraunhofer ISE.
-              I&apos;m interested in full-stack software engineering and the architecture
-              where software meets hardware.
+              I&apos;m completing a B.Sc. in Computer Science at the University of
+              Freiburg, working at Fraunhofer ISE, and beginning Medicine at Akdeniz
+              University in September 2026. I build web and app products today while
+              working toward the intersection of software and healthcare.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">
@@ -108,16 +97,16 @@ export default function Home() {
 
             <dl className="hero-facts" aria-label="Profile highlights">
               <div>
-                <dt>02 years</dt>
-                <dd>Fraunhofer ISE</dd>
-              </div>
-              <div>
-                <dt>Graduate</dt>
+                <dt>B.Sc. candidate</dt>
                 <dd>University of Freiburg</dd>
               </div>
               <div>
-                <dt>System view</dt>
-                <dd>Software + hardware architecture</dd>
+                <dt>Working student</dt>
+                <dd>Fraunhofer ISE · Since Apr 2026</dd>
+              </div>
+              <div>
+                <dt>Incoming Medicine</dt>
+                <dd>Akdeniz University · Sep 2026</dd>
               </div>
             </dl>
           </div>
@@ -127,19 +116,19 @@ export default function Home() {
             <div className="system-orbit orbit-two" />
             <div className="system-card">
               <div className="system-card-top">
-                <span>ET / SYSTEM 01</span>
+                <span>ET / PATH 01</span>
                 <span className="system-status">ONLINE</span>
               </div>
               <div className="system-core">
                 <span className="core-ring" />
-                <span className="core-label">IDEA</span>
+                <span className="core-label">BUILD</span>
               </div>
               <div className="system-path">
-                <span>Interface</span>
+                <span>Software</span>
                 <i />
-                <span>Backend</span>
+                <span>Research</span>
                 <i />
-                <span>Hardware</span>
+                <span>Medicine</span>
               </div>
               <div className="system-meter">
                 <span />
@@ -152,20 +141,20 @@ export default function Home() {
                 <span />
               </div>
             </div>
-            <div className="coordinate coordinate-a">47.999° N</div>
-            <div className="coordinate coordinate-b">SOFTWARE ↔ HARDWARE</div>
+            <div className="coordinate coordinate-a">FREIBURG → ANTALYA</div>
+            <div className="coordinate coordinate-b">CODE ↔ CARE</div>
           </div>
         </section>
 
         <div className="profile-strip" aria-label="Profile summary">
           <div className="section-shell strip-inner">
-            <span>Software engineering</span>
-            <i aria-hidden="true" />
-            <span>Full-stack systems</span>
-            <i aria-hidden="true" />
-            <span>Hardware architecture</span>
+            <span>Full-stack development</span>
             <i aria-hidden="true" />
             <span>Applied research</span>
+            <i aria-hidden="true" />
+            <span>Medicine 2026</span>
+            <i aria-hidden="true" />
+            <span>MedTech direction</span>
           </div>
         </div>
 
@@ -175,8 +164,8 @@ export default function Home() {
             <div>
               <h2 id="projects-title">Ideas made tangible.</h2>
               <p>
-                Five concept projects spanning interfaces, backend systems, data, and
-                hardware-aware engineering.
+                Three independent concepts showing the kind of full-stack products I
+                want to build. Each will be replaced by a real case study as it is ready.
               </p>
             </div>
           </div>
@@ -216,7 +205,7 @@ export default function Home() {
 
                 <div className="project-content">
                   <div className="project-meta">
-                    <span>{project.number} / Concept project</span>
+                    <span>{project.number} / Independent concept</span>
                     <span>{project.type}</span>
                   </div>
                   <h3>{project.title}</h3>
@@ -227,7 +216,7 @@ export default function Home() {
                         <li key={technology}>{technology}</li>
                       ))}
                     </ul>
-                    <span className="coming-soon">Case study soon ↗</span>
+                    <span className="coming-soon">Details coming soon ↗</span>
                   </div>
                 </div>
               </article>
@@ -240,10 +229,10 @@ export default function Home() {
             <div className="section-heading section-heading-light">
               <p className="section-label">02 / Background</p>
               <div>
-                <h2 id="experience-title">Research mindset.<br />System view.</h2>
+                <h2 id="experience-title">Computer Science.<br />Research. Medicine.</h2>
                 <p>
-                  Academic foundations and two years inside an applied-research
-                  environment shape how I approach technical work.
+                  A technical foundation, current experience in applied research, and
+                  the next chapter in medicine.
                 </p>
               </div>
             </div>
@@ -255,14 +244,14 @@ export default function Home() {
                   <p className="timeline-type">Experience</p>
                   <h3>Fraunhofer Institute for Solar Energy Systems ISE</h3>
                   <p>
-                    Two years as a working student alongside my Computer Science
-                    studies—experiencing how careful technical work fits into a wider,
-                    interdisciplinary research environment.
+                    Working in the Interconnection &amp; Encapsulation team, an applied
+                    R&amp;D environment focused on photovoltaic module interconnection,
+                    encapsulation technologies, and prototypes.
                   </p>
                 </div>
                 <div className="timeline-detail">
                   <strong>Working Student</strong>
-                  <span>2 years</span>
+                  <span>Apr 2026 — Apr 2027 contract</span>
                 </div>
               </article>
 
@@ -272,13 +261,31 @@ export default function Home() {
                   <p className="timeline-type">Education</p>
                   <h3>University of Freiburg</h3>
                   <p>
-                    Graduated in Computer Science (Informatik), building a broad
-                    foundation for understanding software from interface to system.
+                    Completing a B.Sc. in Computer Science (Informatik), building a
+                    broad foundation across software, algorithms, and computer systems.
                   </p>
                 </div>
                 <div className="timeline-detail">
-                  <strong>Computer Science</strong>
-                  <span>Graduate</span>
+                  <strong>B.Sc. Computer Science</strong>
+                  <span>Oct 2023 — Sep 2026 expected</span>
+                </div>
+              </article>
+
+              <article className="timeline-card">
+                <div className="timeline-index">03</div>
+                <div className="timeline-main">
+                  <p className="timeline-type">Next chapter</p>
+                  <h3>Akdeniz University</h3>
+                  <p>
+                    Admitted to Medicine and preparing to begin in September 2026,
+                    with a long-term interest in connecting computing, engineering,
+                    and healthcare. Ranked 5,493rd nationally in Türkiye&apos;s university
+                    entrance examination.
+                  </p>
+                </div>
+                <div className="timeline-detail">
+                  <strong>Incoming Medical Student</strong>
+                  <span>Academic year 2026/27</span>
                 </div>
               </article>
             </div>
@@ -289,24 +296,23 @@ export default function Home() {
           <div className="about-lead">
             <p className="section-label">03 / About me</p>
             <h2 id="about-title">
-              From interface<br />to architecture.
+              Technology, with<br />a wider context.
             </h2>
           </div>
           <div className="about-copy">
             <p className="about-intro">
-              My background connects Computer Science with professional experience in
-              applied research. My current direction spans software engineering,
-              full-stack products, and hardware architecture—especially the interfaces
-              where those layers meet.
+              Computer Science gives me the technical foundation, Fraunhofer ISE gives
+              me experience in applied research, and Medicine will add a clinical
+              perspective. My long-term direction is MedTech.
             </p>
             <p>
-              I care about maintainable code, purposeful interfaces, and understanding
-              a system beyond a single layer. The projects above are concept pieces;
-              real case studies will replace them as this portfolio grows.
+              Along the way, I enjoy building useful websites, web apps, and product
+              prototypes. I value clear interfaces, maintainable software, and practical
+              solutions over unnecessary complexity.
             </p>
           </div>
 
-          <div className="capability-list" aria-label="Focus areas">
+          <div className="capability-list" aria-label="Services and focus areas">
             {capabilities.map(([number, title, detail]) => (
               <div className="capability" key={number}>
                 <span>{number}</span>
@@ -315,16 +321,28 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          <div className="language-panel">
+            <p className="section-label">Languages</p>
+            <dl className="language-list">
+              {languages.map(([language, level]) => (
+                <div key={language}>
+                  <dt>{language}</dt>
+                  <dd>{level}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </section>
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
           <div className="section-shell contact-inner">
             <p className="section-label">04 / Contact</p>
-            <h2 id="contact-title">Have a problem worth engineering?</h2>
+            <h2 id="contact-title">Need a focused developer for your next web or app project?</h2>
             <p>
-              I&apos;m interested in thoughtful software, full-stack systems, hardware
-              architecture, and teams that care about the details. Contact links will
-              be connected in the next iteration.
+              I&apos;m interested in selected freelance and collaborative projects—from
+              focused websites to full-stack product prototypes. Contact links will be
+              connected in the next iteration.
             </p>
             <div className="contact-links" aria-label="Contact links coming soon">
               <span>Email <small>ADD LINK</small></span>
@@ -338,7 +356,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="section-shell footer-inner">
           <p>© 2026 Ege Tekin</p>
-          <p>Software / Full-stack / Hardware architecture</p>
+          <p>Full-stack development / MedTech direction</p>
           <a href="#top">Back to top ↑</a>
         </div>
       </footer>

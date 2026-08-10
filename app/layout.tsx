@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 
-const title = "Ege Tekin — Software & Systems Engineer";
+const title = "Ege Tekin — Full-Stack Developer · MedTech Focus";
 const description =
-  "Portfolio of Ege Tekin, a University of Freiburg Computer Science graduate with two years of working-student experience at Fraunhofer ISE, focused on software engineering, full-stack development, and hardware architecture.";
+  "Portfolio of Ege Tekin, completing a B.Sc. in Computer Science at the University of Freiburg, working at Fraunhofer ISE, and preparing to begin Medicine at Akdeniz University.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -22,16 +22,16 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     openGraph: {
       title,
-      description: "Software engineering, full-stack development, and hardware architecture.",
+      description: "Full-stack product development with a long-term direction in MedTech.",
       type: "website",
       images: socialImage
-        ? [{ url: socialImage, alt: "Ege Tekin — Software, Full-Stack, Hardware Architecture" }]
+        ? [{ url: socialImage, alt: "Ege Tekin — Full-Stack Developer, MedTech Focus" }]
         : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description: "Software engineering, full-stack development, and hardware architecture.",
+      description: "Full-stack product development with a long-term direction in MedTech.",
       images: socialImage ? [socialImage] : undefined,
     },
   };
