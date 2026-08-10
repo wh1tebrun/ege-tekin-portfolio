@@ -267,6 +267,23 @@ const projectIndex = [
     ],
   },
   {
+    year: "2023",
+    projects: [
+      {
+        date: "Dec 2023",
+        dateISO: "2023-12",
+        title: "Asteroid Defense",
+        description:
+          "A tested Python arcade game with deterministic core logic, collision handling, and a lightweight Pygame front end.",
+        area: "Game",
+        stack: "Python · Pygame",
+        links: [
+          { label: "GitHub", href: "https://github.com/wh1tebrun/asteroid-defense" },
+        ],
+      },
+    ],
+  },
+  {
     year: "2022",
     projects: [
       {
