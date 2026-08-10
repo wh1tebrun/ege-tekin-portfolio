@@ -1366,6 +1366,10 @@ a.coming-soon:hover {
     min-height: 390px;
   }
 
+  .hero-system::before {
+    inset-inline: 0;
+  }
+
   .hero-system::after {
     width: 270px;
     height: 270px;
