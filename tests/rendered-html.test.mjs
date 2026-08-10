@@ -34,7 +34,10 @@ test("presents the verified v2 identity, direction, and background", async () =>
 
   assert.match(page, /Résumé · August 2026/);
   assert.match(page, /<h1 id="page-title">Ege Tekin<\/h1>/);
-  assert.match(page, /<p className="role">Software Engineering · Applied Research · Medical Technology<\/p>/);
+  assert.match(
+    page,
+    /<p className="role">\s*<span>Software Engineering · Applied Research<span className="sr-only"> · <\/span><\/span>\s*<span>Medical Technology<\/span>\s*<\/p>/,
+  );
   assert.match(page, /<p className="location">Freiburg, Germany<\/p>/);
   assert.match(
     page,
@@ -90,7 +93,7 @@ test("presents the verified v2 identity, direction, and background", async () =>
   assert.doesNotMatch(page, /MedTech developer|Medical Software Engineer/i);
 });
 
-test("uses a six-section editorial résumé information architecture", async () => {
+test("uses a seven-section editorial résumé information architecture", async () => {
   const page = await readFile(pageUrl, "utf8");
 
   assert.match(page, /<main className="resume section-shell" id="main-content" tabIndex=\{-1\}>/);
@@ -104,9 +107,9 @@ test("uses a six-section editorial résumé information architecture", async () 
       'id="summary-title">Profile',
       'id="experience-title">Experience',
       'id="education-title">Education',
-      'id="work-title">Selected work',
-      'id="archive-title">Archive &amp; capabilities',
-      'id="skills-title">Technical profile',
+      'id="work-title">Featured work',
+      'id="archive-title">Project archive',
+      'id="skills-title">Capabilities',
       'id="contact-title">Contact',
     ],
     "Résumé section",
@@ -120,18 +123,22 @@ test("uses a six-section editorial résumé information architecture", async () 
     ["01", "summary-title", "Profile"],
     ["02", "experience-title", "Experience"],
     ["03", "education-title", "Education"],
-    ["04", "work-title", "Selected work"],
-    ["05", "archive-title", "Archive &amp; capabilities"],
-    ["06", "contact-title", "Contact"],
+    ["04", "work-title", "Featured work"],
+    ["05", "archive-title", "Project archive"],
+    ["06", "skills-title", "Capabilities"],
+    ["07", "contact-title", "Contact"],
   ]) {
     assert.ok(
       page.includes(`data-index="${index}" id="${id}">${label}`),
       `Missing section index ${index} for ${label}`,
     );
   }
-  assert.equal((page.match(/data-index="0[1-6]"/g) || []).length, 6);
-  assert.doesNotMatch(page, /data-index="07"/);
-  assert.match(page, /<h3 className="subsection-title" id="skills-title">Technical profile<\/h3>/);
+  assert.equal((page.match(/data-index="0[1-7]"/g) || []).length, 7);
+  assert.match(
+    page,
+    /<section className="resume-section capabilities-section" aria-labelledby="skills-title">/,
+  );
+  assert.doesNotMatch(page, /Selected work|Archive &amp; capabilities|Technical profile/);
 
   assert.doesNotMatch(page, /AnchorNavigation|className="site-header"|<nav\b/);
   assert.doesNotMatch(page, /className="hero|hero-|className="credibility/);
@@ -162,12 +169,20 @@ test("keeps exactly four selected projects in newest-first order", async () => {
   );
 });
 
-test("keeps twelve additional projects newest-first without repeating selected work", async () => {
+test("keeps all twelve archive projects chronological while curating seven for the initial view", async () => {
   const page = await readFile(pageUrl, "utf8");
   const additionalData = dataBlock(
     page,
     ["const additionalProjects = [", "const projectIndex = ["],
     "Additional projects",
+  );
+  const primaryArchiveData = dataBlock(
+    page,
+    ["const primaryArchiveTitles = ["],
+    "Primary archive titles",
+  );
+  const primaryTitles = [...primaryArchiveData.matchAll(/\n\s+"([^"]+)",?/g)].map(
+    (match) => match[1],
   );
 
   assert.equal(
@@ -194,6 +209,33 @@ test("keeps twelve additional projects newest-first without repeating selected w
     "Additional project",
   );
 
+  assert.deepEqual(
+    primaryTitles,
+    [
+      "Freiburg–Konstanz",
+      "WG Cup — 2D Football",
+      "ROSE",
+      "Delusions of Grandeur",
+      "EGE Fitness Fan Page",
+      "Egelingo",
+      "Terminal Blocks",
+    ],
+    "The initial archive view must contain the seven curated projects in chronological order",
+  );
+  assert.equal(new Set(primaryTitles).size, 7, "Curated archive titles must be unique");
+  for (const title of primaryTitles) {
+    assert.ok(additionalData.includes(`title: "${title}"`), `Unknown curated project: ${title}`);
+  }
+  assertInOrder(additionalData, primaryTitles, "Curated archive project");
+  assert.match(
+    page,
+    /const primaryArchiveProjects = archiveProjects\.filter\(\(project\) =>\s*primaryArchiveTitles\.includes\(project\.title\),\s*\);/,
+  );
+  assert.match(
+    page,
+    /const remainingArchiveProjects = archiveProjects\.filter\(\s*\(project\) => !primaryArchiveTitles\.includes\(project\.title\),\s*\);/,
+  );
+
   for (const selectedTitle of [
     "Ege Image Studio",
     "Regex → AIGER",
@@ -211,7 +253,8 @@ test("keeps twelve additional projects newest-first without repeating selected w
     );
   }
 
-  assert.match(page, /12 projects · Oct 2022 – May 2026/);
+  assert.match(page, /<ArchiveGroups projects=\{primaryArchiveProjects\} idPrefix="archive-primary" \/>/);
+  assert.match(page, /<ArchiveGroups projects=\{remainingArchiveProjects\} idPrefix="archive-earlier" \/>/);
   assert.doesNotMatch(page, /16 projects · Oct 2022 – Aug 2026/);
 });
 
@@ -262,8 +305,19 @@ test("preserves accessibility, anchor offsets, and print behavior", async () => 
   assert.match(page, /alt="Portrait of Ege Tekin"/);
   assert.match(page, /<address\b/);
   assert.match(page, /<time[^>]*dateTime=/);
-  assert.match(page, /<details className="archive anchor-target" id="project-index">/);
-  assert.match(page, /<summary>/);
+  assert.match(
+    page,
+    /<section className="resume-section archive-section anchor-target" id="project-index" aria-labelledby="archive-title">/,
+  );
+  assert.match(page, /<section className="archive archive-primary" aria-label="Curated project archive">/);
+  const expansionTag = page.match(/<details className="archive-expansion"[^>]*>/)?.[0];
+  assert.ok(expansionTag, "The full archive must use a native details disclosure");
+  assert.doesNotMatch(expansionTag, /\sopen(?:=|\s|>)/, "The full archive must be closed by default");
+  assert.match(
+    page,
+    /<summary>\s*<span>View full archive<\/span>\s*<span>\{remainingArchiveProjects\.length\} earlier projects · Oct 2022 – Jun 2024 <i aria-hidden="true">\+<\/i><\/span>\s*<\/summary>/,
+  );
+  assert.match(page, /<div className="archive-expansion-content">/);
   assert.match(page, /className="sr-only">Area: <\/span>/);
   assert.equal(
     (page.match(/target="_blank"/g) || []).length,
@@ -277,6 +331,7 @@ test("preserves accessibility, anchor offsets, and print behavior", async () => 
   assert.doesNotMatch(styles, /scroll-padding-top:/);
   assert.match(styles, /@media \(max-width: 768px\)/);
   assert.match(styles, /@media print/);
+  assert.match(styles, /@media print\s*\{[\s\S]*?#skills-title::before\s*\{\s*content:\s*"05";/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
@@ -292,8 +347,9 @@ test("uses the v2 editorial typography and restrained résumé visual system", a
     /--page:\s*#e9e8e3/i,
     /--paper:\s*#fffefa/i,
     /--ink:\s*#171717/i,
-    /--muted:\s*#626262/i,
+    /--muted:\s*#565656/i,
     /--rule:\s*#bdbcb7/i,
+    /--rule-light:\s*#e7e5df/i,
     /--accent:\s*#1647d4/i,
     /--shell:\s*min\(1120px,\s*calc\(100vw - 48px\)\)/i,
     /--font-instrument:\s*"Instrument Serif"/i,
@@ -304,6 +360,12 @@ test("uses the v2 editorial typography and restrained résumé visual system", a
   }
 
   assert.match(styles, /body\s*\{[\s\S]*?font-size:\s*16px/);
+  assert.match(styles, /body\s*\{[\s\S]*?overflow-x:\s*clip;[\s\S]*?line-height:\s*1\.6/);
+  assert.match(styles, /\.entry-description\s*\{[\s\S]*?font-size:\s*15px;[\s\S]*?line-height:\s*1\.7;/);
+  assert.match(styles, /\.project-notes > p\s*\{[\s\S]*?font-size:\s*15px;[\s\S]*?line-height:\s*1\.74;/);
+  assert.match(styles, /\.archive-project strong\s*\{[\s\S]*?font-size:\s*16px;[\s\S]*?line-height:\s*1\.4;/);
+  assert.match(styles, /\.archive-project p\s*\{[\s\S]*?font-size:\s*13px;[\s\S]*?line-height:\s*1\.6;/);
+  assert.match(styles, /\.capability-groups dd\s*\{[\s\S]*?font-size:\s*14px;[\s\S]*?line-height:\s*1\.68;/);
   assert.match(styles, /\.identity h1\s*\{[\s\S]*?font-family:\s*var\(--serif\);[\s\S]*?font-size:\s*clamp\(4\.5rem,\s*8\.6vw,\s*6\.5rem\)/);
   assert.match(layout, /@fontsource-variable\/manrope\/wght\.css/);
   assert.match(layout, /@fontsource\/instrument-serif/);
@@ -376,7 +438,7 @@ test("uses screenshot-led project showcases across responsive and print layouts"
 
   assert.match(
     styles,
-    /\.masthead\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\) minmax\(330px, 390px\);/,
+    /\.masthead\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\) minmax\(350px, 400px\);/,
   );
   assert.match(
     styles,
@@ -384,15 +446,15 @@ test("uses screenshot-led project showcases across responsive and print layouts"
   );
   assert.match(
     styles,
-    /@media \(max-width: 920px\)\s*\{[\s\S]*?\.masthead\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-showcase-layout,[\s\S]*?\.project-showcase--media-right \.project-showcase-layout\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-showcase--media-right \.project-media,[\s\S]*?grid-column:\s*1;[\s\S]*?grid-row:\s*auto;/,
+    /@media \(max-width: 1020px\)\s*\{[\s\S]*?\.masthead\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-showcase-layout,[\s\S]*?\.project-showcase--media-right \.project-showcase-layout\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-showcase--media-right \.project-media,[\s\S]*?grid-column:\s*1;[\s\S]*?grid-row:\s*auto;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 768px\)\s*\{[\s\S]*?\.summary,[\s\S]*?\.resume-section\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-image-frame img\s*\{[\s\S]*?width:\s*100%;/,
+    /@media \(max-width: 768px\)\s*\{[\s\S]*?\.summary,[\s\S]*?\.resume-section\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-image-frame img\s*\{[\s\S]*?width:\s*100%;[\s\S]*?\.archive-expansion > summary\s*\{[\s\S]*?flex-direction:\s*column;[\s\S]*?\.archive-row\s*\{[\s\S]*?grid-template-columns:\s*1fr auto;[\s\S]*?\.capability-groups\s*\{[\s\S]*?grid-template-columns:\s*1fr;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 480px\)\s*\{[\s\S]*?\.masthead-aside\s*\{[\s\S]*?grid-template-columns:\s*1fr 116px;[\s\S]*?\.cv-entry\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-notes dl > div,[\s\S]*?\.profile-lines dl > div\s*\{[\s\S]*?grid-template-columns:\s*1fr;/,
+    /@media \(max-width: 480px\)\s*\{[\s\S]*?\.masthead-aside\s*\{[\s\S]*?grid-template-columns:\s*1fr 116px;[\s\S]*?\.cv-entry\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-notes dl > div\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.archive-expansion > summary > span:last-child\s*\{[\s\S]*?white-space:\s*normal;/,
   );
   assert.match(
     styles,

@@ -280,6 +280,35 @@ const projectIndex = [
   },
 ];
 
+const primaryArchiveTitles = [
+  "Freiburg–Konstanz",
+  "WG Cup — 2D Football",
+  "ROSE",
+  "Delusions of Grandeur",
+  "EGE Fitness Fan Page",
+  "Egelingo",
+  "Terminal Blocks",
+];
+
+type ArchiveProject = (typeof projectIndex)[number]["projects"][number];
+
+const archiveProjects = projectIndex.flatMap((group) => group.projects);
+const primaryArchiveProjects = archiveProjects.filter((project) =>
+  primaryArchiveTitles.includes(project.title),
+);
+const remainingArchiveProjects = archiveProjects.filter(
+  (project) => !primaryArchiveTitles.includes(project.title),
+);
+
+function groupProjectsByYear(projects: ArchiveProject[]) {
+  return projectIndex
+    .map((group) => ({
+      year: group.year,
+      projects: group.projects.filter((project) => projects.includes(project)),
+    }))
+    .filter((group) => group.projects.length > 0);
+}
+
 const languages = [
   ["Turkish", "Native"],
   ["English", "C2"],
@@ -346,6 +375,38 @@ function ProjectShowcase({ project }: { project: SelectedProject }) {
   );
 }
 
+function ArchiveGroups({ projects, idPrefix }: { projects: ArchiveProject[]; idPrefix: string }) {
+  return (
+    <div className="archive-groups">
+      {groupProjectsByYear(projects).map((group) => (
+        <section className="year-group" aria-labelledby={`${idPrefix}-${group.year}`} key={group.year}>
+          <h3 id={`${idPrefix}-${group.year}`}>{group.year}</h3>
+          <ol>
+            {group.projects.map((project) => (
+              <li className="archive-row" key={`${project.date}-${project.title}`}>
+                <time dateTime={project.dateISO}>{project.date}</time>
+                <div className="archive-project">
+                  <strong>{project.title}</strong>
+                  <p>{project.description}</p>
+                </div>
+                <span className="archive-area">
+                  <span className="sr-only">Area: </span>{project.area}
+                </span>
+                <span className="archive-stack">{project.stack}</span>
+                <div className="archive-links">
+                  {project.links.map((link) => (
+                    <ExternalLink link={link} project={project.title} key={link.href} />
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -359,7 +420,10 @@ export default function Home() {
           <div className="identity">
             <p className="document-label">Résumé · August 2026</p>
             <h1 id="page-title">Ege Tekin</h1>
-            <p className="role">Software Engineering · Applied Research · Medical Technology</p>
+            <p className="role">
+              <span>Software Engineering · Applied Research<span className="sr-only"> · </span></span>
+              <span>Medical Technology</span>
+            </p>
             <p className="location">Freiburg, Germany</p>
           </div>
 
@@ -464,7 +528,7 @@ export default function Home() {
         </section>
 
         <section className="resume-section anchor-target" id="work" aria-labelledby="work-title">
-          <h2 className="section-label" data-index="04" id="work-title">Selected work</h2>
+          <h2 className="section-label" data-index="04" id="work-title">Featured work</h2>
           <div className="section-content selected-work">
             {selectedProjects.map((project) => (
               <ProjectShowcase project={project} key={project.title} />
@@ -472,69 +536,55 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="resume-section archive-section" aria-labelledby="archive-title">
-          <h2 className="section-label" data-index="05" id="archive-title">Archive &amp; capabilities</h2>
+        <section className="resume-section archive-section anchor-target" id="project-index" aria-labelledby="archive-title">
+          <h2 className="section-label" data-index="05" id="archive-title">Project archive</h2>
           <div className="section-content">
-            <details className="archive anchor-target" id="project-index">
-              <summary>
-                <span>Chronological project archive</span>
-                <span>12 projects · Oct 2022 – May 2026 <i aria-hidden="true">+</i></span>
-              </summary>
+            <p className="archive-intro">
+              A curated chronology of games, interactive experiments, and systems work.
+            </p>
 
-              <div className="archive-content">
-                {projectIndex.map((group) => (
-                  <section className="year-group" aria-labelledby={`year-${group.year}`} key={group.year}>
-                    <h3 id={`year-${group.year}`}>{group.year}</h3>
-                    <ol>
-                      {group.projects.map((project) => (
-                        <li className="archive-row" key={`${project.date}-${project.title}`}>
-                          <time dateTime={project.dateISO}>{project.date}</time>
-                          <div className="archive-project">
-                            <strong>{project.title}</strong>
-                            <p>{project.description}</p>
-                          </div>
-                          <span className="archive-area">
-                            <span className="sr-only">Area: </span>{project.area}
-                          </span>
-                          <span className="archive-stack">{project.stack}</span>
-                          <div className="archive-links">
-                            {project.links.map((link) => (
-                              <ExternalLink link={link} project={project.title} key={link.href} />
-                            ))}
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </section>
-                ))}
+            <section className="archive archive-primary" aria-label="Curated project archive">
+              <ArchiveGroups projects={primaryArchiveProjects} idPrefix="archive-primary" />
+            </section>
+
+            <details className="archive-expansion">
+              <summary>
+                <span>View full archive</span>
+                <span>{remainingArchiveProjects.length} earlier projects · Oct 2022 – Jun 2024 <i aria-hidden="true">+</i></span>
+              </summary>
+              <div className="archive-expansion-content">
+                <ArchiveGroups projects={remainingArchiveProjects} idPrefix="archive-earlier" />
               </div>
             </details>
-            <div className="profile-lines" aria-labelledby="skills-title">
-              <h3 className="subsection-title" id="skills-title">Technical profile</h3>
-              <dl>
-                <div>
-                  <dt>Web &amp; product</dt>
-                  <dd>TypeScript, React, Next.js, Vite, testing, responsive interfaces</dd>
-                </div>
-                <div>
-                  <dt>Research &amp; systems</dt>
-                  <dd>Python, AIGER, automata, model checking, data analysis, C++20</dd>
-                </div>
-                <div>
-                  <dt>Interactive software</dt>
-                  <dd>C#, MonoGame, Unity, Canvas, Three.js</dd>
-                </div>
-                <div>
-                  <dt>Languages</dt>
-                  <dd>{languages.map(([language, level]) => `${language} (${level})`).join(" · ")}</dd>
-                </div>
-              </dl>
-            </div>
+          </div>
+        </section>
+
+        <section className="resume-section capabilities-section" aria-labelledby="skills-title">
+          <h2 className="section-label" data-index="06" id="skills-title">Capabilities</h2>
+          <div className="section-content">
+            <dl className="capability-groups">
+              <div>
+                <dt>Web &amp; product</dt>
+                <dd>TypeScript, React, Next.js, Vite, testing, responsive interfaces</dd>
+              </div>
+              <div>
+                <dt>Research &amp; systems</dt>
+                <dd>Python, AIGER, automata, model checking, data analysis, C++20</dd>
+              </div>
+              <div>
+                <dt>Interactive software</dt>
+                <dd>C#, MonoGame, Unity, Canvas, Three.js</dd>
+              </div>
+              <div>
+                <dt>Languages</dt>
+                <dd>{languages.map(([language, level]) => `${language} (${level})`).join(" · ")}</dd>
+              </div>
+            </dl>
           </div>
         </section>
 
         <section className="resume-section contact anchor-target" id="contact" aria-labelledby="contact-title">
-          <h2 className="section-label" data-index="06" id="contact-title">Contact</h2>
+          <h2 className="section-label" data-index="07" id="contact-title">Contact</h2>
           <div className="section-content contact-content">
             <div>
               <p className="contact-lead">Let&apos;s build something useful.</p>
