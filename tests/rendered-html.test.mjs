@@ -5,6 +5,7 @@ import test from "node:test";
 const pageUrl = new URL("../app/page.tsx", import.meta.url);
 const stylesUrl = new URL("../app/globals.css", import.meta.url);
 const layoutUrl = new URL("../app/layout.tsx", import.meta.url);
+const paperUrl = new URL("../public/ege-tekin-yks-score-volatility.pdf", import.meta.url);
 
 test("uses the professional positioning and verified background", async () => {
   const [page, layout] = await Promise.all([
@@ -53,6 +54,7 @@ test("features the strongest work and connects verified public repositories", as
     "https://github.com/wh1tebrun/rose",
     "https://github.com/wh1tebrun/dog",
     "https://github.com/wh1tebrun/game",
+    "https://github.com/wh1tebrun/football-game",
     "https://dishes-helper.vercel.app/",
     "https://country-fawn.vercel.app/",
   ]) {
@@ -60,8 +62,8 @@ test("features the strongest work and connects verified public repositories", as
   }
 
   assert.doesNotMatch(page, /Private build/);
+  assert.match(page, /\/ege-tekin-yks-score-volatility\.pdf/);
   assert.doesNotMatch(page, /github\.com\/freiburg-missing-semester-course\/project-wh1tebrun/);
-  assert.match(page, /Research package available on request/);
   assert.doesNotMatch(page, /VitalLoop|GridScope|FocusFlow/);
 });
 
@@ -76,7 +78,7 @@ test("keeps the project index chronologically ordered", async () => {
 
   for (const marker of [
     "Ege Image Studio",
-    "RideQuest",
+    "Freiburg–Konstanz",
     "WG Cup — 2D Football",
     "Regex → AIGER",
     "YKS Score Volatility",
@@ -141,6 +143,8 @@ test("implements the editorial design system and removes the previous concept", 
   assert.match(styles, /\.background :focus-visible/);
   assert.match(page, /className="sr-only">Area: <\/span>/);
   assert.doesNotMatch(await readFile(layoutUrl, "utf8"), /headers\(\)/);
+  assert.match(styles, /\.anchor-target\s*\{[\s\S]*scroll-margin-top:/);
+  assert.doesNotMatch(styles, /scroll-padding-top:/);
 
   for (const legacy of [
     "system-orbit",
@@ -160,4 +164,11 @@ test("implements the editorial design system and removes the previous concept", 
   ]) {
     assert.ok(!source.includes(legacy), `Legacy concept remains: ${legacy}`);
   }
+});
+
+test("ships the privacy-safe public YKS paper", async () => {
+  const paper = await readFile(paperUrl);
+
+  assert.ok(paper.length > 100_000, "Public paper PDF is unexpectedly small");
+  assert.equal(paper.subarray(0, 4).toString(), "%PDF");
 });

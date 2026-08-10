@@ -12,6 +12,7 @@
   --white: #ffffff;
   --shell: min(1240px, calc(100vw - 64px));
   --header-height: 72px;
+  --anchor-gap: 18px;
   --radius: 5px;
 }
 
@@ -21,7 +22,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 28px);
   background: var(--canvas);
 }
 
@@ -552,16 +552,8 @@ ul {
   gap: 18px;
 }
 
-.evidence-note {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.anchor-target {
+  scroll-margin-top: calc(var(--header-height) + var(--anchor-gap));
 }
 
 .text-link {
@@ -1359,6 +1351,7 @@ ul {
   :root {
     --shell: min(100% - 40px, 680px);
     --header-height: 66px;
+    --anchor-gap: 12px;
   }
 
   .nav-shell {

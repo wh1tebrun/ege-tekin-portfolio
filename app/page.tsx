@@ -18,7 +18,6 @@ type FeaturedProject = {
   visual: "circuit" | "studio" | "decision" | "research";
   links: ProjectLink[];
   fullTitle?: string;
-  evidenceNote?: string;
 };
 
 const featuredProjects: FeaturedProject[] = [
@@ -91,8 +90,9 @@ const featuredProjects: FeaturedProject[] = [
       "I analyzed public 2021–2022 Computer Engineering admissions data to show how comparable national ranks can produce different scores—and therefore different converted outcomes under the Bavarian formula.",
     stack: ["Python", "pandas", "Matplotlib", "LaTeX"],
     visual: "research",
-    links: [],
-    evidenceNote: "Research package available on request",
+    links: [
+      { label: "Read paper", href: "/ege-tekin-yks-score-volatility.pdf" },
+    ],
   },
 ];
 
@@ -115,9 +115,9 @@ const projectIndex = [
       {
         date: "May 2026",
         dateISO: "2026-05",
-        title: "RideQuest",
+        title: "Freiburg–Konstanz",
         description:
-          "A ten-stage cycling arcade game following the route from Freiburg to Konstanz.",
+          "A ten-stage browser cycling game built around lane changes, traffic avoidance, stamina management, and collectible-driven scoring.",
         area: "Game",
         stack: "React · TypeScript",
         links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/bisiklet" }],
@@ -130,7 +130,9 @@ const projectIndex = [
           "A local two-player pixel-art football game with character stats and fixed-timestep physics.",
         area: "Game",
         stack: "Canvas · JavaScript",
-        links: [],
+        links: [
+          { label: "GitHub", href: "https://github.com/wh1tebrun/football-game" },
+        ],
       },
       {
         date: "Apr 2026",
@@ -152,7 +154,9 @@ const projectIndex = [
           "A reproducible analysis of year-dependent scores and Bavarian grade conversion outcomes.",
         area: "Research",
         stack: "Python · LaTeX",
-        links: [],
+        links: [
+          { label: "Paper", href: "/ege-tekin-yks-score-volatility.pdf" },
+        ],
       },
     ],
   },
@@ -441,8 +445,8 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="work section-shell" id="work" aria-labelledby="work-title">
-          <div className="section-intro">
+        <section className="work section-shell" aria-labelledby="work-title">
+          <div className="section-intro anchor-target" id="work">
             <p className="section-kicker">Selected work</p>
             <div>
               <h2 id="work-title">Depth where it matters. Clarity everywhere else.</h2>
@@ -472,7 +476,6 @@ export default function Home() {
                     {project.links.map((link) => (
                       <ExternalLink link={link} project={project.title} key={link.href} />
                     ))}
-                    {project.evidenceNote ? <span className="evidence-note">{project.evidenceNote}</span> : null}
                   </div>
                 </div>
 
@@ -482,8 +485,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="project-index section-shell" id="project-index" aria-labelledby="index-title">
-          <div className="section-intro section-intro-compact">
+        <section className="project-index section-shell" aria-labelledby="index-title">
+          <div className="section-intro section-intro-compact anchor-target" id="project-index">
             <p className="section-kicker">Project index</p>
             <div>
               <h2 id="index-title">A chronological record of what I build.</h2>
@@ -525,9 +528,9 @@ export default function Home() {
           </p>
         </section>
 
-        <section className="background" id="background" aria-labelledby="background-title">
+        <section className="background" aria-labelledby="background-title">
           <div className="section-shell">
-            <div className="section-intro section-intro-dark">
+            <div className="section-intro section-intro-dark anchor-target" id="background">
               <p className="section-kicker">Experience &amp; education</p>
               <div>
                 <h2 id="background-title">A path from computer science and applied research into medicine.</h2>
@@ -569,8 +572,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="profile section-shell" id="profile" aria-labelledby="profile-title">
-          <div className="profile-story">
+        <section className="profile section-shell" aria-labelledby="profile-title">
+          <div className="profile-story anchor-target" id="profile">
             <p className="section-kicker">Profile</p>
             <h2 id="profile-title">Technical depth, practical execution.</h2>
             <p className="profile-lead">
@@ -603,8 +606,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="contact" id="contact" aria-labelledby="contact-title">
-          <div className="section-shell contact-inner">
+        <section className="contact" aria-labelledby="contact-title">
+          <div className="section-shell contact-inner anchor-target" id="contact">
             <p className="section-kicker">Contact</p>
             <h2 id="contact-title">Have a useful product to build?</h2>
             <p>I&apos;m available for selected freelance websites, web applications, and product prototypes. Send me a short note with the problem, scope, and timeline.</p>
