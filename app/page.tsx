@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import AnchorNavigation from "./anchor-navigation";
+
 type ProjectLink = {
   label: string;
   href: string;
@@ -361,6 +363,7 @@ function ProjectVisual({ type }: { type: FeaturedProject["visual"] }) {
 export default function Home() {
   return (
     <>
+      <AnchorNavigation />
       <a className="skip-link" href="#main-content">Skip to content</a>
 
       <header className="site-header">
@@ -394,7 +397,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <section className="hero section-shell" id="top" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow">Software Engineer · Freiburg, Germany</p>

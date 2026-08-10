@@ -5,6 +5,7 @@ import test from "node:test";
 const pageUrl = new URL("../app/page.tsx", import.meta.url);
 const stylesUrl = new URL("../app/globals.css", import.meta.url);
 const layoutUrl = new URL("../app/layout.tsx", import.meta.url);
+const anchorNavigationUrl = new URL("../app/anchor-navigation.tsx", import.meta.url);
 const paperUrl = new URL("../public/ege-tekin-yks-score-volatility.pdf", import.meta.url);
 
 test("uses the professional positioning and verified background", async () => {
@@ -97,10 +98,17 @@ test("keeps the project index chronologically ordered", async () => {
 });
 
 test("preserves semantic navigation and accessibility", async () => {
-  const page = await readFile(pageUrl, "utf8");
+  const [page, anchorNavigation] = await Promise.all([
+    readFile(pageUrl, "utf8"),
+    readFile(anchorNavigationUrl, "utf8"),
+  ]);
 
   assert.match(page, /className="skip-link" href="#main-content"/);
-  assert.match(page, /<main id="main-content">/);
+  assert.match(page, /<AnchorNavigation \/>/);
+  assert.match(anchorNavigation, /scrollIntoView/);
+  assert.match(anchorNavigation, /prefers-reduced-motion: reduce/);
+  assert.match(anchorNavigation, /window\.history\.pushState/);
+  assert.match(page, /<main id="main-content" tabIndex=\{-1\}>/);
   assert.match(page, /aria-label="Primary navigation"/);
 
   for (const target of ["#work", "#project-index", "#background", "#contact"]) {
