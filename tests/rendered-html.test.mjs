@@ -279,6 +279,121 @@ test("uses the restrained executive résumé visual system", async () => {
   assert.doesNotMatch(layout, /headers\(\)/);
 });
 
+test("adds a self-contained editorial specimen layer without obscuring résumé content", async () => {
+  const [page, styles] = await Promise.all([
+    readFile(pageUrl, "utf8"),
+    readFile(stylesUrl, "utf8"),
+  ]);
+  const selectedData = dataBlock(
+    page,
+    ["const selectedProjects: SelectedProject[] = [", "const selectedProjects = ["],
+    "Selected projects",
+  );
+
+  assert.match(
+    page,
+    /visual:\s*"studio" \| "circuit" \| "research" \| "decision"/,
+  );
+  assert.match(page, /function ProjectSpecimen\(\{ type \}/);
+  assert.equal(
+    (selectedData.match(/\n\s+visual:\s*"(?:studio|circuit|research|decision)"/g) || []).length,
+    4,
+    "Every selected project must declare one specimen variant",
+  );
+  for (const variant of ["studio", "circuit", "research", "decision"]) {
+    assert.match(
+      page,
+      new RegExp(`className="project-specimen specimen-${variant}" aria-hidden="true"`),
+      `Missing decorative ${variant} specimen`,
+    );
+  }
+  assert.equal(
+    (page.match(/<ProjectSpecimen type=\{project\.visual\} \/>/g) || []).length,
+    1,
+    "Selected-project rows must render their declared specimen",
+  );
+
+  assert.match(page, /<div className="scroll-progress" aria-hidden="true" \/>/);
+  assert.match(page, /<div className="masthead-folio" aria-hidden="true">/);
+  assert.match(page, /<span>Folio 01<\/span>/);
+  assert.match(page, /<strong>ET<\/strong>/);
+  assert.match(page, /<small>Freiburg · 2026<\/small>/);
+
+  for (const [index, id, label] of [
+    ["01", "summary-title", "Profile"],
+    ["02", "experience-title", "Experience"],
+    ["03", "education-title", "Education"],
+    ["04", "work-title", "Selected work"],
+    ["05", "archive-title", "Additional work"],
+    ["06", "skills-title", "Technical profile"],
+    ["07", "contact-title", "Contact"],
+  ]) {
+    assert.ok(
+      page.includes(`data-index="${index}" id="${id}">${label}`),
+      `Missing editorial section index ${index} for ${label}`,
+    );
+  }
+
+  for (const selector of [
+    ".project-specimen",
+    ".specimen-studio",
+    ".specimen-circuit",
+    ".specimen-research",
+    ".specimen-decision",
+  ]) {
+    assert.ok(styles.includes(selector), `Missing specimen style: ${selector}`);
+  }
+
+  assert.match(
+    styles,
+    /@supports \(animation-timeline: view\(\)\)\s*\{[\s\S]*?\.project-specimen\s*\{[\s\S]*?animation:\s*editorial-entry linear both;[\s\S]*?animation-timeline:\s*view\(\);[\s\S]*?animation-range:\s*entry 12% cover 36%;/,
+  );
+  assert.equal(
+    (styles.match(/animation:\s*editorial-entry/g) || []).length,
+    1,
+    "Only project specimens may use the editorial entry animation",
+  );
+  assert.doesNotMatch(
+    styles,
+    /\.(?:resume|summary|resume-section|cv-entry|project-entry-copy|entry-description)[^{]*\{[^}]*(?:animation:\s*editorial-entry|opacity\s*:)/,
+  );
+  assert.match(
+    styles,
+    /@supports \(animation-timeline: scroll\(\)\)\s*\{[\s\S]*?\.scroll-progress\s*\{[\s\S]*?display:\s*block;[\s\S]*?\.scroll-progress::after\s*\{[\s\S]*?animation:\s*page-progress linear both;[\s\S]*?animation-timeline:\s*scroll\(root block\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(min-width: 769px\)\s*\{[\s\S]*?\.summary > \.section-label,[\s\S]*?\.resume-section > \.section-label\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?top:\s*28px;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 920px\)\s*\{[\s\S]*?\.masthead\s*\{[\s\S]*?flex-direction:\s*column;[\s\S]*?\.project-entry-body\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-specimen\s*\{[\s\S]*?width:\s*100%;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 768px\)\s*\{[\s\S]*?\.project-entry-body\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?\.project-specimen\s*\{[\s\S]*?width:\s*100%;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 480px\)\s*\{[\s\S]*?\.project-specimen,[\s\S]*?\.scroll-progress\s*\{\s*display:\s*none;/,
+  );
+  assert.match(
+    styles,
+    /@media print\s*\{[\s\S]*?\.scroll-progress,[\s\S]*?\.masthead-folio,[\s\S]*?\.project-specimen\s*\{\s*display:\s*none;/,
+  );
+  assert.match(
+    styles,
+    /@media print\s*\{[\s\S]*?\.masthead::before,\s*\.masthead::after\s*\{\s*display:\s*none;[\s\S]*?\.project-entry-body\s*\{\s*grid-template-columns:\s*1fr;/,
+  );
+  assert.match(
+    styles,
+    /@media \(prefers-reduced-motion: reduce\)\s*\{[\s\S]*?animation:\s*none !important;[\s\S]*?\.scroll-progress\s*\{\s*display:\s*none !important;/,
+  );
+
+  assert.doesNotMatch(page, /<(?:svg|canvas)\b/i);
+  assert.doesNotMatch(page, /src="https?:\/\//i);
+});
+
 test("ships the privacy-safe public YKS paper", async () => {
   const paper = await readFile(paperUrl);
 

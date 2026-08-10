@@ -12,6 +12,7 @@ type SelectedProject = {
   type: string;
   description: string;
   stack: string;
+  visual: "studio" | "circuit" | "research" | "decision";
   links: ProjectLink[];
   fullTitle?: string;
 };
@@ -25,6 +26,7 @@ const selectedProjects: SelectedProject[] = [
     description:
       "A tested Next.js workspace for organizing image references, assigning roles, refining prompts, and reviewing deterministic mock outputs through a replaceable architecture.",
     stack: "Next.js · React · TypeScript · Vitest · Playwright",
+    visual: "studio",
     links: [
       {
         label: "Source",
@@ -40,6 +42,7 @@ const selectedProjects: SelectedProject[] = [
     description:
       "A Python pipeline that compiles fixed-string and regular-expression constraints into bounded or sequential ASCII AIGER circuits, with simulation, fuzzing, and cross-backend validation.",
     stack: "Python · AIGER · Automata · Model checking",
+    visual: "circuit",
     links: [
       {
         label: "Source",
@@ -57,6 +60,7 @@ const selectedProjects: SelectedProject[] = [
     description:
       "An analysis of public 2021–2022 Computer Engineering admissions data examining how comparable national ranks can produce different German grade-conversion outcomes.",
     stack: "Python · pandas · Matplotlib · LaTeX",
+    visual: "research",
     links: [
       { label: "Paper", href: "/ege-tekin-yks-score-volatility.pdf" },
     ],
@@ -69,6 +73,7 @@ const selectedProjects: SelectedProject[] = [
     description:
       "A pairwise decision tool that guides users from a 99-dish catalogue to one choice. Built with strict TypeScript, tested with Vitest, and deployed on Vercel.",
     stack: "TypeScript · Vite · Vitest · Vercel",
+    visual: "decision",
     links: [
       { label: "Live", href: "https://dishes-helper.vercel.app/" },
       { label: "Source", href: "https://github.com/wh1tebrun/dishes" },
@@ -251,9 +256,69 @@ function ExternalLink({ link, project }: { link: ProjectLink; project: string })
   );
 }
 
+function ProjectSpecimen({ type }: { type: SelectedProject["visual"] }) {
+  if (type === "studio") {
+    return (
+      <div className="project-specimen specimen-studio" aria-hidden="true">
+        <span className="specimen-label">Reference workflow</span>
+        <div className="studio-frame">
+          <div className="studio-toolbar"><i /><i /><i /><b>IMAGE / 01</b></div>
+          <div className="studio-workspace">
+            <div className="studio-roles">
+              <span>Identity</span><span>Style</span><span>Layout</span>
+            </div>
+            <div className="studio-prompt-lines"><i /><i /><i /></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "circuit") {
+    return (
+      <div className="project-specimen specimen-circuit" aria-hidden="true">
+        <span className="specimen-label">Compiler trace</span>
+        <code>/ab(c|d)*/</code>
+        <div className="circuit-flow">
+          <span>Regex</span><i>→</i><span>NFA</span><i>→</i><span>AIG</span>
+        </div>
+        <div className="circuit-output"><span>0101 1010</span><span>1011 0010</span></div>
+      </div>
+    );
+  }
+
+  if (type === "research") {
+    return (
+      <div className="project-specimen specimen-research" aria-hidden="true">
+        <span className="specimen-label">Rank / score variance</span>
+        <div className="plot-scale"><span>Score</span><i /><i /><i /></div>
+        <div className="plot-bars">
+          <div><i className="bar-2021" /><i className="bar-2022" /><span>5k</span></div>
+          <div><i className="bar-2021" /><i className="bar-2022" /><span>10k</span></div>
+          <div><i className="bar-2021" /><i className="bar-2022" /><span>20k</span></div>
+          <div><i className="bar-2021" /><i className="bar-2022" /><span>30k</span></div>
+        </div>
+        <div className="plot-key"><span>2021</span><span>2022</span></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="project-specimen specimen-decision" aria-hidden="true">
+      <span className="specimen-label">Pairwise reduction</span>
+      <div className="decision-count"><b>99</b><i>→</i><b>1</b></div>
+      <div className="decision-pairs">
+        <span>Pasta</span><i>or</i><span>Sushi</span>
+      </div>
+      <div className="decision-result">One clear choice</div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <>
+      <div className="scroll-progress" aria-hidden="true" />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -267,6 +332,11 @@ export default function Home() {
           </div>
 
           <div className="masthead-aside">
+            <div className="masthead-folio" aria-hidden="true">
+              <span>Folio 01</span>
+              <strong>ET</strong>
+              <small>Freiburg · 2026</small>
+            </div>
             <Image
               className="headshot"
               src="/ege-tekin-portrait.jpg"
@@ -284,7 +354,7 @@ export default function Home() {
         </section>
 
         <section className="summary" aria-labelledby="summary-title">
-          <h2 className="section-label" id="summary-title">Profile</h2>
+          <h2 className="section-label" data-index="01" id="summary-title">Profile</h2>
           <div>
             <p>
               Software engineer working across full-stack products, systems software, and applied
@@ -295,7 +365,7 @@ export default function Home() {
         </section>
 
         <section className="resume-section anchor-target" id="background" aria-labelledby="experience-title">
-          <h2 className="section-label" id="experience-title">Experience</h2>
+          <h2 className="section-label" data-index="02" id="experience-title">Experience</h2>
           <div className="section-content">
             <article className="cv-entry">
               <div className="entry-date">Apr 2026 – Apr 2027</div>
@@ -317,7 +387,7 @@ export default function Home() {
         </section>
 
         <section className="resume-section" aria-labelledby="education-title">
-          <h2 className="section-label" id="education-title">Education</h2>
+          <h2 className="section-label" data-index="03" id="education-title">Education</h2>
           <div className="section-content">
             <article className="cv-entry">
               <time className="entry-date" dateTime="2026-09">Sep 2026</time>
@@ -353,26 +423,29 @@ export default function Home() {
         </section>
 
         <section className="resume-section anchor-target" id="work" aria-labelledby="work-title">
-          <h2 className="section-label" id="work-title">Selected work</h2>
+          <h2 className="section-label" data-index="04" id="work-title">Selected work</h2>
           <div className="section-content">
             {selectedProjects.map((project) => (
               <article className="cv-entry project-entry" key={project.title}>
                 <time className="entry-date" dateTime={project.dateISO}>{project.date}</time>
-                <div>
-                  <header className="entry-heading project-heading">
-                    <div>
-                      <h3>{project.title}</h3>
-                      <p>{project.type}</p>
-                    </div>
-                    <div className="entry-links">
-                      {project.links.map((link) => (
-                        <ExternalLink link={link} project={project.title} key={link.href} />
-                      ))}
-                    </div>
-                  </header>
-                  {project.fullTitle ? <p className="project-full-title">{project.fullTitle}</p> : null}
-                  <p className="entry-description">{project.description}</p>
-                  <p className="technology-line"><span>Technology</span>{project.stack}</p>
+                <div className="project-entry-body">
+                  <div className="project-entry-copy">
+                    <header className="entry-heading project-heading">
+                      <div>
+                        <h3>{project.title}</h3>
+                        <p>{project.type}</p>
+                      </div>
+                      <div className="entry-links">
+                        {project.links.map((link) => (
+                          <ExternalLink link={link} project={project.title} key={link.href} />
+                        ))}
+                      </div>
+                    </header>
+                    {project.fullTitle ? <p className="project-full-title">{project.fullTitle}</p> : null}
+                    <p className="entry-description">{project.description}</p>
+                    <p className="technology-line"><span>Technology</span>{project.stack}</p>
+                  </div>
+                  <ProjectSpecimen type={project.visual} />
                 </div>
               </article>
             ))}
@@ -380,7 +453,7 @@ export default function Home() {
         </section>
 
         <section className="resume-section archive-section" aria-labelledby="archive-title">
-          <h2 className="section-label" id="archive-title">Additional work</h2>
+          <h2 className="section-label" data-index="05" id="archive-title">Additional work</h2>
           <div className="section-content">
             <details className="archive anchor-target" id="project-index">
               <summary>
@@ -420,7 +493,7 @@ export default function Home() {
         </section>
 
         <section className="resume-section" aria-labelledby="skills-title">
-          <h2 className="section-label" id="skills-title">Technical profile</h2>
+          <h2 className="section-label" data-index="06" id="skills-title">Technical profile</h2>
           <div className="section-content profile-lines">
             <dl>
               <div>
@@ -444,7 +517,7 @@ export default function Home() {
         </section>
 
         <section className="resume-section contact anchor-target" id="contact" aria-labelledby="contact-title">
-          <h2 className="section-label" id="contact-title">Contact</h2>
+          <h2 className="section-label" data-index="07" id="contact-title">Contact</h2>
           <div className="section-content contact-content">
             <p>Available for freelance websites, web applications, and product prototypes.</p>
             <a className="email-link" href="mailto:ege.tekin@web.de">ege.tekin@web.de</a>
