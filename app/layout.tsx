@@ -4,7 +4,7 @@ import "./globals.css";
 
 const title = "Ege Tekin — Full-Stack Developer · MedTech Focus";
 const description =
-  "Portfolio of Ege Tekin, completing a B.Sc. in Computer Science at the University of Freiburg, working at Fraunhofer ISE, and preparing to begin Medicine at Akdeniz University.";
+  "Portfolio of Ege Tekin, completing a B.Sc. in Computer Science at the University of Freiburg, working at Fraunhofer ISE, and admitted to Medicine at Akdeniz University.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     openGraph: {
       title,
-      description: "Full-stack product development with a long-term direction in MedTech.",
+      description: "Full-stack product development with a long-term focus on MedTech.",
       type: "website",
       images: socialImage
         ? [{ url: socialImage, alt: "Ege Tekin — Full-Stack Developer, MedTech Focus" }]
@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title,
-      description: "Full-stack product development with a long-term direction in MedTech.",
+      description: "Full-stack product development with a long-term focus on MedTech.",
       images: socialImage ? [socialImage] : undefined,
     },
   };

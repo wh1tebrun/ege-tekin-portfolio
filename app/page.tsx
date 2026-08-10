@@ -1,54 +1,141 @@
+import Image from "next/image";
+
 const projects = [
   {
     number: "01",
     title: "Regex → AIGER",
-    stage: "Bachelor’s thesis",
-    type: "Formal methods · Hardware-oriented systems",
+    stage: "Apr 2026 · Bachelor’s thesis",
+    type: "Formal methods · Circuit generation",
     description:
       "A Python compiler pipeline that translates regular expressions into bounded or sequential AIGER circuits, backed by simulation, benchmarks, and model-checking artifacts.",
-    technologies: ["Python", "AIGER", "Model Checking"],
+    technologies: ["Python", "AIGER", "Model checking"],
     visual: "architecture",
-    status: "View source ↗",
-    href: "https://github.com/wh1tebrun/string-to-aiger",
+    links: [
+      {
+        label: "GitHub ↗",
+        href: "https://github.com/wh1tebrun/string-to-aiger",
+      },
+    ],
     featured: true,
   },
   {
     number: "02",
-    title: "Dishes Helper",
-    stage: "Live web project",
-    type: "Decision game · Product experience",
+    title: "YKS Score Volatility",
+    stage: "Feb 2026 · Research project",
+    type: "Education data · Admissions analysis",
     description:
-      "A TypeScript web game that reduces choice overload by letting users compare dishes pair by pair until one clear winner remains.",
-    technologies: ["TypeScript", "Web Game", "Vercel"],
-    visual: "health",
-    status: "Open live project ↗",
-    href: "https://dishes-helper.vercel.app/",
+      "A Python analysis of public 2021–2022 Computer Engineering admissions data, showing how comparable ranks can map to different YKS scores and year-dependent outcomes under the Bavarian conversion formula.",
+    technologies: ["Python", "pandas", "Matplotlib", "LaTeX"],
+    visual: "paper",
+    links: [
+      {
+        label: "GitHub ↗",
+        href: "https://github.com/freiburg-missing-semester-course/project-wh1tebrun",
+      },
+    ],
   },
   {
     number: "03",
-    title: "YKS Score Volatility",
-    stage: "Research paper",
-    type: "Education data · Admissions analysis",
+    title: "Dishes Helper",
+    stage: "Mar 2024 · Web game",
+    type: "Decision game · Product experience",
     description:
-      "A paper titled “Year-Dependent YKS Score Volatility and Implications for German NC Admissions,” examining year-to-year variation and its admissions context.",
-    technologies: ["YKS", "German NC", "Analysis"],
-    visual: "paper",
-    status: "Publication details pending ↗",
-    href: undefined,
+      "A TypeScript web game that reduces choice overload by letting users compare a filtered set of dishes pair by pair until one winner remains.",
+    technologies: ["TypeScript", "Vite", "Vitest", "Vercel"],
+    visual: "health",
+    links: [
+      { label: "Live demo ↗", href: "https://dishes-helper.vercel.app/" },
+      { label: "GitHub ↗", href: "https://github.com/wh1tebrun/dishes" },
+    ],
   },
 ];
 
-const experiments = [
-  ["Egelingo", "Language-learning website"],
-  ["Ege Image Studio", "Image software"],
-  ["2D Football", "Browser game"],
-  ["Bisiklet", "Web game"],
-  ["Balloon Game", "Unity"],
-  ["Cannon Mechanics", "Unity prototype"],
-  ["Delusions of Grandeur", "MonoGame"],
-  ["Country Flags Quiz", "Quiz game"],
-  ["EGE Fitness", "Fan website"],
-  ["ROSE", "Project details pending"],
+const archiveProjects = [
+  {
+    date: "Aug 2026",
+    dateISO: "2026-08",
+    title: "Ege Image Studio",
+    kind: "Product prototype · Next.js / TypeScript",
+    description:
+      "A private image-workflow prototype with reference roles, editable prompt flows, deterministic mock generation, and automated browser tests.",
+    status: "Private build",
+  },
+  {
+    date: "May 2026",
+    dateISO: "2026-05",
+    title: "RideQuest",
+    kind: "Browser game · React / TypeScript",
+    description:
+      "A ten-stage cycling arcade game from Freiburg to Konstanz with traffic avoidance, collectibles, stamina, scoring, and locally saved progress.",
+    status: "Private build",
+  },
+  {
+    date: "May 2026",
+    dateISO: "2026-05",
+    title: "WG Cup — 2D Football",
+    kind: "Browser game · Canvas / JavaScript",
+    description:
+      "A local two-player football game with character selection, keyboard controls, shooting, collision physics, and first-to-three scoring.",
+    status: "Private build",
+  },
+  {
+    date: "Jul 2025",
+    dateISO: "2025-07",
+    title: "Delusions of Grandeur",
+    kind: "Team game project · MonoGame / C#",
+    description:
+      "A team-built action game with distinct combat roles, animated enemies, item systems, checkpoints, tiled maps, custom shaders, and a boss encounter.",
+    links: [
+      { label: "GitHub ↗", href: "https://github.com/wh1tebrun/dog" },
+    ],
+  },
+  {
+    date: "Feb 2025",
+    dateISO: "2025-02",
+    title: "ROSE",
+    kind: "Interactive story · Three.js / JavaScript",
+    description:
+      "A customizable 3D story experience that stores names, colors, and messages locally and creates shareable links from the same settings.",
+    status: "Private build",
+  },
+  {
+    date: "Oct 2024",
+    dateISO: "2024-10",
+    title: "EGE Fitness Fan Page",
+    kind: "Responsive website · HTML / CSS / JavaScript",
+    description:
+      "A mobile-friendly fan page with curated shorts, an accessible information dialog, a lightbox, and a responsive Swiper gallery.",
+    status: "Private build",
+  },
+  {
+    date: "Sep 2024",
+    dateISO: "2024-09",
+    title: "Egelingo",
+    kind: "Learning platform · HTML / CSS / JavaScript",
+    description:
+      "A four-language learning site with subject-based lessons, XP, streaks, quests, achievements, a shop, and local progress tracking.",
+    status: "Private build",
+  },
+  {
+    date: "Mar 2024",
+    dateISO: "2024-03",
+    title: "Country Quiz",
+    kind: "Quiz game · HTML / CSS / JavaScript",
+    description:
+      "A geography game for practicing flags, map locations, and capital cities across selectable continents, with a leaderboard view.",
+    links: [{ label: "Live demo ↗", href: "https://country-fawn.vercel.app/" }],
+  },
+  {
+    date: "Jun 2023",
+    dateISO: "2023-06",
+    title: "Balloon Game",
+    kind: "Arcade game · Unity / C#",
+    description:
+      "A survival game built around climbing through obstacles, avoiding birds, and using movement, cloud-breaking, acceleration, and shooting abilities.",
+    links: [
+      { label: "Video demo ↗", href: "https://www.youtube.com/watch?v=mxrglnKJKCQ" },
+    ],
+  },
 ];
 
 const capabilities = [
@@ -74,17 +161,25 @@ export default function Home() {
       <header className="site-header">
         <nav className="nav-shell" aria-label="Primary navigation">
           <a className="brand" href="#top" aria-label="Ege Tekin, back to top">
-            <span className="brand-mark">ET</span>
+            <span className="brand-mark" aria-hidden="true">
+              <Image
+                src="/ege-tekin-portrait.jpg"
+                alt=""
+                width={384}
+                height={384}
+                sizes="38px"
+              />
+            </span>
             <span className="brand-copy">
               <strong>Ege Tekin</strong>
-              <small>Full-stack · MedTech</small>
+              <small>Software · Research · Medicine</small>
             </span>
           </a>
 
           <div className="nav-links">
             <a href="#projects">Work</a>
-            <a href="#about">About</a>
             <a href="#experience">Experience</a>
+            <a href="#about">About</a>
             <a className="nav-contact" href="#contact">
               Contact <span aria-hidden="true">↗</span>
             </a>
@@ -97,16 +192,16 @@ export default function Home() {
           <div className="hero-copy">
             <p className="eyebrow">
               <span className="signal-dot" aria-hidden="true" />
-              Full-stack developer · MedTech direction
+              Full-stack developer · MedTech focus
             </p>
             <h1 id="hero-title">
-              I build full-stack products—and explore <em>where technology meets medicine.</em>
+              I build practical software and explore <em>how technology can support medicine.</em>
             </h1>
             <p className="hero-intro">
               I&apos;m completing a B.Sc. in Computer Science at the University of
-              Freiburg, working at Fraunhofer ISE, and beginning Medicine at Akdeniz
-              University in September 2026. I build web and app products today while
-              working toward the intersection of software and healthcare.
+              Freiburg and working in photovoltaic R&amp;D at Fraunhofer ISE. I have
+              been admitted to study Medicine at Akdeniz University, beginning in Sep
+              2026.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">
@@ -119,15 +214,15 @@ export default function Home() {
 
             <dl className="hero-facts" aria-label="Profile highlights">
               <div>
-                <dt>B.Sc. candidate</dt>
-                <dd>University of Freiburg</dd>
+                <dt>B.Sc. Computer Science</dt>
+                <dd>University of Freiburg · Oct 2023 – Sep 2026</dd>
               </div>
               <div>
-                <dt>Working student</dt>
-                <dd>Fraunhofer ISE · Since Apr 2026</dd>
+                <dt>Working Student</dt>
+                <dd>Fraunhofer ISE · Apr 2026 – Apr 2027</dd>
               </div>
               <div>
-                <dt>Incoming Medicine</dt>
+                <dt>Medicine · Admitted</dt>
                 <dd>Akdeniz University · Sep 2026</dd>
               </div>
             </dl>
@@ -174,9 +269,9 @@ export default function Home() {
             <i aria-hidden="true" />
             <span>Applied research</span>
             <i aria-hidden="true" />
-            <span>Medicine 2026</span>
+            <span>Medicine · Admitted</span>
             <i aria-hidden="true" />
-            <span>MedTech direction</span>
+            <span>MedTech focus</span>
           </div>
         </div>
 
@@ -186,8 +281,8 @@ export default function Home() {
             <div>
               <h2 id="projects-title">Research, systems, and playful builds.</h2>
               <p>
-                A first selection from my real work. Full case studies, repositories,
-                and technical details will be added as the archive is organized.
+                Selected research, software, and game projects, with source code and
+                live demos where available.
               </p>
             </div>
           </div>
@@ -238,19 +333,20 @@ export default function Home() {
                         <li key={technology}>{technology}</li>
                       ))}
                     </ul>
-                    {project.href ? (
-                      <a
-                        className="coming-soon"
-                        href={project.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`${project.status.replace(" ↗", "")} for ${project.title}`}
-                      >
-                        {project.status}
-                      </a>
-                    ) : (
-                      <span className="coming-soon">{project.status}</span>
-                    )}
+                    <div className="project-links">
+                      {project.links.map((link) => (
+                        <a
+                          className="coming-soon"
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          key={link.href}
+                          aria-label={`${link.label.replace(" ↗", "")} for ${project.title}`}
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </article>
@@ -261,19 +357,30 @@ export default function Home() {
             <div className="experiment-heading">
               <p className="section-label">Project archive</p>
               <div>
-                <h3 id="experiments-title">Selected experiments</h3>
+                <h3 id="experiments-title">More projects</h3>
                 <p>
-                  Games, websites, and product experiments that will become short case
-                  studies as their demos and source code are prepared.
+                  Additional web, game, and graphics projects from my GitHub archive,
+                  ordered from newest to oldest by their first commit.
                 </p>
               </div>
             </div>
             <ul className="experiment-list">
-              {experiments.map(([title, type], index) => (
-                <li key={title}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{title}</strong>
-                  <small>{type}</small>
+              {archiveProjects.map((project) => (
+                <li key={project.title}>
+                  <time dateTime={project.dateISO}>{project.date}</time>
+                  <div className="experiment-copy">
+                    <strong>{project.title}</strong>
+                    <p>{project.description}</p>
+                  </div>
+                  <small>{project.kind}</small>
+                  <div className="experiment-links">
+                    {project.links?.map((link) => (
+                      <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>
+                        {link.label}
+                      </a>
+                    ))}
+                    {project.status ? <span>{project.status}</span> : null}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -287,8 +394,8 @@ export default function Home() {
               <div>
                 <h2 id="experience-title">Computer Science.<br />Research. Medicine.</h2>
                 <p>
-                  A technical foundation, current experience in applied research, and
-                  the next chapter in medicine.
+                  My current path across technical education, applied research, and
+                  medicine, ordered from newest to oldest.
                 </p>
               </div>
             </div>
@@ -297,52 +404,48 @@ export default function Home() {
               <article className="timeline-card">
                 <div className="timeline-index">01</div>
                 <div className="timeline-main">
-                  <p className="timeline-type">Experience</p>
-                  <h3>Fraunhofer Institute for Solar Energy Systems ISE</h3>
+                  <p className="timeline-type">Education · Admitted</p>
+                  <h3>Akdeniz University</h3>
                   <p>
-                    Working in the Interconnection &amp; Encapsulation team in an applied
-                    photovoltaic R&amp;D environment. My hands-on work includes peel
-                    testing; further responsibilities will be documented as individual
-                    case-study details are cleared.
+                    Admitted to the Medicine program, beginning in Sep 2026. Ranked
+                    5,493rd nationally in Türkiye&apos;s university entrance examination.
                   </p>
                 </div>
                 <div className="timeline-detail">
-                  <strong>Working Student</strong>
-                  <span>Apr 2026 — Apr 2027 contract</span>
+                  <strong>Medicine</strong>
+                  <span>Sep 2026</span>
                 </div>
               </article>
 
               <article className="timeline-card">
                 <div className="timeline-index">02</div>
                 <div className="timeline-main">
-                  <p className="timeline-type">Education</p>
-                  <h3>University of Freiburg</h3>
+                  <p className="timeline-type">Experience · Current</p>
+                  <h3>Fraunhofer Institute for Solar Energy Systems ISE</h3>
                   <p>
-                    Completing a B.Sc. in Computer Science (Informatik), building a
-                    broad foundation across software, algorithms, and computer systems.
+                    Contribute to applied photovoltaic R&amp;D in the Interconnection &amp;
+                    Encapsulation team, with hands-on work in peel testing.
                   </p>
                 </div>
                 <div className="timeline-detail">
-                  <strong>B.Sc. Computer Science</strong>
-                  <span>Oct 2023 — Sep 2026 expected</span>
+                  <strong>Working Student</strong>
+                  <span>Apr 2026 – Apr 2027</span>
                 </div>
               </article>
 
               <article className="timeline-card">
                 <div className="timeline-index">03</div>
                 <div className="timeline-main">
-                  <p className="timeline-type">Next chapter</p>
-                  <h3>Akdeniz University</h3>
+                  <p className="timeline-type">Education · In progress</p>
+                  <h3>University of Freiburg</h3>
                   <p>
-                    Admitted to Medicine and preparing to begin in September 2026,
-                    with a long-term interest in connecting computing, engineering,
-                    and healthcare. Ranked 5,493rd nationally in Türkiye&apos;s university
-                    entrance examination.
+                    Completing a B.Sc. in Computer Science (Informatik), with a broad
+                    foundation across software, algorithms, and computer systems.
                   </p>
                 </div>
                 <div className="timeline-detail">
-                  <strong>Incoming Medical Student</strong>
-                  <span>Academic year 2026/27</span>
+                  <strong>B.Sc. Computer Science</strong>
+                  <span>Oct 2023 – Sep 2026</span>
                 </div>
               </article>
             </div>
@@ -358,9 +461,9 @@ export default function Home() {
           </div>
           <div className="about-copy">
             <p className="about-intro">
-              Computer Science gives me the technical foundation, Fraunhofer ISE gives
-              me experience in applied research, and Medicine will add a clinical
-              perspective. My long-term direction is MedTech.
+              Computer Science gives me the technical foundation, and Fraunhofer ISE
+              gives me experience in applied research. I have been admitted to study
+              Medicine beginning in Sep 2026, with a long-term focus on MedTech.
             </p>
             <p>
               Along the way, I enjoy building useful websites, web apps, and product
@@ -419,7 +522,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="section-shell footer-inner">
           <p>© 2026 Ege Tekin</p>
-          <p>Full-stack development / MedTech direction</p>
+          <p>Full-stack development / MedTech focus</p>
           <a href="#top">Back to top ↑</a>
         </div>
       </footer>
