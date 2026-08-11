@@ -6,6 +6,8 @@
   --rule: #bdbcb7;
   --rule-light: #e7e5df;
   --accent: #1647d4;
+  --accent-soft: color-mix(in srgb, var(--accent) 9%, transparent);
+  --paper-wash: #f7f5ef;
   --shell: min(1120px, calc(100vw - 48px));
   --anchor-gap: 28px;
   --font-instrument: "Instrument Serif";
@@ -27,6 +29,10 @@ body {
   margin: 0;
   overflow-x: clip;
   background: var(--page);
+  background-image:
+    radial-gradient(circle at 14% 9%, color-mix(in srgb, var(--accent) 4%, transparent), transparent 29rem),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.22), transparent 42%);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
@@ -120,11 +126,33 @@ ul {
 }
 
 .resume {
+  position: relative;
+  isolation: isolate;
   margin-block: 28px;
   padding: 68px 72px 82px;
   border: 1px solid #d4d2cc;
-  background: var(--paper);
-  box-shadow: 0 16px 48px rgba(23, 23, 23, 0.055);
+  background:
+    linear-gradient(180deg, rgba(22, 71, 212, 0.018), transparent 360px),
+    var(--paper);
+  box-shadow:
+    0 22px 70px rgba(23, 23, 23, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.resume::before {
+  position: absolute;
+  top: 370px;
+  bottom: 112px;
+  left: 24px;
+  z-index: -1;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 32%, transparent) 0 22px,
+    transparent 22px 32px
+  );
+  content: "";
+  pointer-events: none;
 }
 
 .masthead {
@@ -166,6 +194,55 @@ ul {
   z-index: 1;
 }
 
+.masthead > .journey-mark {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.journey-mark::before {
+  position: absolute;
+  top: 62px;
+  left: 47%;
+  width: 250px;
+  height: 112px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 0 100% 0 0;
+  content: "";
+  transform: rotate(-8deg);
+  transform-origin: left center;
+}
+
+.journey-mark span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 72%, transparent);
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--paper) 82%, transparent);
+}
+
+.journey-mark span:nth-child(1) {
+  top: 56px;
+  left: 47%;
+}
+
+.journey-mark span:nth-child(2) {
+  top: 82px;
+  left: 59%;
+}
+
+.journey-mark span:nth-child(3) {
+  top: 148px;
+  left: 69%;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
 .document-label,
 .section-label,
 .project-overline {
@@ -203,6 +280,15 @@ ul {
 
 .role > span:first-child {
   white-space: nowrap;
+}
+
+.role > span:last-child {
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 1.13em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .location {
@@ -264,6 +350,8 @@ ul {
   object-fit: cover;
   object-position: center 22%;
   filter: saturate(0.86);
+  box-shadow: 9px 9px 0 var(--paper-wash), 10px 10px 0 var(--rule-light);
+  transition: filter 240ms ease, transform 240ms ease, box-shadow 240ms ease;
 }
 
 .masthead-links {
@@ -312,14 +400,29 @@ ul {
 
 .summary,
 .resume-section {
+  position: relative;
   display: grid;
   grid-template-columns: 136px minmax(0, 1fr);
   gap: 42px;
   border-bottom: 1px solid var(--rule);
 }
 
+.summary::before,
+.resume-section::before {
+  position: absolute;
+  top: 58px;
+  left: -52px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 5px var(--paper);
+  content: "";
+}
+
 .summary {
-  padding-block: 46px;
+  padding-block: 66px;
 }
 
 .summary .section-label,
@@ -331,6 +434,14 @@ ul {
   display: grid;
   align-content: start;
   gap: 7px;
+}
+
+.section-label::after {
+  width: 36px;
+  height: 1px;
+  margin-top: 5px;
+  background: color-mix(in srgb, var(--accent) 62%, transparent);
+  content: "";
 }
 
 .section-label::before {
@@ -364,7 +475,19 @@ ul {
 }
 
 .resume-section {
-  padding-block: 52px;
+  padding-block: 66px;
+}
+
+#work {
+  padding-block: 88px;
+}
+
+.archive-section {
+  padding-block: 74px;
+}
+
+.capabilities-section {
+  padding-block: 70px;
 }
 
 .section-content {
@@ -436,11 +559,29 @@ ul {
 }
 
 .project-showcase {
+  position: relative;
+  isolation: isolate;
   padding-bottom: 76px;
+}
+
+.project-showcase::before {
+  position: absolute;
+  top: 2px;
+  right: -5px;
+  z-index: -1;
+  color: color-mix(in srgb, var(--accent) 7%, transparent);
+  content: attr(data-project);
+  font-family: var(--serif);
+  font-size: clamp(7rem, 14vw, 10.5rem);
+  font-style: italic;
+  letter-spacing: -0.08em;
+  line-height: 0.7;
+  pointer-events: none;
 }
 
 .project-showcase + .project-showcase {
   padding-top: 76px;
+  border-top: 1px solid var(--rule-light);
 }
 
 .project-showcase:last-child {
@@ -482,10 +623,12 @@ ul {
   max-width: 660px;
   margin-top: 14px;
   color: var(--ink);
-  font-size: 17px;
-  font-weight: 620;
-  letter-spacing: -0.012em;
-  line-height: 1.5;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.35;
 }
 
 .project-full-title {
@@ -522,13 +665,47 @@ ul {
 }
 
 .project-media {
+  position: relative;
   min-width: 0;
 }
 
+.project-media::before {
+  position: absolute;
+  inset: 13px -11px -11px 13px;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--rule-light));
+  content: "";
+  transition: transform 240ms ease, border-color 240ms ease;
+}
+
+.project-media::after {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  z-index: 2;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--paper);
+  content: "";
+}
+
+.project-showcase--media-right .project-media::before {
+  inset: 13px 13px -11px -11px;
+}
+
+.project-showcase--media-right .project-media::after {
+  right: -5px;
+  left: auto;
+}
+
 .project-image-frame {
+  position: relative;
+  z-index: 1;
   overflow: hidden;
   border: 1px solid var(--rule);
   background: #f3f2ed;
+  box-shadow: 0 16px 34px rgba(23, 23, 23, 0.075);
 }
 
 .project-image-frame img {
@@ -536,7 +713,8 @@ ul {
   height: auto;
   aspect-ratio: 8 / 5;
   object-fit: cover;
-  transition: transform 240ms ease;
+  filter: saturate(0.92) contrast(0.985);
+  transition: transform 320ms ease, filter 320ms ease;
 }
 
 .project-media:hover img {
@@ -545,10 +723,21 @@ ul {
 
 .project-media figcaption {
   margin-top: 9px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: var(--muted);
   font-family: var(--mono);
   font-size: 10px;
   line-height: 1.6;
+}
+
+.project-media figcaption::before {
+  width: 28px;
+  height: 1px;
+  flex: 0 0 auto;
+  background: var(--accent);
+  content: "";
 }
 
 .project-notes > p {
@@ -559,18 +748,20 @@ ul {
 
 .project-notes dl {
   margin-top: 23px;
-  border-top: 1px solid var(--rule-light);
+  padding-left: 18px;
+  border-left: 1px solid color-mix(in srgb, var(--accent) 26%, var(--rule-light));
 }
 
 .project-notes dl > div {
-  padding-block: 12px;
+  padding-block: 0;
   display: grid;
   grid-template-columns: 92px 1fr;
   gap: 14px;
 }
 
 .project-notes dl > div + div {
-  border-top: 1px solid var(--rule-light);
+  margin-top: 12px;
+  border-top: 0;
 }
 
 .project-notes dt {
@@ -700,12 +891,28 @@ ul {
 }
 
 .archive-row {
+  position: relative;
   min-height: 96px;
-  padding-block: 21px;
+  margin-inline: -12px;
+  padding: 21px 12px;
   display: grid;
   grid-template-columns: 112px minmax(170px, 1.25fr) 70px minmax(110px, 0.75fr) auto;
   align-items: start;
   gap: 16px;
+  transition: background-color 180ms ease, padding-left 180ms ease;
+}
+
+.archive-row::before {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 0;
+  width: 1px;
+  background: var(--accent);
+  content: "";
+  opacity: 0;
+  transform: scaleY(0.35);
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .archive-row + .archive-row {
@@ -731,6 +938,13 @@ ul {
   color: var(--ink);
   font-size: 16px;
   line-height: 1.4;
+}
+
+.archive-row .archive-project strong {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.012em;
 }
 
 .archive-project p {
@@ -759,6 +973,9 @@ ul {
 
 .capability-groups > div {
   min-width: 0;
+  padding-left: 18px;
+  border-left: 1px solid var(--rule-light);
+  transition: border-color 180ms ease, transform 180ms ease;
 }
 
 .capability-groups dt {
@@ -779,14 +996,18 @@ ul {
 }
 
 .contact {
+  padding-top: 78px;
   border-bottom: 0;
 }
 
 .contact-content {
+  position: relative;
+  padding-top: 28px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 40px;
+  border-top: 2px solid var(--ink);
 }
 
 .contact-lead {
@@ -817,11 +1038,44 @@ ul {
   align-items: center;
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 21px;
+  font-size: clamp(21px, 2.4vw, 28px);
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-underline-offset: 5px;
   white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .headshot:hover {
+    filter: saturate(1);
+    transform: translate(-2px, -2px);
+    box-shadow: 11px 11px 0 var(--paper-wash), 12px 12px 0 var(--rule-light);
+  }
+
+  .project-media:hover::before {
+    border-color: color-mix(in srgb, var(--accent) 52%, var(--rule-light));
+    transform: translate(2px, 2px);
+  }
+
+  .project-media:hover img {
+    filter: saturate(1) contrast(1);
+    transform: scale(1.018);
+  }
+
+  .archive-row:hover {
+    padding-left: 18px;
+    background: linear-gradient(90deg, var(--accent-soft), transparent 74%);
+  }
+
+  .archive-row:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  .capability-groups > div:hover {
+    border-left-color: var(--accent);
+    transform: translateX(3px);
+  }
 }
 
 .site-footer {
@@ -916,6 +1170,15 @@ ul {
     padding-inline: 56px;
   }
 
+  .resume::before {
+    left: 18px;
+  }
+
+  .summary::before,
+  .resume-section::before {
+    left: -42px;
+  }
+
   .masthead {
     grid-template-columns: minmax(0, 1fr) minmax(330px, 370px);
     gap: 46px;
@@ -936,9 +1199,22 @@ ul {
     padding-inline: 46px;
   }
 
+  .resume::before {
+    left: 16px;
+  }
+
+  .summary::before,
+  .resume-section::before {
+    left: -35px;
+  }
+
   .masthead {
     grid-template-columns: 1fr;
     gap: 36px;
+  }
+
+  .journey-mark {
+    opacity: 0.58;
   }
 
   .masthead-aside {
@@ -998,6 +1274,13 @@ ul {
     padding: 42px 28px 56px;
   }
 
+  .resume::before,
+  .summary::before,
+  .resume-section::before,
+  .journey-mark {
+    display: none;
+  }
+
   .identity h1 {
     font-size: clamp(4rem, 17vw, 5.4rem);
   }
@@ -1023,15 +1306,38 @@ ul {
     gap: 22px;
   }
 
+  .summary {
+    padding-block: 50px;
+  }
+
+  .resume-section {
+    padding-block: 54px;
+  }
+
+  #work {
+    padding-block: 66px;
+  }
+
+  .archive-section,
+  .capabilities-section {
+    padding-block: 58px;
+  }
+
   .summary .section-label,
   .resume-section > .section-label {
     padding-top: 0;
   }
 
   .section-label {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto 1fr;
     align-items: baseline;
     gap: 10px;
+  }
+
+  .section-label::after {
+    width: 100%;
+    margin-top: 0;
+    align-self: center;
   }
 
   .cv-entry {
@@ -1056,12 +1362,27 @@ ul {
     padding-bottom: 54px;
   }
 
+  .project-showcase::before {
+    top: 22px;
+    font-size: clamp(5rem, 22vw, 7.5rem);
+  }
+
   .project-showcase h3 {
     font-size: clamp(2.6rem, 12vw, 3.5rem);
   }
 
   .project-image-frame img {
     width: 100%;
+  }
+
+  .project-media::before,
+  .project-showcase--media-right .project-media::before {
+    inset: 8px -7px -7px 8px;
+  }
+
+  .project-showcase--media-right .project-media::after {
+    right: auto;
+    left: -5px;
   }
 
   .archive-expansion > summary {
@@ -1134,6 +1455,11 @@ ul {
     padding: 34px 20px 48px;
     border: 0;
     box-shadow: none;
+  }
+
+  .project-showcase::before {
+    right: 0;
+    font-size: 5rem;
   }
 
   .masthead {
@@ -1220,7 +1546,13 @@ ul {
   .contact,
   .scroll-progress,
   .project-media,
-  .archive-section {
+  .archive-section,
+  .journey-mark,
+  .resume::before,
+  .summary::before,
+  .resume-section::before,
+  .project-showcase::before,
+  .section-label::after {
     display: none;
   }
 
