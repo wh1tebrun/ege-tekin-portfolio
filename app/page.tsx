@@ -54,6 +54,35 @@ const selectedProjects: SelectedProject[] = [
   },
   {
     index: "02",
+    title: "Freiburg–Konstanz",
+    date: "May 2026",
+    dateISO: "2026-05",
+    type: "Independent project · Browser game",
+    headline: "A Black Forest cycling arcade.",
+    description:
+      "A browser cycling arcade across ten stylized stages from Freiburg to Konstanz, combining traffic avoidance, stamina management, power-ups, combos, and persistent progression.",
+    stack: "React · TypeScript · requestAnimationFrame · CSS · localStorage",
+    layout: "media-right",
+    image: {
+      src: "/projects/freiburg-konstanz.webp",
+      alt: "Freiburg–Konstanz route selection screen with a typographic introduction and illustrated Black Forest stage artwork",
+      caption: "Ten-stage route selection and progression interface.",
+      width: 1440,
+      height: 1000,
+    },
+    links: [
+      {
+        label: "Live",
+        href: "https://wh1tebrun.github.io/freiburg-konstanz/",
+      },
+      {
+        label: "Source",
+        href: "https://github.com/wh1tebrun/freiburg-konstanz",
+      },
+    ],
+  },
+  {
+    index: "03",
     title: "Regex → AIGER",
     date: "Apr 2026",
     dateISO: "2026-04",
@@ -78,7 +107,7 @@ const selectedProjects: SelectedProject[] = [
     ],
   },
   {
-    index: "03",
+    index: "04",
     title: "YKS Score Volatility",
     fullTitle:
       "Year-Dependent YKS Score Volatility and Unfair Outcomes Under the Bavarian Grade Conversion Formula",
@@ -102,7 +131,7 @@ const selectedProjects: SelectedProject[] = [
     ],
   },
   {
-    index: "04",
+    index: "05",
     title: "Dishes Helper",
     date: "Mar 2024",
     dateISO: "2024-03",
@@ -130,15 +159,6 @@ const projectIndex = [
   {
     year: "2026",
     projects: [
-      {
-        date: "May 2026",
-        dateISO: "2026-05",
-        title: "Freiburg–Konstanz",
-        description: "A ten-stage browser cycling game with traffic, stamina, and scoring systems.",
-        area: "Game",
-        stack: "React · TypeScript",
-        links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/bisiklet" }],
-      },
       {
         date: "May 2026",
         dateISO: "2026-05",
@@ -281,7 +301,6 @@ const projectIndex = [
 ];
 
 const primaryArchiveTitles = [
-  "Freiburg–Konstanz",
   "WG Cup — 2D Football",
   "ROSE",
   "Delusions of Grandeur",
@@ -332,7 +351,10 @@ function ExternalLink({ link, project }: { link: ProjectLink; project: string })
 
 function ProjectShowcase({ project }: { project: SelectedProject }) {
   return (
-    <article className={`project-showcase project-showcase--${project.layout}`}>
+    <article
+      className={`project-showcase project-showcase--${project.layout}`}
+      data-project={project.index}
+    >
       <header className="project-showcase-header">
         <p className="project-overline">
           <span>Project {project.index}</span>
@@ -417,6 +439,11 @@ export default function Home() {
 
       <main className="resume section-shell" id="main-content" tabIndex={-1}>
         <section className="masthead anchor-target" id="top" aria-labelledby="page-title">
+          <div className="journey-mark" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
           <div className="identity">
             <p className="document-label">Résumé · August 2026</p>
             <h1 id="page-title">Ege Tekin</h1>

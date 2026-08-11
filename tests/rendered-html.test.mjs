@@ -144,7 +144,7 @@ test("uses a seven-section editorial résumé information architecture", async (
   assert.doesNotMatch(page, /className="hero|hero-|className="credibility/);
 });
 
-test("keeps exactly four selected projects in newest-first order", async () => {
+test("keeps exactly five selected projects in newest-first order", async () => {
   const page = await readFile(pageUrl, "utf8");
   const selectedData = dataBlock(
     page,
@@ -154,22 +154,28 @@ test("keeps exactly four selected projects in newest-first order", async () => {
 
   assert.equal(
     (selectedData.match(/\n\s+title:\s*"/g) || []).length,
-    4,
-    "Selected work must contain exactly four projects",
+    5,
+    "Selected work must contain exactly five projects",
   );
   assertInOrder(
     selectedData,
-    ["Ege Image Studio", "Regex → AIGER", "YKS Score Volatility", "Dishes Helper"],
+    [
+      "Ege Image Studio",
+      "Freiburg–Konstanz",
+      "Regex → AIGER",
+      "YKS Score Volatility",
+      "Dishes Helper",
+    ],
     "Selected project",
   );
   assertInOrder(
     selectedData,
-    ["Aug 2026", "Apr 2026", "Feb 2026", "Mar 2024"],
+    ["Aug 2026", "May 2026", "Apr 2026", "Feb 2026", "Mar 2024"],
     "Selected project date",
   );
 });
 
-test("keeps all twelve archive projects chronological while curating seven for the initial view", async () => {
+test("keeps all eleven archive projects chronological while curating six for the initial view", async () => {
   const page = await readFile(pageUrl, "utf8");
   const additionalData = dataBlock(
     page,
@@ -187,13 +193,12 @@ test("keeps all twelve archive projects chronological while curating seven for t
 
   assert.equal(
     (additionalData.match(/\n\s+title:\s*"/g) || []).length,
-    12,
-    "Additional projects must contain exactly twelve non-selected projects",
+    11,
+    "Additional projects must contain exactly eleven non-selected projects",
   );
   assertInOrder(
     additionalData,
     [
-      "Freiburg–Konstanz",
       "WG Cup — 2D Football",
       "ROSE",
       "Delusions of Grandeur",
@@ -212,7 +217,6 @@ test("keeps all twelve archive projects chronological while curating seven for t
   assert.deepEqual(
     primaryTitles,
     [
-      "Freiburg–Konstanz",
       "WG Cup — 2D Football",
       "ROSE",
       "Delusions of Grandeur",
@@ -220,9 +224,9 @@ test("keeps all twelve archive projects chronological while curating seven for t
       "Egelingo",
       "Terminal Blocks",
     ],
-    "The initial archive view must contain the seven curated projects in chronological order",
+    "The initial archive view must contain the six curated projects in chronological order",
   );
-  assert.equal(new Set(primaryTitles).size, 7, "Curated archive titles must be unique");
+  assert.equal(new Set(primaryTitles).size, 6, "Curated archive titles must be unique");
   for (const title of primaryTitles) {
     assert.ok(additionalData.includes(`title: "${title}"`), `Unknown curated project: ${title}`);
   }
@@ -238,6 +242,7 @@ test("keeps all twelve archive projects chronological while curating seven for t
 
   for (const selectedTitle of [
     "Ege Image Studio",
+    "Freiburg–Konstanz",
     "Regex → AIGER",
     "YKS Score Volatility",
     "Dishes Helper",
@@ -265,7 +270,7 @@ test("connects every verified project, publication, contact, and profile link", 
     "https://github.com/wh1tebrun/string-to-aiger",
     "https://github.com/wh1tebrun/ege-image-studio",
     "https://github.com/wh1tebrun/dishes",
-    "https://github.com/wh1tebrun/bisiklet",
+    "https://github.com/wh1tebrun/freiburg-konstanz",
     "https://github.com/wh1tebrun/football-game",
     "https://github.com/wh1tebrun/rose",
     "https://github.com/wh1tebrun/delusions-of-grandeur-case-study",
@@ -277,6 +282,7 @@ test("connects every verified project, publication, contact, and profile link", 
     "https://github.com/wh1tebrun/python",
     "https://github.com/wh1tebrun/game",
     "https://dishes-helper.vercel.app/",
+    "https://wh1tebrun.github.io/freiburg-konstanz/",
     "https://country-fawn.vercel.app/",
     "https://www.youtube.com/watch?v=mxrglnKJKCQ",
     "https://www.linkedin.com/in/tekinege/",
@@ -391,6 +397,10 @@ test("uses screenshot-led project showcases across responsive and print layouts"
       "Reference organization and prompt refinement workspace.",
     ],
     [
+      "/projects/freiburg-konstanz.webp",
+      "Ten-stage route selection and progression interface.",
+    ],
+    [
       "/projects/regex-aiger.webp",
       "Compilation pipeline from regular-expression constraints to ASCII AIGER.",
     ],
@@ -414,7 +424,7 @@ test("uses screenshot-led project showcases across responsive and print layouts"
   assert.match(page, /src=\{project\.image\.src\}/);
   assert.match(page, /alt=\{project\.image\.alt\}/);
   assert.match(page, /<figcaption>\{project\.image\.caption\}<\/figcaption>/);
-  assert.equal((selectedData.match(/\n\s+image:\s*\{/g) || []).length, 4);
+  assert.equal((selectedData.match(/\n\s+image:\s*\{/g) || []).length, 5);
 
   for (const [src, caption] of screenshots) {
     assert.ok(selectedData.includes(`src: "${src}"`), `Missing screenshot: ${src}`);
