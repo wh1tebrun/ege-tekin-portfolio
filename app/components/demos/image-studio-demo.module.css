@@ -1,0 +1,444 @@
+.demo {
+  --studio-accent: #d76e4a;
+  overflow: hidden;
+  color: #f5f0e6;
+  border: 1px solid rgba(30, 33, 35, 0.35);
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 74% 8%, color-mix(in srgb, var(--studio-accent) 24%, transparent), transparent 28%),
+    #171a1b;
+  box-shadow: 0 28px 70px rgba(25, 27, 28, 0.2);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.72rem 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(245, 240, 230, 0.72);
+  font-size: 0.68rem;
+  letter-spacing: 0.035em;
+}
+
+.toolbar p {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.statusDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--studio-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--studio-accent) 16%, transparent);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(145px, 0.72fr) minmax(230px, 1.22fr) minmax(210px, 0.88fr);
+  min-height: 340px;
+}
+
+.workspace > * {
+  min-width: 0;
+  padding: clamp(0.85rem, 1.8vw, 1.3rem);
+}
+
+.workspace > * + * {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.panelLabel,
+.promptPanel label {
+  display: block;
+  margin: 0 0 1rem;
+  color: rgba(245, 240, 230, 0.62);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.referenceGrid {
+  display: grid;
+  grid-template-columns: 1fr 0.72fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.55rem;
+  height: 215px;
+}
+
+.referenceGrid > div {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #282b2d;
+}
+
+.referenceMeta {
+  position: absolute;
+  right: 0.35rem;
+  bottom: 0.35rem;
+  left: 0.35rem;
+  padding: 0.4rem 0.45rem;
+  display: grid;
+  gap: 0.16rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(11, 12, 13, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.referencePortrait {
+  grid-row: 1 / -1;
+}
+
+.referencePortraitImage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-repeat: no-repeat;
+  filter: saturate(0.88) contrast(1.04);
+  transition: background-image 180ms ease;
+}
+
+.referencePalette {
+  isolation: isolate;
+}
+
+.referencePalette::before,
+.referenceLight::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.14), transparent 45%);
+  content: "";
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.referenceMeta small {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.referenceMeta strong {
+  font-size: 0.58rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.referenceNote {
+  margin: 0.8rem 0 0;
+  color: rgba(245, 240, 230, 0.58);
+  font-family: var(--serif, Georgia, serif);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.promptPanel {
+  display: flex;
+  flex-direction: column;
+}
+
+.promptPanel textarea {
+  width: 100%;
+  min-height: 6.6rem;
+  resize: vertical;
+  padding: 1rem;
+  color: #f7f0e7;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 2px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.045);
+  font: 400 1.02rem/1.55 var(--serif, Georgia, serif);
+}
+
+.promptPanel textarea:focus-visible {
+  border-color: var(--studio-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--studio-accent) 18%, transparent);
+}
+
+.samples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-top: 0.72rem;
+}
+
+.samples button,
+.runButton {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  font: inherit;
+}
+
+.samples button {
+  padding: 0.45rem;
+  display: grid;
+  gap: 0.18rem;
+  align-content: center;
+  justify-items: start;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-align: left;
+}
+
+.samples button span {
+  color: var(--studio-accent);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.samples button[aria-pressed="true"] {
+  color: #171a1b;
+  background: #ede5d8;
+}
+
+.samples button[aria-pressed="true"] span {
+  color: #171a1b;
+}
+
+.runButton {
+  width: 100%;
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  color: #171a1b;
+  background: #ede5d8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.runButton:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.samples button:focus-visible,
+.runButton:focus-visible {
+  outline: 2px solid var(--studio-accent);
+  outline-offset: 3px;
+}
+
+.output {
+  margin: 0;
+}
+
+.outputFrame {
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 225px);
+  margin-inline: auto;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  isolation: isolate;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    #202426;
+  background-size: 28px 28px;
+}
+
+.generatedImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: revealOutput 420ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.outputPlaceholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.4rem;
+  color: rgba(245, 240, 230, 0.74);
+  text-align: center;
+}
+
+.outputPlaceholder strong {
+  color: #f5f0e6;
+  font-family: var(--serif, Georgia, serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.outputPlaceholder small {
+  max-width: 11rem;
+  color: rgba(245, 240, 230, 0.48);
+  font-size: 0.58rem;
+  line-height: 1.5;
+}
+
+.placeholderMark {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 0.42rem);
+  gap: 0.3rem;
+  place-content: center;
+  width: 3.35rem;
+  height: 3.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.placeholderMark i {
+  display: block;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: rgba(245, 240, 230, 0.28);
+}
+
+.outputFrame[data-state="running"] .placeholderMark {
+  border-color: color-mix(in srgb, var(--studio-accent) 62%, rgba(255, 255, 255, 0.18));
+  box-shadow: 0 0 34px color-mix(in srgb, var(--studio-accent) 20%, transparent);
+}
+
+.outputFrame[data-state="running"] .placeholderMark i {
+  background: var(--studio-accent);
+  animation: studioPulse 780ms ease-in-out infinite alternate;
+}
+
+.outputFrame[data-state="running"] .placeholderMark i:nth-child(2) {
+  animation-delay: 130ms;
+}
+
+.outputFrame[data-state="running"] .placeholderMark i:nth-child(3) {
+  animation-delay: 260ms;
+}
+
+.progressTrack {
+  overflow: hidden;
+  width: min(8rem, 72%);
+  height: 1px;
+  margin-top: 0.15rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.progressTrack i {
+  display: block;
+  width: 45%;
+  height: 100%;
+  background: var(--studio-accent);
+  animation: studioProgress 900ms ease-in-out infinite;
+}
+
+.output figcaption {
+  width: min(100%, 225px);
+  margin: 0.65rem auto 0;
+  color: rgba(245, 240, 230, 0.58);
+  font-size: 0.64rem;
+  line-height: 1.45;
+}
+
+@keyframes studioPulse {
+  from { opacity: 0.28; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(-0.22rem); }
+}
+
+@keyframes studioProgress {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(260%); }
+}
+
+@keyframes revealOutput {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 860px) {
+  .workspace {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .output {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(150px, 230px) 1fr;
+    align-items: center;
+    gap: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 0 !important;
+  }
+
+  .output .panelLabel {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .outputFrame {
+    grid-row: 2 / 4;
+  }
+
+  .output figcaption {
+    width: auto;
+    margin: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .workspace {
+    display: block;
+  }
+
+  .workspace > * + * {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 0;
+  }
+
+  .referenceGrid {
+    height: 210px;
+  }
+
+  .promptPanel {
+    min-height: 340px;
+  }
+
+  .output {
+    display: block;
+  }
+
+  .outputFrame {
+    width: min(76vw, 280px);
+  }
+
+  .output figcaption {
+    width: min(76vw, 280px);
+    margin: 0.65rem auto 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .referencePortraitImage,
+  .generatedImage,
+  .placeholderMark i,
+  .progressTrack i {
+    animation: none;
+    transition: none;
+  }
+}

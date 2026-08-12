@@ -1,0 +1,277 @@
+.explorer {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ink, #171717) 18%, transparent);
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 88% 2%, color-mix(in srgb, var(--accent, #1647d4) 8%, transparent), transparent 28rem),
+    color-mix(in srgb, var(--paper, #fffefa) 94%, #e8edf6);
+  box-shadow: 0 24px 64px rgba(23, 23, 23, 0.08);
+  container: yks-explorer / inline-size;
+}
+
+.header {
+  padding: clamp(1.1rem, 2.8vw, 1.8rem);
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1.2fr);
+  align-items: end;
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink, #171717) 13%, transparent);
+}
+
+.eyebrow,
+.scope,
+.tab,
+.figure figcaption span,
+.readingNote > span {
+  font-family: var(--mono, "SFMono-Regular", Consolas, monospace);
+}
+
+.eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--accent, #1647d4);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.header h4 {
+  max-width: 15ch;
+  margin: 0;
+  color: var(--ink, #171717);
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(1.65rem, 3.4vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.scope {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted, #565656);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid color-mix(in srgb, var(--ink, #171717) 14%, transparent);
+}
+
+.tab {
+  min-width: 0;
+  min-height: 3.25rem;
+  padding: 0.75rem clamp(0.65rem, 1.8vw, 1.1rem);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  color: var(--muted, #565656);
+  border: 0;
+  background: transparent;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-align: left;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.tab + .tab {
+  border-left: 1px solid color-mix(in srgb, var(--ink, #171717) 12%, transparent);
+}
+
+.tab span {
+  color: color-mix(in srgb, var(--accent, #1647d4) 65%, var(--muted, #565656));
+  font-size: 0.61rem;
+  letter-spacing: 0.08em;
+}
+
+.tab:hover {
+  color: var(--ink, #171717);
+  background: color-mix(in srgb, var(--accent, #1647d4) 4%, transparent);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--ink, #171717);
+  background: color-mix(in srgb, var(--accent, #1647d4) 8%, transparent);
+  box-shadow: inset 0 -2px 0 var(--accent, #1647d4);
+}
+
+.tab:focus-visible,
+.panel:focus-visible {
+  position: relative;
+  z-index: 2;
+  outline: 3px solid var(--accent, #1647d4);
+  outline-offset: -3px;
+}
+
+.panel {
+  min-width: 0;
+  max-width: 100%;
+  padding: clamp(0.9rem, 2.2vw, 1.45rem);
+}
+
+.figureBody {
+  min-width: 0;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 0.3fr);
+  align-items: start;
+  gap: clamp(1rem, 2.5vw, 1.8rem);
+  animation: figure-enter 220ms ease-out both;
+}
+
+.figure {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--ink, #171717) 13%, transparent);
+  background:
+    linear-gradient(color-mix(in srgb, var(--accent, #1647d4) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent, #1647d4) 3%, transparent) 1px, transparent 1px),
+    #fff;
+  background-size: 24px 24px;
+}
+
+.imageFrame img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: clamp(0.45rem, 1.5cqi, 1rem);
+}
+
+.figure figcaption {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.65rem;
+  color: var(--ink, #171717);
+  line-height: 1.45;
+}
+
+.figure figcaption span {
+  color: var(--accent, #1647d4);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.figure figcaption strong {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.readingNote {
+  padding: 0.9rem 0 0 1rem;
+  border-left: 1px solid color-mix(in srgb, var(--accent, #1647d4) 30%, transparent);
+}
+
+.readingNote > span {
+  color: var(--accent, #1647d4);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.readingNote p {
+  margin: 0.55rem 0 0;
+  color: var(--muted, #565656);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+@keyframes figure-enter {
+  from {
+    opacity: 0.72;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@container yks-explorer (max-width: 46rem) {
+  .header {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 0.8rem;
+  }
+
+  .header h4 {
+    max-width: 19ch;
+  }
+
+  .figureBody {
+    grid-template-columns: 1fr;
+  }
+
+  .readingNote {
+    padding-top: 0;
+  }
+}
+
+@container yks-explorer (max-width: 35rem) {
+  .tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .tab {
+    min-height: 2.9rem;
+  }
+
+  .tab + .tab {
+    border-top: 1px solid color-mix(in srgb, var(--ink, #171717) 12%, transparent);
+    border-left: 0;
+  }
+
+  .tab[aria-selected="true"] {
+    box-shadow: inset 3px 0 0 var(--accent, #1647d4);
+  }
+
+  .figure figcaption {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab {
+    transition: none;
+  }
+
+  .figureBody {
+    animation: none;
+  }
+}
+
+@media print {
+  .tabs {
+    display: none;
+  }
+
+  .explorer,
+  .imageFrame {
+    box-shadow: none;
+  }
+}

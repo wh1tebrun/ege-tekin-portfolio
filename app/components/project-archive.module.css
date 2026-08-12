@@ -1,0 +1,718 @@
+.archive {
+  min-width: 0;
+  border-top: 1px solid var(--rule, #bdbcb7);
+  container: project-archive / inline-size;
+}
+
+.group {
+  display: grid;
+  grid-template-columns: 66px minmax(0, 1fr);
+  border-bottom: 1px solid var(--rule, #bdbcb7);
+}
+
+.group > h3 {
+  margin: 0;
+  padding: 1.45rem 0.75rem 0 0;
+  color: var(--accent, #1647d4);
+  font-family: var(--mono, monospace);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.list {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--rule-light, #e7e5df);
+}
+
+.row {
+  --archive-accent: #46596e;
+  --archive-field: #eceff1;
+  min-width: 0;
+}
+
+.row + .row {
+  border-top: 1px solid var(--rule-light, #e7e5df);
+}
+
+.row[data-theme="studio"] {
+  --archive-accent: #974a32;
+  --archive-field: #f5ece5;
+}
+
+.row[data-theme="football"] {
+  --archive-accent: #2c6048;
+  --archive-field: #eaf1e8;
+}
+
+.row[data-theme="research"] {
+  --archive-accent: #83591f;
+  --archive-field: #f5eee0;
+}
+
+.row[data-theme="rose"] {
+  --archive-accent: #85495f;
+  --archive-field: #f3e9ed;
+}
+
+.row[data-theme="fitness"] {
+  --archive-accent: #8b3d31;
+  --archive-field: #f4e8e3;
+}
+
+.row[data-theme="language"] {
+  --archive-accent: #4d4f91;
+  --archive-field: #edecf4;
+}
+
+.row[data-theme="terminal"] {
+  --archive-accent: #365686;
+  --archive-field: #e9edf3;
+}
+
+.row[data-theme="geo"] {
+  --archive-accent: #23665e;
+  --archive-field: #e8f0ed;
+}
+
+.row[data-theme="country"] {
+  --archive-accent: #355d8c;
+  --archive-field: #eaf0f4;
+}
+
+.row[data-theme="asteroid"] {
+  --archive-accent: #494b84;
+  --archive-field: #ececf4;
+}
+
+.row[data-theme="python"] {
+  --archive-accent: #46596e;
+  --archive-field: #eceff1;
+}
+
+.row[data-theme="balloon"] {
+  --archive-accent: #7b4766;
+  --archive-field: #f2e9ee;
+}
+
+.rowArticle {
+  min-width: 0;
+}
+
+.rowMain {
+  position: relative;
+  min-width: 0;
+  min-height: 7.25rem;
+  padding: 1.15rem 0.9rem;
+  display: grid;
+  grid-template-columns: 48px 88px minmax(180px, 1.25fr) 78px minmax(120px, 0.72fr) auto;
+  align-items: center;
+  gap: 0.75rem 0.9rem;
+  background: color-mix(in srgb, var(--archive-field) 58%, var(--paper, #fffefa));
+  transition: background-color 180ms ease;
+}
+
+.rowMain::before {
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: 0;
+  width: 3px;
+  background: var(--archive-accent);
+  content: "";
+  opacity: 0;
+  transform: scaleY(0.45);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.stamp {
+  position: relative;
+  width: 48px;
+  aspect-ratio: 1;
+  display: block;
+  overflow: hidden;
+  color: var(--archive-accent);
+  border: 1px solid color-mix(in srgb, var(--archive-accent) 42%, transparent);
+  background: var(--archive-field);
+}
+
+.stamp::before,
+.stamp::after,
+.stampCore {
+  position: absolute;
+  display: block;
+  content: "";
+}
+
+.date,
+.area,
+.stack {
+  color: var(--muted, #565656);
+  font-family: var(--mono, monospace);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.date {
+  text-transform: uppercase;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy h4 {
+  margin: 0;
+  color: var(--ink, #171717);
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.12;
+}
+
+.copy p {
+  max-width: 58ch;
+  margin: 0.4rem 0 0;
+  color: var(--muted, #565656);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.area {
+  color: var(--archive-accent);
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.stack {
+  overflow-wrap: anywhere;
+}
+
+.links {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+}
+
+.links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--ink, #171717);
+  border-bottom: 1px solid color-mix(in srgb, var(--archive-accent) 62%, transparent);
+  font-size: 0.75rem;
+  font-weight: 750;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.links a span {
+  color: var(--archive-accent);
+  transition: transform 160ms ease;
+}
+
+.links a:focus-visible,
+.preview > summary:focus-visible {
+  outline: 3px solid var(--archive-accent);
+  outline-offset: 3px;
+}
+
+.preview {
+  margin: 0 0.9rem 0 4.7rem;
+  border-top: 1px solid color-mix(in srgb, var(--archive-accent) 28%, transparent);
+}
+
+.preview > summary {
+  min-height: 62px;
+  padding: 0.65rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.preview > summary::-webkit-details-marker {
+  display: none;
+}
+
+.preview > summary > span:first-child {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.preview small {
+  color: var(--archive-accent);
+  font-family: var(--mono, monospace);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.preview strong {
+  color: var(--ink, #171717);
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.previewAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--muted, #565656);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.previewAction i {
+  color: var(--archive-accent);
+  font-size: 1.25rem;
+  font-style: normal;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.preview[open] .previewAction i {
+  transform: rotate(45deg);
+}
+
+.previewPanel {
+  min-width: 0;
+  padding: 0.35rem 0 1.5rem;
+}
+
+/* Image Studio: crop frame and lens. */
+.row[data-theme="studio"] .stamp::before {
+  inset: 8px;
+  border: 1px solid currentColor;
+}
+
+.row[data-theme="studio"] .stamp::after {
+  inset: 15px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.row[data-theme="studio"] .stampCore {
+  top: 5px;
+  left: 5px;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+}
+
+/* Football: pitch centre line and circle. */
+.row[data-theme="football"] .stamp::before {
+  top: 8px;
+  left: 9px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.row[data-theme="football"] .stamp::after {
+  top: 5px;
+  bottom: 5px;
+  left: 23px;
+  width: 1px;
+  background: currentColor;
+}
+
+.row[data-theme="football"] .stampCore {
+  top: 21px;
+  left: 21px;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Research: equality line and measured points. */
+.row[data-theme="research"] .stamp::before {
+  top: 23px;
+  left: 9px;
+  width: 29px;
+  height: 1px;
+  background: currentColor;
+  transform: rotate(-36deg);
+}
+
+.row[data-theme="research"] .stamp::after {
+  top: 29px;
+  left: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 10px -7px 0 currentColor, 22px -17px 0 currentColor;
+}
+
+.row[data-theme="research"] .stampCore {
+  inset: 8px;
+  border-bottom: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+}
+
+/* ROSE: two intersecting orbits. */
+.row[data-theme="rose"] .stamp::before,
+.row[data-theme="rose"] .stamp::after {
+  top: 13px;
+  left: 7px;
+  width: 32px;
+  height: 19px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.row[data-theme="rose"] .stamp::after {
+  transform: rotate(55deg);
+}
+
+.row[data-theme="rose"] .stampCore {
+  top: 20px;
+  left: 20px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 15px -7px 0 -1px currentColor;
+}
+
+/* Fitness: repetition bars and timing marker. */
+.row[data-theme="fitness"] .stamp::before {
+  top: 13px;
+  left: 10px;
+  width: 27px;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 9px 0 currentColor, 0 18px 0 currentColor;
+}
+
+.row[data-theme="fitness"] .stamp::after {
+  top: 8px;
+  bottom: 8px;
+  left: 18px;
+  width: 1px;
+  border-left: 1px dashed currentColor;
+}
+
+/* Egelingo: overlapping lesson cards. */
+.row[data-theme="language"] .stamp::before,
+.row[data-theme="language"] .stamp::after {
+  width: 25px;
+  height: 17px;
+  border: 1px solid currentColor;
+}
+
+.row[data-theme="language"] .stamp::before {
+  top: 10px;
+  left: 8px;
+}
+
+.row[data-theme="language"] .stamp::after {
+  right: 7px;
+  bottom: 9px;
+  background: var(--archive-field);
+}
+
+.row[data-theme="language"] .stampCore {
+  right: 10px;
+  bottom: 6px;
+  width: 7px;
+  height: 7px;
+  border-left: 1px solid currentColor;
+  transform: skew(-32deg);
+}
+
+/* Terminal Blocks: tetromino. */
+.row[data-theme="terminal"] .stamp::before {
+  top: 14px;
+  left: 11px;
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  box-shadow: 9px 0 0 currentColor, 18px 0 0 currentColor, 18px 9px 0 currentColor;
+}
+
+.row[data-theme="terminal"] .stamp::after {
+  inset: 7px;
+  border: 1px solid color-mix(in srgb, currentColor 44%, transparent);
+}
+
+/* Geo Heatmap: density matrix. */
+.row[data-theme="geo"] .stamp::before {
+  top: 11px;
+  left: 11px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow:
+    10px 0 0 currentColor, 20px 0 0 currentColor,
+    0 10px 0 currentColor, 10px 10px 0 currentColor, 20px 10px 0 currentColor,
+    0 20px 0 currentColor, 10px 20px 0 currentColor, 20px 20px 0 currentColor;
+}
+
+.row[data-theme="geo"] .stamp::after {
+  top: 16px;
+  left: 16px;
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+/* Country Quiz: latitude and longitude crosshair. */
+.row[data-theme="country"] .stamp::before {
+  inset: 8px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.row[data-theme="country"] .stamp::after {
+  top: 23px;
+  left: 7px;
+  width: 33px;
+  height: 1px;
+  background: currentColor;
+}
+
+.row[data-theme="country"] .stampCore {
+  top: 7px;
+  bottom: 7px;
+  left: 23px;
+  width: 1px;
+  background: currentColor;
+}
+
+/* Asteroid Defense: orbit and shield. */
+.row[data-theme="asteroid"] .stamp::before {
+  top: 14px;
+  left: 6px;
+  width: 34px;
+  height: 17px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transform: rotate(-26deg);
+}
+
+.row[data-theme="asteroid"] .stamp::after {
+  top: 9px;
+  right: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: -25px 21px 0 -1px currentColor;
+}
+
+.row[data-theme="asteroid"] .stampCore {
+  top: 17px;
+  left: 17px;
+  width: 13px;
+  height: 13px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+/* Python coursework: code brackets and notebook rules. */
+.row[data-theme="python"] .stamp::before {
+  top: 8px;
+  left: 9px;
+  color: currentColor;
+  content: "{ }";
+  font-family: var(--mono, monospace);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.row[data-theme="python"] .stamp::after {
+  right: 8px;
+  bottom: 9px;
+  left: 8px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 -5px 0 color-mix(in srgb, currentColor 58%, transparent);
+}
+
+/* Balloon Game: ascending targets and tether. */
+.row[data-theme="balloon"] .stamp::before {
+  top: 28px;
+  left: 10px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  box-shadow: 11px -8px 0 -1px var(--archive-field), 11px -8px 0 0 currentColor,
+    23px -18px 0 -1px var(--archive-field), 23px -18px 0 0 currentColor;
+}
+
+.row[data-theme="balloon"] .stamp::after {
+  top: 12px;
+  left: 13px;
+  width: 26px;
+  height: 24px;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(-37deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rowMain:hover {
+    background: color-mix(in srgb, var(--archive-field) 88%, var(--paper, #fffefa));
+  }
+
+  .rowMain:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  .links a:hover span {
+    transform: translate(2px, -2px);
+  }
+}
+
+@container project-archive (max-width: 820px) {
+  .group {
+    grid-template-columns: 1fr;
+  }
+
+  .group > h3 {
+    padding: 1rem 0 0.65rem;
+    border-bottom: 1px solid var(--rule-light, #e7e5df);
+  }
+
+  .list {
+    border-left: 0;
+  }
+
+  .rowMain {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "stamp date area"
+      "stamp copy copy"
+      ". stack links";
+    align-items: start;
+  }
+
+  .stamp { grid-area: stamp; }
+  .date { grid-area: date; }
+  .copy { grid-area: copy; }
+  .area { grid-area: area; }
+  .stack { grid-area: stack; }
+  .links { grid-area: links; }
+
+  .links {
+    justify-content: flex-start;
+  }
+}
+
+@container project-archive (max-width: 520px) {
+  .rowMain {
+    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-areas:
+      "stamp date"
+      "stamp area"
+      "copy copy"
+      "stack stack"
+      "links links";
+    gap: 0.5rem 0.8rem;
+    padding-inline: 0.6rem;
+  }
+
+  .stamp {
+    width: 42px;
+    transform: scale(0.875);
+    transform-origin: top left;
+  }
+
+  .copy {
+    padding-top: 0.3rem;
+  }
+
+  .links {
+    gap: 0 1rem;
+  }
+
+  .preview {
+    margin-inline: 0.6rem;
+  }
+
+  .preview > summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .previewAction {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rowMain,
+  .rowMain::before,
+  .links a span,
+  .previewAction i {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .stamp,
+  .preview,
+  .row + .row,
+  .group,
+  .list {
+    border-color: CanvasText;
+  }
+
+  .stamp::before,
+  .stamp::after,
+  .stampCore,
+  .rowMain::before {
+    display: none;
+  }
+
+  .links a,
+  .links a:focus-visible,
+  .preview > summary:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media print {
+  .stamp,
+  .preview {
+    display: none;
+  }
+
+  .group,
+  .rowMain {
+    display: block;
+  }
+
+  .group > h3,
+  .rowMain > * {
+    margin-top: 0.35rem;
+  }
+
+  .rowMain {
+    min-height: 0;
+    break-inside: avoid;
+  }
+}

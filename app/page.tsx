@@ -1,636 +1,301 @@
 import Image from "next/image";
+import AnchorNavigation from "./anchor-navigation";
+import { FeaturedWork } from "./components/featured-work";
+import { ImageStudioDemo } from "./components/demos/image-studio-demo";
+import { IsabelleProofDemo } from "./components/demos/isabelle-proof-demo";
+import { YksFigureExplorer } from "./components/demos/yks-figure-explorer";
+import { ProjectArchive } from "./components/project-archive";
+import { contactLinks, languages } from "./content";
 
-type ProjectLink = {
-  label: string;
-  href: string;
-};
-
-type SelectedProject = {
-  index: string;
-  title: string;
-  date: string;
-  dateISO: string;
-  type: string;
-  headline: string;
-  description: string;
-  stack: string;
-  layout: "wide" | "media-left" | "media-right";
-  image: {
-    src: string;
-    alt: string;
-    caption: string;
-    width: number;
-    height: number;
-  };
-  links: ProjectLink[];
-  fullTitle?: string;
-};
-
-const selectedProjects: SelectedProject[] = [
-  {
-    index: "01",
-    title: "Ege Image Studio",
-    date: "Aug 2026",
-    dateISO: "2026-08",
-    type: "Independent project · Product prototype",
-    headline: "A structured workspace for reference-driven image workflows.",
-    description:
-      "A tested Next.js workspace for organizing image references, assigning roles, refining prompts, and reviewing deterministic mock outputs through a replaceable architecture.",
-    stack: "Next.js · React · TypeScript · Vitest · Playwright",
-    layout: "wide",
-    image: {
-      src: "/projects/ege-image-studio.webp",
-      alt: "Ege Image Studio interface showing image references, a prompt workspace, and output review panels",
-      caption: "Reference organization and prompt refinement workspace.",
-      width: 1600,
-      height: 1000,
-    },
-    links: [
-      {
-        label: "Source",
-        href: "https://github.com/wh1tebrun/ege-image-studio",
-      },
-    ],
-  },
-  {
-    index: "02",
-    title: "Freiburg–Konstanz",
-    date: "May 2026",
-    dateISO: "2026-05",
-    type: "Independent project · Browser game",
-    headline: "A Black Forest cycling arcade.",
-    description:
-      "A browser cycling arcade across ten stylized stages from Freiburg to Konstanz, combining traffic avoidance, stamina management, power-ups, combos, and persistent progression.",
-    stack: "React · TypeScript · requestAnimationFrame · CSS · localStorage",
-    layout: "media-right",
-    image: {
-      src: "/projects/freiburg-konstanz.webp",
-      alt: "Freiburg–Konstanz route selection screen with a typographic introduction and illustrated Black Forest stage artwork",
-      caption: "Ten-stage route selection and progression interface.",
-      width: 1440,
-      height: 1000,
-    },
-    links: [
-      {
-        label: "Live",
-        href: "https://wh1tebrun.github.io/freiburg-konstanz/",
-      },
-      {
-        label: "Source",
-        href: "https://github.com/wh1tebrun/freiburg-konstanz",
-      },
-    ],
-  },
-  {
-    index: "03",
-    title: "Regex → AIGER",
-    date: "Apr 2026",
-    dateISO: "2026-04",
-    type: "Bachelor’s thesis · Formal methods",
-    headline: "Compiling regular expressions into verifiable hardware circuits.",
-    description:
-      "A Python pipeline that compiles fixed-string and regular-expression constraints into bounded or sequential ASCII AIGER circuits, with simulation, fuzzing, and cross-backend validation.",
-    stack: "Python · AIGER · Automata · Model checking",
-    layout: "media-left",
-    image: {
-      src: "/projects/regex-aiger.webp",
-      alt: "Regex to AIGER tooling showing a regular-expression compilation pipeline and generated circuit output",
-      caption: "Compilation pipeline from regular-expression constraints to ASCII AIGER.",
-      width: 1600,
-      height: 1000,
-    },
-    links: [
-      {
-        label: "Source",
-        href: "https://github.com/wh1tebrun/string-to-aiger",
-      },
-    ],
-  },
-  {
-    index: "04",
-    title: "YKS Score Volatility",
-    fullTitle:
-      "Year-Dependent YKS Score Volatility and Unfair Outcomes Under the Bavarian Grade Conversion Formula",
-    date: "Feb 2026",
-    dateISO: "2026-02",
-    type: "Independent research · Data analysis",
-    headline: "How year-to-year YKS volatility affects German NC admissions.",
-    description:
-      "An analysis of public 2021–2022 Computer Engineering admissions data examining how comparable national ranks can produce different German grade-conversion outcomes.",
-    stack: "Python · pandas · Matplotlib · LaTeX",
-    layout: "media-right",
-    image: {
-      src: "/projects/yks-volatility.webp",
-      alt: "Chart comparing YKS rank-to-score relationships across 2021 and 2022 admission data",
-      caption: "Rank-to-score comparison from the published analysis.",
-      width: 1600,
-      height: 1000,
-    },
-    links: [
-      { label: "Paper", href: "/ege-tekin-yks-score-volatility.pdf" },
-    ],
-  },
-  {
-    index: "05",
-    title: "Dishes Helper",
-    date: "Mar 2024",
-    dateISO: "2024-03",
-    type: "Independent project · Web application",
-    headline: "Turning an overwhelming menu into one clear choice.",
-    description:
-      "A pairwise decision tool that guides users from a 99-dish catalogue to one choice. Built with strict TypeScript, tested with Vitest, and deployed on Vercel.",
-    stack: "TypeScript · Vite · Vitest · Vercel",
-    layout: "media-left",
-    image: {
-      src: "/projects/dishes-helper.webp",
-      alt: "Dishes Helper landing page with game setup controls for candidate count and dietary preferences",
-      caption: "Game setup before the pairwise selection flow begins.",
-      width: 1600,
-      height: 1000,
-    },
-    links: [
-      { label: "Live", href: "https://dishes-helper.vercel.app/" },
-      { label: "Source", href: "https://github.com/wh1tebrun/dishes" },
-    ],
-  },
-];
-
-const projectIndex = [
-  {
-    year: "2026",
-    projects: [
-      {
-        date: "May 2026",
-        dateISO: "2026-05",
-        title: "WG Cup — 2D Football",
-        description: "A local two-player football game with character stats and fixed-timestep physics.",
-        area: "Game",
-        stack: "Canvas · JavaScript",
-        links: [
-          { label: "GitHub", href: "https://github.com/wh1tebrun/football-game" },
-        ],
-      },
-    ],
-  },
-  {
-    year: "2025",
-    projects: [
-      {
-        date: "Feb 2025",
-        dateISO: "2025-02",
-        title: "ROSE",
-        description: "A customizable 3D romantic-story template with shareable URL experiences.",
-        area: "Interactive",
-        stack: "Three.js · JavaScript",
-        links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/rose" }],
-      },
-    ],
-  },
-  {
-    year: "2024",
-    projects: [
-      {
-        date: "Nov 2024 – Feb 2025",
-        dateISO: "2024-11",
-        title: "Delusions of Grandeur",
-        description: "A six-person university action game covering gameplay and integration work.",
-        area: "Team game",
-        stack: "C# · MonoGame",
-        links: [
-          {
-            label: "Case study",
-            href: "https://github.com/wh1tebrun/delusions-of-grandeur-case-study",
-          },
-        ],
-      },
-      {
-        date: "Oct 2024",
-        dateISO: "2024-10",
-        title: "EGE Fitness Fan Page",
-        description: "A responsive fan page combining short videos, photography, and training content.",
-        area: "Website",
-        stack: "HTML · CSS · JavaScript",
-        links: [
-          { label: "GitHub", href: "https://github.com/wh1tebrun/calisthenics" },
-        ],
-      },
-      {
-        date: "Sep 2024",
-        dateISO: "2024-09",
-        title: "Egelingo",
-        description: "A four-language vocabulary platform with lessons, streaks, quests, and gems.",
-        area: "Learning",
-        stack: "HTML · CSS · JavaScript",
-        links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/language" }],
-      },
-      {
-        date: "Jul 2024",
-        dateISO: "2024-07",
-        title: "Terminal Blocks",
-        description: "A dependency-free falling-block terminal game with a testable core.",
-        area: "Game",
-        stack: "C++20 · CMake",
-        links: [
-          { label: "GitHub", href: "https://github.com/wh1tebrun/terminal-blocks" },
-        ],
-      },
-      {
-        date: "Jun 2024",
-        dateISO: "2024-06",
-        title: "Geo Heatmap CLI",
-        description: "A CLI that turns geographic point data into deterministic ASCII density maps.",
-        area: "Tool",
-        stack: "C++20 · CMake",
-        links: [
-          { label: "GitHub", href: "https://github.com/wh1tebrun/geo-heatmap-cli" },
-        ],
-      },
-      {
-        date: "Mar 2024",
-        dateISO: "2024-03",
-        title: "Country Quiz",
-        description: "A geography game with flag, map, capital-city, and continent modes.",
-        area: "Game",
-        stack: "HTML · CSS · JavaScript",
-        links: [{ label: "Live", href: "https://country-fawn.vercel.app/" }],
-      },
-    ],
-  },
-  {
-    year: "2023",
-    projects: [
-      {
-        date: "Dec 2023",
-        dateISO: "2023-12",
-        title: "Asteroid Defense",
-        description: "A tested Python arcade game with deterministic logic and collision handling.",
-        area: "Game",
-        stack: "Python · Pygame",
-        links: [
-          { label: "GitHub", href: "https://github.com/wh1tebrun/asteroid-defense" },
-        ],
-      },
-      {
-        date: "Oct 2023 – Feb 2024",
-        dateISO: "2023-10",
-        title: "Python Coursework",
-        description: "A sheet-by-sheet archive of university programming exercises.",
-        area: "Coursework",
-        stack: "Python",
-        links: [{ label: "GitHub", href: "https://github.com/wh1tebrun/python" }],
-      },
-    ],
-  },
-  {
-    year: "2022",
-    projects: [
-      {
-        date: "Oct 2022 – Jun 2023",
-        dateISO: "2022-10",
-        title: "Balloon Game",
-        description: "A vertical-survival Unity game with hazards, shooting, and abilities.",
-        area: "Game",
-        stack: "Unity · C#",
-        links: [
-          { label: "Demo", href: "https://www.youtube.com/watch?v=mxrglnKJKCQ" },
-          { label: "Early source", href: "https://github.com/wh1tebrun/game" },
-        ],
-      },
-    ],
-  },
-];
-
-const primaryArchiveTitles = [
-  "WG Cup — 2D Football",
-  "ROSE",
-  "Delusions of Grandeur",
-  "EGE Fitness Fan Page",
-  "Egelingo",
-  "Terminal Blocks",
-];
-
-type ArchiveProject = (typeof projectIndex)[number]["projects"][number];
-
-const archiveProjects = projectIndex.flatMap((group) => group.projects);
-const primaryArchiveProjects = archiveProjects.filter((project) =>
-  primaryArchiveTitles.includes(project.title),
-);
-const remainingArchiveProjects = archiveProjects.filter(
-  (project) => !primaryArchiveTitles.includes(project.title),
-);
-
-function groupProjectsByYear(projects: ArchiveProject[]) {
-  return projectIndex
-    .map((group) => ({
-      year: group.year,
-      projects: group.projects.filter((project) => projects.includes(project)),
-    }))
-    .filter((group) => group.projects.length > 0);
+function ExternalArrow() {
+  return <span aria-hidden="true">↗</span>;
 }
 
-const languages = [
-  ["Turkish", "Native"],
-  ["English", "C2"],
-  ["German", "C2"],
-  ["French", "B1"],
-];
-
-function ExternalLink({ link, project }: { link: ProjectLink; project: string }) {
+function InstitutionMark({ src }: { src: string }) {
   return (
-    <a
-      className="text-link"
-      href={link.href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`${link.label} for ${project} (opens in a new tab)`}
-    >
-      {link.label} <span aria-hidden="true">↗</span>
-    </a>
-  );
-}
-
-function ProjectShowcase({ project }: { project: SelectedProject }) {
-  return (
-    <article
-      className={`project-showcase project-showcase--${project.layout}`}
-      data-project={project.index}
-    >
-      <header className="project-showcase-header">
-        <p className="project-overline">
-          <span>Project {project.index}</span>
-          <time dateTime={project.dateISO}>{project.date}</time>
-          <span>{project.type}</span>
-        </p>
-        <h3>{project.title}</h3>
-        <p className="project-deck">{project.headline}</p>
-        {project.fullTitle ? <p className="project-full-title">{project.fullTitle}</p> : null}
-      </header>
-
-      <div className="project-showcase-layout">
-        <figure className="project-media">
-          <div className="project-image-frame">
-            <Image
-              src={project.image.src}
-              alt={project.image.alt}
-              width={project.image.width}
-              height={project.image.height}
-              sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1100px) 72vw, 720px"
-            />
-          </div>
-          <figcaption>{project.image.caption}</figcaption>
-        </figure>
-
-        <div className="project-notes">
-          <p>{project.description}</p>
-          <dl>
-            <div><dt>Role / type</dt><dd>{project.type}</dd></div>
-            <div><dt>Technology</dt><dd>{project.stack}</dd></div>
-          </dl>
-          <div className="entry-links">
-            {project.links.map((link) => (
-              <ExternalLink link={link} project={project.title} key={link.href} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function ArchiveGroups({ projects, idPrefix }: { projects: ArchiveProject[]; idPrefix: string }) {
-  return (
-    <div className="archive-groups">
-      {groupProjectsByYear(projects).map((group) => (
-        <section className="year-group" aria-labelledby={`${idPrefix}-${group.year}`} key={group.year}>
-          <h3 id={`${idPrefix}-${group.year}`}>{group.year}</h3>
-          <ol>
-            {group.projects.map((project) => (
-              <li className="archive-row" key={`${project.date}-${project.title}`}>
-                <time dateTime={project.dateISO}>{project.date}</time>
-                <div className="archive-project">
-                  <strong>{project.title}</strong>
-                  <p>{project.description}</p>
-                </div>
-                <span className="archive-area">
-                  <span className="sr-only">Area: </span>{project.area}
-                </span>
-                <span className="archive-stack">{project.stack}</span>
-                <div className="archive-links">
-                  {project.links.map((link) => (
-                    <ExternalLink link={link} project={project.title} key={link.href} />
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      ))}
-    </div>
+    <span className="institution-mark" aria-hidden="true">
+      <Image src={src} alt="" width={72} height={72} />
+    </span>
   );
 }
 
 export default function Home() {
   return (
     <>
-      <div className="scroll-progress" aria-hidden="true" />
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
+      <AnchorNavigation />
+      <a className="skip-link" href="#main-content">Skip to content</a>
 
-      <main className="resume section-shell" id="main-content" tabIndex={-1}>
-        <section className="masthead anchor-target" id="top" aria-labelledby="page-title">
-          <div className="journey-mark" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <div className="identity">
-            <p className="document-label">Résumé · August 2026</p>
-            <h1 id="page-title">Ege Tekin</h1>
-            <p className="role">
-              <span>Software Engineering · Applied Research<span className="sr-only"> · </span></span>
-              <span>Medical Technology</span>
-            </p>
-            <p className="location">Freiburg, Germany</p>
-          </div>
-
-          <div className="masthead-aside">
-            <dl className="context-block" aria-label="Current position and next step">
-              <div>
-                <dt>Currently</dt>
-                <dd><strong>Fraunhofer ISE</strong><span>Freiburg</span></dd>
-              </div>
-              <div>
-                <dt>Next</dt>
-                <dd><strong>Medicine</strong><span>Sep 2026</span></dd>
-              </div>
-            </dl>
-            <Image
-              className="headshot"
-              src="/ege-tekin-portrait-large.jpg"
-              alt="Portrait of Ege Tekin"
-              width={144}
-              height={176}
-              priority
-            />
-            <address className="masthead-links">
-              <a href="mailto:ege.tekin@web.de">Email <span aria-hidden="true">↗</span></a>
-              <a aria-label="GitHub profile (opens in a new tab)" href="https://github.com/wh1tebrun" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-              <a aria-label="LinkedIn profile (opens in a new tab)" href="https://www.linkedin.com/in/tekinege/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
-            </address>
-          </div>
-        </section>
-
-        <section className="summary" aria-labelledby="summary-title">
-          <h2 className="section-label" data-index="01" id="summary-title">Profile</h2>
+      <header className="site-header">
+        <nav className="folio-nav" aria-label="Portfolio navigation">
+          <a className="monogram" href="#top" aria-label="Ege Tekin, back to top">ET</a>
           <div>
-            <p className="summary-lead">
-              I build software at the intersection of engineering and applied research.
-            </p>
-            <p className="summary-supporting">
-              I&apos;m completing a B.Sc. in Computer Science at the University of Freiburg and
-              working in applied photovoltaic R&amp;D at Fraunhofer ISE. I have been admitted to
-              Akdeniz University&apos;s Medicine program, beginning Sep 2026, with a long-term
-              direction in medical technology.
-            </p>
+            <a href="#background">Background</a>
+            <a href="#work">Work</a>
+            <a href="#project-index">Archive</a>
+            <a href="#contact">Contact</a>
           </div>
-        </section>
+        </nav>
+      </header>
 
-        <section className="resume-section anchor-target" id="background" aria-labelledby="experience-title">
-          <h2 className="section-label" data-index="02" id="experience-title">Experience</h2>
-          <div className="section-content">
-            <article className="cv-entry">
-              <div className="entry-date">Apr 2026 – Apr 2027</div>
-              <div>
-                <header className="entry-heading">
-                  <div>
-                    <h3>Fraunhofer ISE</h3>
-                    <p>Working Student · Interconnection &amp; Encapsulation</p>
-                  </div>
-                  <span>Freiburg, Germany</span>
-                </header>
-                <p className="entry-description">
-                  Supporting applied photovoltaic R&amp;D through hands-on peel testing and
-                  structured experimental work.
-                </p>
+      <main className="folio" id="main-content" tabIndex={-1}>
+        <section className="hero anchor-target" id="top" aria-labelledby="page-title">
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <p className="document-label">Software · Research · Freiburg</p>
+              <h1 id="page-title">Ege Tekin</h1>
+              <p className="hero-role">Computer scientist building useful software and moving toward medical technology.</p>
+              <p className="hero-summary">
+                Computer Science student at the University of Freiburg, working student at
+                Fraunhofer ISE, and software developer based in Freiburg.
+              </p>
+              <div className="hero-actions">
+                <a className="primary-action" href="#work">View selected work <span aria-hidden="true">↓</span></a>
+                <a href={contactLinks.github} target="_blank" rel="noreferrer" aria-label="GitHub profile (opens in a new tab)">GitHub <ExternalArrow /></a>
+                <a href={contactLinks.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile (opens in a new tab)">LinkedIn <ExternalArrow /></a>
               </div>
-            </article>
+            </div>
+
+            <div className="hero-portrait-wrap">
+              <div className="hero-registration" aria-hidden="true">
+                <span>01 · SOFTWARE</span>
+                <i />
+                <span>02 · RESEARCH</span>
+                <i />
+                <span>03 · MEDICINE</span>
+              </div>
+              <figure className="hero-portrait">
+                <Image
+                  src="/ege-tekin-portrait-large.jpg"
+                  alt="Portrait of Ege Tekin in a navy suit"
+                  width={480}
+                  height={600}
+                  priority
+                />
+                <figcaption><span>Freiburg</span><span>2026</span></figcaption>
+              </figure>
+            </div>
           </div>
-        </section>
 
-        <section className="resume-section" aria-labelledby="education-title">
-          <h2 className="section-label" data-index="03" id="education-title">Education</h2>
-          <div className="section-content">
-            <article className="cv-entry">
-              <time className="entry-date" dateTime="2026-09">Sep 2026</time>
-              <div>
-                <header className="entry-heading">
-                  <div>
-                    <h3>Akdeniz University</h3>
-                    <p>Medicine · Admitted · Starts Sep 2026</p>
-                  </div>
-                  <span>Antalya, Türkiye</span>
-                </header>
-                <p className="entry-description">
-                  Ranked 5,493rd nationally in Türkiye&apos;s university entrance examination.
-                </p>
-              </div>
-            </article>
-            <article className="cv-entry">
-              <div className="entry-date">Oct 2023 – Sep 2026</div>
-              <div>
-                <header className="entry-heading">
-                  <div>
-                    <h3>University of Freiburg</h3>
-                    <p>B.Sc. Computer Science (Informatik) · In progress</p>
-                  </div>
-                  <span>Freiburg, Germany</span>
-                </header>
-                <p className="entry-description">
-                  Coursework in software engineering, algorithms, formal methods, and computer systems.
-                </p>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section className="resume-section anchor-target" id="work" aria-labelledby="work-title">
-          <h2 className="section-label" data-index="04" id="work-title">Featured work</h2>
-          <div className="section-content selected-work">
-            {selectedProjects.map((project) => (
-              <ProjectShowcase project={project} key={project.title} />
-            ))}
-          </div>
-        </section>
-
-        <section className="resume-section archive-section anchor-target" id="project-index" aria-labelledby="archive-title">
-          <h2 className="section-label" data-index="05" id="archive-title">Project archive</h2>
-          <div className="section-content">
-            <p className="archive-intro">
-              A curated chronology of games, interactive experiments, and systems work.
-            </p>
-
-            <section className="archive archive-primary" aria-label="Curated project archive">
-              <ArchiveGroups projects={primaryArchiveProjects} idPrefix="archive-primary" />
-            </section>
-
-            <details className="archive-expansion">
-              <summary>
-                <span>View full archive</span>
-                <span>{remainingArchiveProjects.length} earlier projects · Oct 2022 – Jun 2024 <i aria-hidden="true">+</i></span>
-              </summary>
-              <div className="archive-expansion-content">
-                <ArchiveGroups projects={remainingArchiveProjects} idPrefix="archive-earlier" />
-              </div>
-            </details>
-          </div>
-        </section>
-
-        <section className="resume-section capabilities-section" aria-labelledby="skills-title">
-          <h2 className="section-label" data-index="06" id="skills-title">Capabilities</h2>
-          <div className="section-content">
-            <dl className="capability-groups">
-              <div>
-                <dt>Web &amp; product</dt>
-                <dd>TypeScript, React, Next.js, Vite, testing, responsive interfaces</dd>
-              </div>
-              <div>
-                <dt>Research &amp; systems</dt>
-                <dd>Python, AIGER, automata, model checking, data analysis, C++20</dd>
-              </div>
-              <div>
-                <dt>Interactive software</dt>
-                <dd>C#, MonoGame, Unity, Canvas, Three.js</dd>
-              </div>
-              <div>
-                <dt>Languages</dt>
-                <dd>{languages.map(([language, level]) => `${language} (${level})`).join(" · ")}</dd>
-              </div>
-            </dl>
-          </div>
-        </section>
-
-        <section className="resume-section contact anchor-target" id="contact" aria-labelledby="contact-title">
-          <h2 className="section-label" data-index="07" id="contact-title">Contact</h2>
-          <div className="section-content contact-content">
+          <div className="credibility-strip" aria-label="Current affiliations">
             <div>
-              <p className="contact-lead">Let&apos;s build something useful.</p>
-              <p>Available for freelance websites, web applications, and product prototypes.</p>
+              <InstitutionMark src="/institutions/fraunhofer-ise.png" />
+              <span><small>Working student</small><strong>Fraunhofer ISE</strong></span>
             </div>
-            <div className="contact-links">
-              <a className="email-link" href="mailto:ege.tekin@web.de">ege.tekin@web.de</a>
-              <a aria-label="GitHub profile (opens in a new tab)" href="https://github.com/wh1tebrun" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-              <a aria-label="LinkedIn profile (opens in a new tab)" href="https://www.linkedin.com/in/tekinege/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+            <div>
+              <InstitutionMark src="/institutions/university-of-freiburg.png" />
+              <span><small>B.Sc. Computer Science</small><strong>University of Freiburg</strong></span>
             </div>
+            <p><small>Based in</small><strong>Freiburg, Germany</strong></p>
+          </div>
+        </section>
+
+        <section className="folio-section profile-section" aria-labelledby="profile-title">
+          <div className="section-rail">
+            <span>01</span>
+            <h2 id="profile-title">Profile</h2>
+          </div>
+          <div className="section-body profile-body">
+            <p className="profile-statement">
+              I like work that makes a complicated system feel direct.
+            </p>
+            <div className="profile-columns">
+              <p>
+                My projects range from formal-methods tooling and frontend products to browser
+                games and data-driven research. I care about clear models, durable code, and
+                interfaces that explain themselves.
+              </p>
+              <dl className="coordinates">
+                <div><dt>Now</dt><dd>Software engineering &amp; photovoltaic R&amp;D</dd></div>
+                <div><dt>Next</dt><dd>Medicine · starts Sep 2026</dd></div>
+                <div><dt>Direction</dt><dd>Medical technology</dd></div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section className="folio-section experience-section anchor-target" id="background" aria-labelledby="experience-title">
+          <div className="section-rail">
+            <span>02</span>
+            <h2 id="experience-title">Experience</h2>
+          </div>
+          <div className="section-body">
+            <article className="institution-entry">
+              <header>
+                <div className="institution-name">
+                  <InstitutionMark src="/institutions/fraunhofer-ise.png" />
+                  <div>
+                    <p>Applied photovoltaic research</p>
+                    <h3>Fraunhofer ISE</h3>
+                    <strong>Working Student · Interconnection &amp; Encapsulation</strong>
+                  </div>
+                </div>
+                <p className="institution-meta">
+                  <span>Freiburg, Germany</span>
+                  <span><time dateTime="2026-04">Apr 2026</time> – <time dateTime="2027-04">Apr 2027</time></span>
+                </p>
+              </header>
+              <div className="entry-grid">
+                <p className="entry-lead">
+                  Supporting applied R&amp;D where laboratory evidence, material behaviour, and
+                  engineering documentation meet.
+                </p>
+                <ul className="entry-points">
+                  <li>Hands-on peel testing and structured experimental work</li>
+                  <li>Result documentation and evaluation within the team workflow</li>
+                  <li>Work across laboratory and software-supported engineering processes</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className="folio-section education-section" aria-labelledby="education-title">
+          <div className="section-rail">
+            <span>03</span>
+            <h2 id="education-title">Education</h2>
+          </div>
+          <div className="section-body education-timeline">
+            <article className="education-entry">
+              <InstitutionMark src="/institutions/university-of-freiburg.png" />
+              <div>
+                <p>Freiburg, Germany · <time dateTime="2023-10">Oct 2023</time> – <time dateTime="2026-09">Sep 2026</time></p>
+                <h3>University of Freiburg</h3>
+                <strong>B.Sc. Computer Science (Informatik)</strong>
+                <span>Software engineering · Algorithms · Formal methods · Computer systems</span>
+              </div>
+            </article>
+            <div className="education-bridge" aria-hidden="true"><span>Freiburg</span><i /><span>Antalya</span></div>
+            <article className="education-entry">
+              <InstitutionMark src="/institutions/akdeniz-university.png" />
+              <div>
+                <p>Antalya, Türkiye · <time dateTime="2026-09">Sep 2026</time></p>
+                <h3>Akdeniz University</h3>
+                <strong>Medicine · Admitted</strong>
+                <span>Ranked 5,493rd nationally in Türkiye&apos;s university entrance examination</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className="folio-section work-section anchor-target" id="work" aria-labelledby="work-title">
+          <div className="section-rail">
+            <span>04</span>
+            <h2 id="work-title">Selected work</h2>
+          </div>
+          <div className="section-body selected-work">
+            <FeaturedWork />
+          </div>
+        </section>
+
+        <section className="folio-section lab-section" aria-labelledby="lab-title">
+          <div className="section-rail">
+            <span>05</span>
+            <h2 id="lab-title">Research &amp; experiments</h2>
+          </div>
+          <div className="section-body lab-body">
+            <article className="lab-feature research-feature">
+              <header>
+                <p>Independent research · Feb 2026</p>
+                <h3>YKS Score Volatility</h3>
+                <span>One consistent viewing field for three published figures.</span>
+              </header>
+              <YksFigureExplorer />
+              <a className="lab-link" href="/ege-tekin-yks-score-volatility.pdf">Read the paper <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article className="lab-feature studio-feature">
+              <header>
+                <p>Product experiment · Aug 2026</p>
+                <h3>Ege Image Studio</h3>
+                <span>A simulated reference-to-output workflow; the review starts intentionally empty.</span>
+              </header>
+              <ImageStudioDemo />
+              <a className="lab-link" href="https://github.com/wh1tebrun/ege-image-studio" target="_blank" rel="noreferrer" aria-label="Ege Image Studio source (opens in a new tab)">Source <ExternalArrow /></a>
+            </article>
+
+            <article className="lab-feature proof-feature">
+              <header>
+                <p>Formal verification · Jul–Aug 2026</p>
+                <h3>Regex-to-NFA Verification</h3>
+                <span>A machine-checked Isabelle/HOL proof of language correctness for the Thompson core.</span>
+              </header>
+              <IsabelleProofDemo />
+              <div className="proof-summary">
+                <p>
+                  The development formalizes regex and epsilon-NFA semantics, then proves
+                  compositional language equivalence for epsilon, characters, concatenation,
+                  union, and Kleene star. Its scope is deliberately precise: it verifies the
+                  mathematical Thompson construction, not the Python implementation or the full
+                  AIGER pipeline.
+                </p>
+                <dl>
+                  <div><dt>Role</dt><dd>Formalization, proof architecture &amp; documentation</dd></div>
+                  <div><dt>Stack</dt><dd>Isabelle/HOL · Isar · Automata · Formal semantics</dd></div>
+                </dl>
+              </div>
+              <a
+                className="lab-link"
+                href="https://gitlab.uni-freiburg.de/et130/regex-to-nfa-isabelle"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Private University of Freiburg GitLab repository for Regex-to-NFA Verification (opens in a new tab)"
+              >
+                University GitLab · access required <ExternalArrow />
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section className="folio-section archive-section anchor-target" id="project-index" aria-labelledby="archive-title">
+          <div className="section-rail">
+            <span>06</span>
+            <h2 id="archive-title">Project archive</h2>
+          </div>
+          <div className="section-body">
+            <div className="archive-intro">
+              <p>A chronological index of games, tools, websites, experiments, and coursework.</p>
+              <span>Live buttons appear only where a working deployment is verified.</span>
+            </div>
+            <ProjectArchive />
+          </div>
+        </section>
+
+        <section className="folio-section capabilities-section" aria-labelledby="capabilities-title">
+          <div className="section-rail">
+            <span>07</span>
+            <h2 id="capabilities-title">Capabilities</h2>
+          </div>
+          <div className="section-body capability-grid">
+            <article data-mark="{}"><h3>Web &amp; product</h3><p>TypeScript, React, Next.js, Vite, testing, responsive interfaces</p></article>
+            <article data-mark="[]"><h3>Research &amp; systems</h3><p>Python, AIGER, automata, SAT workflows, data analysis, C++20</p></article>
+            <article data-mark="+"><h3>Interactive software</h3><p>C#, MonoGame, Unity, Canvas, Three.js, deterministic simulation</p></article>
+            <article data-mark="Aa"><h3>Languages</h3><p>{languages.map(([language, level]) => `${language} (${level})`).join(" · ")}</p></article>
+          </div>
+        </section>
+
+        <section className="folio-section contact-section anchor-target" id="contact" aria-labelledby="contact-title">
+          <div className="section-rail">
+            <span>08</span>
+            <h2 id="contact-title">Contact</h2>
+          </div>
+          <div className="section-body contact-body">
+            <div>
+              <p className="contact-kicker">Have a useful problem?</p>
+              <h3>Let&apos;s build something people enjoy using.</h3>
+              <p>Open to software engineering opportunities, freelance products, and technical collaborations.</p>
+            </div>
+            <address>
+              <a className="email-link" href={contactLinks.email}>ege.tekin@web.de <span aria-hidden="true">→</span></a>
+              <a href={contactLinks.github} target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a>
+              <a href={contactLinks.linkedin} target="_blank" rel="noreferrer">LinkedIn <ExternalArrow /></a>
+            </address>
           </div>
         </section>
       </main>
 
       <footer className="site-footer">
-        <div className="section-shell footer-inner">
-          <p>© 2026 Ege Tekin</p>
-          <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
-        </div>
+        <p>© 2026 Ege Tekin · Freiburg, Germany</p>
+        <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
       </footer>
     </>
   );

@@ -8,7 +8,7 @@ Personal portfolio for Ege Tekin, a Freiburg-based software engineer working acr
 
 The site is a single-page professional portfolio built around verifiable work rather than decorative mock projects. It includes:
 
-- four selected case studies;
+- five selected projects with small, embedded interactive explanations;
 - a reverse-chronological project index;
 - experience and education at Fraunhofer ISE, the University of Freiburg, and Akdeniz University;
 - freelance services, languages, and contact details;
@@ -16,10 +16,15 @@ The site is a single-page professional portfolio built around verifiable work ra
 
 ## Selected work
 
-- **Regex → AIGER** — a Python compiler from regular-expression constraints to ASCII AIGER circuits.
-- **Ege Image Studio** — a tested Next.js prototype for structured reference and prompt workflows.
-- **Dishes Helper** — a TypeScript pairwise decision game deployed on Vercel.
-- **YKS Score Volatility** — reproducible research into year-dependent score conversion outcomes.
+- **Ege Image Studio** — a tested Next.js prototype with separate subject references, three scenario-based briefs, and an honest empty-to-generated showcase simulation.
+- **Freiburg–Konstanz** — a browser cycling game, represented by a keyboard/touch micro-scene using the game’s staged backgrounds and Melissa sprite animation.
+- **Regex → AIGER** — a Python compiler explained through fixed, verified pipeline artifacts.
+- **YKS Score Volatility** — research presented through three authentic published figures.
+- **Dishes Helper** — an immediately playable four-choice version of the real winner-stays mechanic using a small selection of original project photographs.
+
+The portfolio demos are intentionally honest about their boundaries: the Image Studio view does not call a model, the compiler view does not run Python in the browser, and the YKS viewer does not fabricate missing point-level data.
+
+> **Local asset review:** the Freiburg game art and Dishes photographs are included in this working branch at the owner’s request, but their source repositories do not yet document sufficient reuse rights. Keep this version local until provenance or replacement licenses are recorded.
 
 ## Stack
 
@@ -54,12 +59,14 @@ npm run lint
 
 ```text
 app/
-  globals.css     Visual system and responsive layouts
+  components/     Project exhibition, media contract, and client demos
+  globals.css     Résumé visual system and responsive page shell
   layout.tsx      Metadata and document shell
-  page.tsx        Portfolio content and page structure
+  page.tsx        Résumé, archive, and contact structure
 public/
   ege-tekin-portrait-large.jpg
   ege-tekin-yks-score-volatility.pdf
+  projects/       Published figures and project-owned mock outputs
   og.png
 tests/
   rendered-html.test.mjs
