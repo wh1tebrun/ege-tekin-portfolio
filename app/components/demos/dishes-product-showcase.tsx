@@ -16,14 +16,14 @@ export function DishesProductShowcase() {
         </div>
 
         <div className={styles.screen}>
-          {/* The local capture is already a compact WebP. A plain image keeps it
-              reliable in both the vinext preview and the hosted static build. */}
+          {/* A plain image keeps the real product capture reliable in both the
+              vinext preview and the hosted static build. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/projects/dishes-helper.webp"
-            alt="Dishes Helper landing page, with the headline Less scrolling. More choosing. beside its game setup panel"
-            width={1600}
-            height={1000}
+            src="/projects/dishes-helper-full.png"
+            alt="Complete Dishes Helper landing page, with the headline Less scrolling. More choosing. beside the full game setup panel"
+            width={1920}
+            height={1080}
             decoding="async"
           />
           <span className={styles.screenLabel}>Existing product interface</span>

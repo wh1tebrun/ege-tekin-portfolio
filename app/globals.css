@@ -26,7 +26,7 @@ html {
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--page);
   color: var(--ink);
   font-family: var(--sans);
@@ -131,7 +131,7 @@ ul {
 .folio {
   width: var(--shell);
   margin: -1px auto 0;
-  overflow: hidden;
+  overflow: clip;
   border: 1px solid #c6c0b4;
   background: var(--paper);
   box-shadow: 0 26px 90px rgb(53 46 36 / 11%);

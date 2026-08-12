@@ -117,7 +117,7 @@ test("keeps interactive demonstrations honest and user controlled", async () => 
   assert.match(route, /prefers-reduced-motion/);
   assert.match(route, /data-running/);
 
-  assert.match(dishes, /\/projects\/dishes-helper\.webp/);
+  assert.match(dishes, /\/projects\/dishes-helper-full\.png/);
   assert.match(dishes, /Try the decision mechanic/);
   assert.match(dishes, /Simplified mechanic preview/);
 
@@ -169,6 +169,7 @@ test("ships local research, portrait, institution, and interaction assets", asyn
     ["public/projects/yks/score-volatility.png", 50_000],
     ["public/projects/yks/grade-gap.png", 10_000],
     ["public/projects/dishes-helper.webp", 40_000],
+    ["public/projects/dishes-helper-full.png", 80_000],
     ["public/projects/image-studio/boardroom.webp", 50_000],
     ["public/projects/freiburg-konstanz/backgrounds/freiburg-im-breisgau.webp", 100_000],
     ["public/projects/freiburg-konstanz/player/melissa-normal.webp", 40_000],

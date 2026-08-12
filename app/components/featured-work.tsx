@@ -82,10 +82,11 @@ export function FeaturedWork() {
     <div className={styles.exhibition}>
       <header className={styles.exhibitionIntro}>
         <p>Selected work · curated sequence</p>
-        <h3>Four projects. Four different rooms.</h3>
+        <h3>Selected projects. Each with its own room.</h3>
         <p>
           Formal methods opens into product decisions, an arcade road trip, and team-scale game
-          engineering. Each case study uses a small, honest interaction to explain the work.
+          engineering. Each selected case study uses a small, honest interaction to explain the
+          work.
         </p>
       </header>
 
