@@ -133,6 +133,10 @@ export const selectedProjects: SelectedProject[] = [
     layout: "wide",
     links: [
       {
+        label: "Source-only archive",
+        href: "https://github.com/wh1tebrun/delusions-of-grandeur",
+      },
+      {
         label: "Case study",
         href: "https://github.com/wh1tebrun/delusions-of-grandeur-case-study",
       },

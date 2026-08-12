@@ -152,6 +152,8 @@ test("retains twelve themed archive entries and only verified live-app destinati
   assert.equal((content.match(/label: "Open live app"/g) ?? []).length, 5);
   assert.match(content, /label: "Read paper"/);
   assert.match(content, /label: "Watch demo"/);
+  assert.match(content, /label: "Source-only archive"/);
+  assert.match(content, /https:\/\/github\.com\/wh1tebrun\/delusions-of-grandeur/);
   assert.match(archive, /data-theme=\{project\.theme\}/);
   assert.match(archive, /sort\(\(left, right\) => right\.dateISO/);
   for (const theme of ["studio", "football", "research", "rose", "fitness", "language", "terminal", "geo", "country", "asteroid", "python", "balloon"]) {
